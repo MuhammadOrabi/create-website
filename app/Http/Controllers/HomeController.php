@@ -11,9 +11,12 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
+    public function __construct() {
+        $this->middleware('auth')->except(['index']);
+    }
+
+    public function index() {
+        return view('home-page.index');
     }
 
     /**
@@ -21,8 +24,8 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function dashboard() {
         return view('home');
     }
+
 }

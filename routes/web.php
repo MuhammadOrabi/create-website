@@ -11,10 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home.index');
+Route::get('/home', 'HomeController@dashboard')->name('home');
+
+Route::get('/active/{id}/{code}', 'ActivateController@active')->name('active.active');
+Route::get('/active/{id}', 'UserController@resend')->name('active.resend');

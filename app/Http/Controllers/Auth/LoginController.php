@@ -44,7 +44,8 @@ class LoginController extends Controller
 	}
 
 	protected function authenticated(Request $request, $user) {
-		if (!$user->active) {
+		// PS: Update the if condition to "production" when you have a production mail service
+		if (!$user->active && config('env') == 'productions') {
 			auth()->logout();
 			\Mail::to($user)->send(new ActivateEmail($user));
 			return back()->withErrors(['msg' => 'Please check your Email to active your account!']);

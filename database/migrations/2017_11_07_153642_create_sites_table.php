@@ -16,11 +16,11 @@ class CreateSitesTable extends Migration
         Schema::create('sites', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable();
-            $table->string('address');
+            $table->string('address')->unique();
             $table->integer('theme_id')->nullable();
             $table->integer('user_id')->nullable();
+            $table->integer('constant_id')->nullable();
             $table->timestamps();
-            $table->unique('address');
         });
     }
 

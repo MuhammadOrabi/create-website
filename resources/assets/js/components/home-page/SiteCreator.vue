@@ -61,7 +61,7 @@
 						        	<v-card-media class="white--text click" height="200px" @click="imgDialog = true"
 						        		:src="theme.imgs[0]? theme.imgs[0].url : ''">
 						        	</v-card-media>
-						        	<v-dialog v-model="imgDialog" width="75%">
+						        	<v-dialog v-model="imgDialog" max-width="75%">
 						        		<v-carousel dark class="hidden-md-and-down">
 										    <v-carousel-item v-for="img in theme.imgs" :src="img.url" :key="img.id"></v-carousel-item>
 										</v-carousel>
@@ -160,7 +160,7 @@ export default {
   				this.disable = true;
   				return;
   			}
-  			axios.post('/api/site/' + vm.address, {} ,{ headers: { 'Authorization': 'Bearer ' + vm.token } })
+  			axios.get('/api/site/exists/' + vm.address, { headers: { 'Authorization': 'Bearer ' + vm.token } })
           	.then((res) => {
           		if (res.data === 'danger') {
           			vm.feedback = 'This address is taken, try another one!';
@@ -178,14 +178,12 @@ export default {
   			var vm = this;
 	    	let site = { theme: vm.id, address: vm.address };
   			axios.post('/api/site', site ,{ headers: { 'Authorization': 'Bearer ' + vm.token } })
-          	.then(function (res) {
-          		if (res.data) {
-          			window.location = '/cms/pages/' + res.data;
+          	.then((res) => {
+          		if (res.data.page) {
+          			window.location = '/dashboard/pages/' + res.data.page.id + '/edit';
           		}
           	})
-          	.catch(function (err) {
-            	console.log(err);
-          	});
+          	.catch((err) => console.log(err));
   		}
 	}
 };

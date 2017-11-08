@@ -18,6 +18,7 @@ class CreateContentsTable extends Migration
 			$table->string('type');
 			$table->longText('content')->nullable();
 			$table->integer('section_id')->nullable();
+			$table->integer('constant_id')->nullable();
 			$table->integer('order')->default(0);
 			$table->timestamps();
 		});

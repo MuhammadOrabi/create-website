@@ -1,6 +1,8 @@
 {
+    "/js/vuetify/app.js": "/js/vuetify/app.js",
     "/js/home-page/app.js": "/js/home-page/app.js",
     "/css/home-page/app.css": "/css/home-page/app.css",
-    "/js/vuetify/app.js": "/js/vuetify/app.js",
-    "/css/vuetify/app.css": "/css/vuetify/app.css"
+    "/css/vuetify/app.css": "/css/vuetify/app.css",
+    "/css/templates/websites/bizlight/app.css": "/css/templates/websites/bizlight/app.css",
+    "/js/templates/websites/bizlight/app.js": "/js/templates/websites/bizlight/app.js"
 }

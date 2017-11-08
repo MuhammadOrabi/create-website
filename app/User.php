@@ -41,11 +41,11 @@ class User extends Authenticatable
 	public function addSite($address, $theme_id) {
 		$name = camel_case($address);
 		$site = $this->sites()->create(compact('address', 'theme_id', 'name'));
-		if ($site->theme->location == 'bizlight') {
+		if ($site->theme->location == 'templates.websites.bizlight') {
 			$site->bizlight_init();
-		} else if ($site->theme->location == 'sys.theme1') {
+		} else if ($site->theme->location == 'templates.web-apps.elearning') {
 			$site->sys_theme1_init();
-		} else if ($site->theme->location == 'portfolio.theme1') {
+		} else if ($site->theme->location == 'templates.portfolios.theme1') {
 			$site->portfolio_theme1_init();
 		}
 

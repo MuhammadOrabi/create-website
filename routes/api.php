@@ -13,6 +13,27 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+
+
+Route::middleware('auth:api')->group(function () {
+	Route::get('user', function () {
+	   return $request->user();
+	});
+
+	Route::prefix('site')->group(function () {
+		Route::post('/', 'SiteController@store');
+		Route::get('exists/{address}', 'SiteController@exists');
+	});
+
+	Route::prefix('section')->group(function () {
+		Route::get('{id}', 'SectionController@edit');
+	});
+	
+	Route::prefix('imgs')->group(function () {
+		Route::get('{address}', 'ImgController@index');
+		Route::post('{address}', 'ImgController@store');
+	});
+
+	Route::put('/content', 'ContentController@update');
+
 });

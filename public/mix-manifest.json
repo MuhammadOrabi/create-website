@@ -1,4 +1,6 @@
 {
     "/js/home-page/app.js": "/js/home-page/app.js",
-    "/css/home-page/app.css": "/css/home-page/app.css"
+    "/css/home-page/app.css": "/css/home-page/app.css",
+    "/js/vuetify/app.js": "/js/vuetify/app.js",
+    "/css/vuetify/app.css": "/css/vuetify/app.css"
 }

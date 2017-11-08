@@ -31,6 +31,29 @@ class User extends Authenticatable
 	public function activate() {
 		return $this->hasOne('App\Activate');
 	}
+	public function sites() {
+		return $this->hasMany('App\Site');
+	}
+	public function extras() {
+		return $this->hasMany('App\Extra');
+	}
+
+	public function addSite($address, $theme_id) {
+		$name = camel_case($address);
+		$site = $this->sites()->create(compact('address', 'theme_id', 'name'));
+		if ($site->theme->location == 'bizlight') {
+			$site->bizlight_init();
+		} else if ($site->theme->location == 'sys.theme1') {
+			$site->sys_theme1_init();
+		} else if ($site->theme->location == 'portfolio.theme1') {
+			$site->portfolio_theme1_init();
+		}
+
+		return $site;
+	}
+	public function getToken($name) {
+		return $this->createToken($name)->accessToken;
+	}
 }
 
 

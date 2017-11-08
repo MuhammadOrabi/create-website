@@ -12,4 +12,6 @@ let mix = require('laravel-mix');
  */
 
 mix.js('resources/assets/js/home-page/app.js', 'public/js/home-page')
-   .sass('resources/assets/sass/home-page/app.scss', 'public/css/home-page');
+   .sass('resources/assets/sass/home-page/app.scss', 'public/css/home-page')
+   .js('resources/assets/js/vuetify/app.js', 'public/js/vuetify')
+   .sass('resources/assets/sass/vuetify/app.scss', 'public/css/vuetify');

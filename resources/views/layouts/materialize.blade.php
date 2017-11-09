@@ -12,7 +12,7 @@
 
 	<!-- Styles -->
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<link href="{{ asset('css/home-page/app.css') }}" rel="stylesheet">
+	<link href="/css/home-page/app.css" rel="stylesheet">
 	<script>
 		window.Laravel = {!! json_encode([
 			'csrfToken' => csrf_token(),
@@ -25,6 +25,6 @@
 	</div>
 
 	<!-- Scripts -->
-	<script src="{{ asset('js/home-page/app.js') }}"></script>
+	<script src="js/home-page/app.js"></script>
 </body>
 </html>

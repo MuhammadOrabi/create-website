@@ -5,7 +5,7 @@
     	<h1>Navigation</h1>
 		<hr>
 		<div class="m-5">
-			<form action="#" method="POST" class="form-group">
+			<form action="/const/{{ $site->constants->where('type', 'top-nav')->first()->id }}" method="POST" class="form-group">
 				{{ method_field('PUT') }}
 				{{ csrf_field() }}
 				

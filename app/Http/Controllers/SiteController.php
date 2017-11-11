@@ -44,8 +44,8 @@ class SiteController extends Controller
     	$slug = request()->slug;
     	$idSlugs = array('course', 'lesson', 'forum');
     	
-    	if ($slug == 'signin' || $slug == 'signup' || !$slug) {
-// if its a webapp authentication
+    	if (!$slug) {
+// if the homepage slug
     		$slug = 'index';
     	}else if (!$site->pages->pluck('slug')->contains($slug)) {
 // if the slug doesn't belong to any of the site pages 
@@ -67,5 +67,18 @@ class SiteController extends Controller
     	$page = $site->pages->where('slug', request()->slug)->first();
     	$nav = $site->constants->where('type', 'top-nav')->first();
     	return view($site->theme->location . '.site.' . $slug, compact('site', 'page', 'nav', 'id'));
+	}
+
+	public function update() {
+		$this->validate(request(), [
+	        'name' => 'required'
+    	]);
+    	$site = Site::findOrFail(request()->id);
+    	if ($site->user->id != auth()->id()) {
+	    	return back();
+    	}
+    	$site->name = request('name');
+    	$site->save();
+    	return back();    
 	}
 }

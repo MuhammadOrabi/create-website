@@ -9,7 +9,9 @@ use Illuminate\Http\Request;
 class PageController extends Controller
 {
 	public function index() {
-		$site = auth()->user()->sites()->where('address', request()->address)->first();
+		$site = Site::where('user_id', auth()->id())->where('address', request()->address)
+					->with('constants.contents', 'imgs', 'theme', 'extras')->first();
+
 		$pages = ['navigation', 'media', 'settings', 'analytics'];
 		if (!$site || !in_array(request()->type, $pages)) {
 			return redirect()->route('home');
@@ -30,4 +32,5 @@ class PageController extends Controller
 		}
 		return view($site->theme->location . '.dashboard.pages.show', compact('page', 'site'));
 	}
+
 }

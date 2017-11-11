@@ -47,13 +47,13 @@
 	  			let data = [
 	  				{id: this.pid, content: this.p}
 	  			];
-	  			axios.put('/api/content', data, { headers: { 'Authorization': token } })
+	  			axios.put('/api/contents', data, { headers: { 'Authorization': token } })
 				.then(res => {
 					this.msg = res.data;
 				}).catch(err => console.log(err));
 	  		},
 	  		getData() {
-	  			axios.get('/api/section/' + this.id, { headers: { 'Authorization': 'Bearer ' + this.token } })
+	  			axios.get('/api/sections/' + this.id + '/edit', { headers: { 'Authorization': 'Bearer ' + this.token } })
 				.then(res => {
 					let par = res.data[0];
 					console.log(par);

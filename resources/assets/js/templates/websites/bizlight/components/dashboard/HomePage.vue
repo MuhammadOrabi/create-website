@@ -8,8 +8,8 @@
 		</div>
 		<button class="btn btn-success" @click="save" >Save</button>
 		<show-case ref="showcase" :token="token" :id="showcase"></show-case>
-		<section-a ref="sectiona" :token="token" :id="sectiona"></section-a>
 		<section-b ref="sectionb" :token="token" :id="sectionb"></section-b>
+		<section-a ref="sectiona" :token="token" :id="sectiona"></section-a>
 		<section-c ref="sectionc" :token="token" :id="sectionc"></section-c>
 	</section>
 </template>
@@ -42,7 +42,7 @@ export default {
 			let data = _.union(
 				this.$refs.showcase.save(), this.$refs.sectiona.save(), this.$refs.sectionb.save(), this.$refs.sectionc.save()
 			);
-			axios.put('/api/content', data, { headers: { 'Authorization': 'Bearer ' + this.token } })
+			axios.put('/api/contents', data, { headers: { 'Authorization': 'Bearer ' + this.token } })
 			.then(res => {
 				this.msg = res.data;
 			}).catch(err => console.log(err));

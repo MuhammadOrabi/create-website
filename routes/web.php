@@ -32,10 +32,12 @@ Route::middleware('auth')->group(function () {
 
 	Route::prefix('dashboard')->group(function () {
 		Route::get('/pages/{id}/edit', 'PageController@edit')->name('page.edit');
-		Route::get('/sections/{id}', 'SectionController@index')->name('sections');
-		Route::get('/content/{id}/edit', 'ContentController@edit')->name('content.edit');
+		// Route::get('/sections/{id}', 'SectionController@index')->name('sections');
+		// Route::get('/content/{id}/edit', 'ContentController@edit')->name('content.edit');
 		Route::get('/{type}/{address}', 'PageController@index')->name('page.index');
 	});
+	Route::put('/const/{id}', 'ConstantController@update')->name('const.update');
+	Route::put('/site/{id}', 'SiteController@update')->name('site.update');
 	Route::delete('/section/{id}', 'SectionController@destroy')->name('section.delete');
 });
 

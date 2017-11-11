@@ -57,13 +57,13 @@
 	  				{id: this.data[1].hid, content: this.data[1].head}, {id: this.data[1].pid, content: this.data[1].data},
 	  				{id: this.data[2].hid, content: this.data[2].head}, {id: this.data[2].pid, content: this.data[2].data}
 	  			];
-	  			axios.put('/api/content', data, { headers: { 'Authorization': token } })
+	  			axios.put('/api/contents', data, { headers: { 'Authorization': token } })
 				.then(res => {
 					this.msg = res.data;
 				}).catch(err => console.log(err));
 	  		},
 	  		getData() {
-	  			axios.get('/api/section/' + this.id, { headers: { 'Authorization': 'Bearer ' + this.token } })
+	  			axios.get('/api/sections/' + this.id + '/edit', { headers: { 'Authorization': 'Bearer ' + this.token } })
 				.then(res => {
 					let order1 = _.where(res.data, {order: 1});
 					let order2 = _.where(res.data, {order: 2});

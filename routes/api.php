@@ -25,15 +25,20 @@ Route::middleware('auth:api')->group(function () {
 		Route::get('exists/{address}', 'SiteController@exists');
 	});
 
-	Route::prefix('section')->group(function () {
-		Route::get('{id}', 'SectionController@edit');
+	Route::prefix('sections')->group(function () {
+		Route::get('{id}', 'SectionController@index');
+		Route::get('{id}/edit', 'SectionController@edit');
+		Route::post('{id}', 'SectionController@store');
+		Route::delete('{id}', 'SectionController@destroyAPI');
 	});
 	
 	Route::prefix('imgs')->group(function () {
+		Route::post('/', 'ImgController@store');
 		Route::get('{address}', 'ImgController@index');
-		Route::post('{address}', 'ImgController@store');
 	});
 
-	Route::put('/content', 'ContentController@update');
+	Route::prefix('contents')->group(function () {
+		Route::put('/', 'ContentController@update');
+	});
 
 });

@@ -13,7 +13,7 @@ class ImgController extends Controller
     }
 
     public function store() {
-        $site = auth()->user()->sites()->where('address', request()->address)->first();
+        $site = auth()->user()->sites()->where('address', request('address'))->first();
     	$img = $site->addImage(request('img'));
     	return response()->json(['msg' => 'success', 'url' => $img->url]);
     }

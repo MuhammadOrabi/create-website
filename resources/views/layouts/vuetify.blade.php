@@ -62,6 +62,14 @@
 					              	</v-list-tile-content>
 					            </v-list-tile>
           					</v-list-group>
+          					<v-list-tile v-else-if="item.click" :key="i" @click="clickMenu(item.click)">
+				        		<v-list-tile-action v-if="item.icon">
+					              	<v-icon>@{{ item.icon }}</v-icon>
+					            </v-list-tile-action>
+					            <v-list-tile-content v-if="item.text">
+					              	<v-list-tile-title>@{{ item.text }}</v-list-tile-title>
+					            </v-list-tile-content>
+				        	</v-list-tile>
 				          	<v-list-tile v-else :href="item.link" :target="item.target" >
 					            <v-list-tile-action>
 					              	<v-icon>@{{ item.icon }}</v-icon>
@@ -80,25 +88,41 @@
 			      		<img :src="nav.logo" alt="logo" width="50px" height="50px" v-if="nav.logo" >
 			      		<v-btn v-else-if="nav.text" flat class="headline" style="text-transform: capitalize" :href="nav.link">@{{ nav.text }}</v-btn>
 			      	</v-toolbar-title>
-			      	<v-btn v-if="nav.logo && nav.text" flat class="headline hidden-md-and-down" 
+			      	<v-btn v-if="nav.logo && nav.text" flat :class="siteNameVisibility" 
 			      		style="text-transform: capitalize" :href="nav.link">@{{ nav.text }}</v-btn>
 			      	<v-spacer></v-spacer>
 			      	<v-toolbar-items class="hidden-xs-only">
-		  				<v-btn flat v-for="(nav, i) in rightSubNav" :key="i" :href="nav.link" class="cap" v-if="!nav.children">
-		  					<v-icon left>@{{ nav.icon }}</v-icon>
+		  				<v-btn flat v-for="(nav, i) in toolBarMenu" :key="i" :href="nav.link" class="cap" v-if="!nav.children">
+		  					<v-icon left v-if="nav.icon">@{{ nav.icon }}</v-icon>
 		  					@{{ nav.text }}
 		  				</v-btn>
 		  			</v-toolbar-items>
 			      	<v-toolbar-side-icon @click="right = !right" v-if="rightSubNavCheck" class="hidden-lg-only"></v-toolbar-side-icon>
-			      	<v-menu open-on-hover offset-y v-if="authUser" class="hidden-md-and-down">
+			      	<v-menu open-on-hover offset-y v-if="authMenu" class="hidden-xs-only">
 				      	<v-btn flat slot="activator" class="cap">
-				      		{{ Auth::user()->name }}
+				      		@{{ authUserName }}
 				      		<v-icon>arrow_drop_down</v-icon>
 			      		</v-btn>
-				      	<v-list>
-				        	<v-list-tile href="/logout">
-				          		<v-list-tile-title>Log out</v-list-tile-title>
-				        	</v-list-tile>
+				      	<v-list dense>
+				      		<template v-for="(item, i) in authMenuList">
+					        	<v-list-tile v-if="item.link" :key="i" :href="item.link">
+					        		<v-list-tile-action v-if="item.icon">
+						              	<v-icon>@{{ item.icon }}</v-icon>
+						            </v-list-tile-action>
+						            <v-list-tile-content v-if="item.text">
+						              	<v-list-tile-title>@{{ item.text }}</v-list-tile-title>
+						            </v-list-tile-content>
+					        	</v-list-tile>
+					        	<v-list-tile v-else-if="item.click" :key="i" @click="clickMenu(item.click)">
+					        		<v-list-tile-action v-if="item.icon">
+						              	<v-icon>@{{ item.icon }}</v-icon>
+						            </v-list-tile-action>
+						            <v-list-tile-content v-if="item.text">
+						              	<v-list-tile-title>@{{ item.text }}</v-list-tile-title>
+						            </v-list-tile-content>
+					        	</v-list-tile>
+					            <v-divider v-else-if="item.divider" class="my-3" :key="i"></v-divider>
+					        </template>
 				      	</v-list>
 				    </v-menu>
 		    	</v-toolbar>
@@ -134,6 +158,14 @@
 					              	</v-list-tile-content>
 					            </v-list-tile>
           					</v-list-group>
+          					<v-list-tile v-else-if="item.click" :key="i" @click="clickMenu(item.click)">
+				        		<v-list-tile-action v-if="item.icon">
+					              	<v-icon>@{{ item.icon }}</v-icon>
+					            </v-list-tile-action>
+					            <v-list-tile-content v-if="item.text">
+					              	<v-list-tile-title>@{{ item.text }}</v-list-tile-title>
+					            </v-list-tile-content>
+				        	</v-list-tile>
 				          	<v-list-tile v-else :href="item.link" :target="item.target" >
 					            <v-list-tile-action>
 					              	<v-icon>@{{ item.icon }}</v-icon>
@@ -178,6 +210,14 @@
 						              	</v-list-tile-content>
 						            </v-list-tile>
 	          					</v-list-group>
+	          					<v-list-tile v-else-if="item.click" :key="i" @click="clickMenu(item.click)">
+					        		<v-list-tile-action v-if="item.icon">
+						              	<v-icon>@{{ item.icon }}</v-icon>
+						            </v-list-tile-action>
+						            <v-list-tile-content v-if="item.text">
+						              	<v-list-tile-title>@{{ item.text }}</v-list-tile-title>
+						            </v-list-tile-content>
+					        	</v-list-tile>
 					          	<v-list-tile v-else :href="item.link" :target="item.target" >
 						            <v-list-tile-action>
 						              	<v-icon>@{{ item.icon }}</v-icon>
@@ -217,7 +257,8 @@
 						                	</v-list-tile-title>
 						              	</v-list-tile-content>
 						            </v-list-tile>
-						            <v-list-tile v-for="(child, i) in item.children" :key="i" :href="child.link" :target="item.target">
+						            <v-list-tile v-for="(child, i) in item.children" :key="i" 
+						            	:href="child.link" @click="clickMenu(child.click)" :target="child.target">
 						              	<v-list-tile-action v-if="child.icon">
 						                	<v-icon>@{{ child.icon }}</v-icon>
 						              	</v-list-tile-action>
@@ -226,6 +267,14 @@
 						              	</v-list-tile-content>
 						            </v-list-tile>
 	          					</v-list-group>
+	          					<v-list-tile v-else-if="item.click" :key="i" @click="clickMenu(item.click)">
+					        		<v-list-tile-action v-if="item.icon">
+						              	<v-icon>@{{ item.icon }}</v-icon>
+						            </v-list-tile-action>
+						            <v-list-tile-content v-if="item.text">
+						              	<v-list-tile-title>@{{ item.text }}</v-list-tile-title>
+						            </v-list-tile-content>
+					        	</v-list-tile>
 					          	<v-list-tile v-else :href="item.link" :target="item.target" >
 						            <v-list-tile-action>
 						              	<v-icon>@{{ item.icon }}</v-icon>
@@ -246,7 +295,6 @@
 		  	</v-app>
 		</div>
 		<!-- JavaScript -->
-		<script type="text/javascript" src="/js/vuetify/app.js"></script>
 		@yield('scripts')
 		<script type="text/javascript">
 			window.onload = function () {

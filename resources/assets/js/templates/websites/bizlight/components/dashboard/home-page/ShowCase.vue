@@ -38,7 +38,7 @@ export default {
   			return [{id: this.h.id, content: this.h.h}, {id: this.p.id, content: this.p.p}];
   		},
   		getData() {
-  			axios.get('/api/section/' + this.id, { headers: { 'Authorization': 'Bearer ' + this.token } })
+  			axios.get('/api/sections/' + this.id + '/edit', { headers: { 'Authorization': 'Bearer ' + this.token } })
 			.then(res => {
 				this.h.h = res.data[0].content || 'Heading';
 				this.h.id = res.data[0].id;

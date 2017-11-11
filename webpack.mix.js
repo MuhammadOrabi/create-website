@@ -16,4 +16,5 @@ mix.js('resources/assets/js/home-page/app.js', 'public/js/home-page')
    .js('resources/assets/js/vuetify/app.js', 'public/js/vuetify')
    .sass('resources/assets/sass/vuetify/app.scss', 'public/css/vuetify')
    .js('resources/assets/js/templates/websites/bizlight/app.js', 'public/js/templates/websites/bizlight')
-   .sass('resources/assets/sass/templates/websites/bizlight/app.scss', 'public/css/templates/websites/bizlight');
+   .sass('resources/assets/sass/templates/websites/bizlight/app.scss', 'public/css/templates/websites/bizlight')
+   .js('resources/assets/js/templates/web-apps/elearning/app.js', 'public/js/templates/web-apps/elearning');

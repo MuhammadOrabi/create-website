@@ -8,6 +8,34 @@ use Illuminate\Http\Request;
 
 class SectionController extends Controller
 {
+	public function index() {
+		$page = Page::where('id', request()->id)->with('sections.contents', 'site.user')->first();
+		if ($page->site->user->id != auth()->id()) {
+		 	return response()->json('err', 401);
+		}
+		return response()->json(compact('page'));
+	}
+
+	public function store() {
+    	$page = Page::findOrFail(request()->id);
+    	$site = $page->site;
+    	if ($site->theme->name == 'E-Learning') {
+	    	if ($page->title == 'News') {
+	    		$news = $page->sections()->create(['title' => 'news', 'order' => 0]);
+	    		$news->contents()->create(['type' => 'heading', 'content' => request('title')]);
+	    		$news->contents()->create(['type' => 'img', 'content' => request('url')]);
+	    		$news->contents()->create(['type' => 'paragraph', 'content' => request('description')]);
+	    		return response()->json(['msg' => 'success', 'news' => compact('news')]);
+	    	} else if ($page->title == 'Home Page' || $page->title == 'About') {
+	    		$home = $page->sections()->create(['title' => 'home', 'order' => 0]);
+	    		$home->contents()->create(['type' => 'heading', 'content' => request('heading')]);
+	    		$home->contents()->create(['type' => 'img', 'content' => request('img')]);
+	    		$home->contents()->create(['type' => 'paragraph', 'content' => request('paragraph')]);
+	    		return response()->json(['msg' => 'success', 'home' => compact('home')]);
+	    	} 
+    	}
+    	return response(500);
+    }
 	public function edit() {
 		$section = Section::findOrFail(request()->id);
 		$site = auth()->user()->sites()->where('address', $section->page->site->address)->first();
@@ -45,9 +73,13 @@ class SectionController extends Controller
 		}
 	}
 	public function destroy() {
-        $section = Section::find(request()->id);
-        $address = $section->page->site->address;
+        $section = Section::findOrFail(request()->id);
         $section->delete();
         return back();
+    }
+    public function destroyAPI() {
+        $section = Section::findOrFail(request()->id);
+        $section->delete();
+        return response()->json('success');
     }
 }

@@ -52,7 +52,7 @@
 	  	},
 	  	methods: {
 	  		getData() {
-	  			axios.get('/api/section/' + this.id, { headers: { 'Authorization': 'Bearer ' + this.token } })
+	  			axios.get('/api/sections/' + this.id + '/edit', { headers: { 'Authorization': 'Bearer ' + this.token } })
 				.then(res => {
 					let par = res.data[0];
 					let img = res.data[1];

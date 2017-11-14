@@ -16,9 +16,6 @@ use Illuminate\Http\Request;
 
 
 Route::middleware('auth:api')->group(function () {
-	Route::get('user', function () {
-	   return $request->user();
-	});
 
 	Route::prefix('site')->group(function () {
 		Route::post('/', 'SiteController@store');
@@ -41,4 +38,13 @@ Route::middleware('auth:api')->group(function () {
 		Route::put('/', 'ContentController@update');
 	});
 
+	Route::prefix('user')->group(function () {
+		Route::get('/', 'UserController@show');
+	});
+
+});
+
+Route::prefix('user')->group(function () {
+	Route::post('/', 'UserController@store');
+	Route::post('login', 'UserController@login');
 });

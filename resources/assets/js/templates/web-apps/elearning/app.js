@@ -14,4 +14,7 @@ Vue.component('about', require('./components/dashboard/About.vue'));
 Vue.component('news', require('./components/dashboard/News.vue'));
 Vue.component('media', require('./components/dashboard/Media.vue'));
 
+Vue.component('site-signin', require('./components/site/Signin.vue'));
+Vue.component('site-signup', require('./components/site/Signup.vue'));
+
 Vue.store = store;

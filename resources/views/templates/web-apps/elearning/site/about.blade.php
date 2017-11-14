@@ -1,7 +1,7 @@
 @extends('layouts.vuetify')
 
 @section('title')
-	{{ $site->address }}
+	About - {{ $site->address }}
 @stop
 
 @section('content')

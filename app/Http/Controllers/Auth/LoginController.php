@@ -57,4 +57,5 @@ class LoginController extends Controller
         $data['address'] = 'main';
         return $data;
     }
+    
 }

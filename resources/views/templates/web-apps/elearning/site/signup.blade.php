@@ -1,13 +1,11 @@
 @extends('layouts.vuetify')
 
 @section('title')
-	{{ $site->address }}
+	Sign Up - {{ $site->address }}
 @stop
 
 @section('content')
-	<v-layout row wrap justify-start>
-		
-	</v-layout>
+	<site-signup address="{{ $site->address }}"></site-signup>
 @stop
 
 @section('scripts')

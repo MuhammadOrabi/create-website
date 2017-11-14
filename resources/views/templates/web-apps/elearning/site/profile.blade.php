@@ -1,13 +1,10 @@
 @extends('layouts.vuetify')
 
 @section('title')
-	{{ $site->address }}
+	Dashboard - {{ $site->address }}
 @stop
 
 @section('content')
-	<v-layout row wrap justify-start>
-		
-	</v-layout>
 @stop
 
 @section('scripts')

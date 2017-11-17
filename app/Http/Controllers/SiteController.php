@@ -43,7 +43,6 @@ class SiteController extends Controller
     	}
     	$slug = request()->slug;
     	$idSlugs = array('course', 'lesson', 'forum');
-    	
     	if (!$slug) {
 // if the homepage slug
     		$slug = 'index';

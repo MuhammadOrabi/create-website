@@ -1,12 +1,12 @@
 @extends('layouts.vuetify')
 
 @section('title')
-	News - {{ $site->address }}
+	News - {{ $site->name }}
 @stop
 
 @section('content')
 	<v-layout row wrap justify-start>
-		
+		<site-news id="{{ $page->id }}"></site-news>
 	</v-layout>
 @stop
 

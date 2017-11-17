@@ -9,7 +9,10 @@ use Illuminate\Http\Request;
 class SectionController extends Controller
 {
 	public function index() {
-		$page = Page::where('id', request()->id)->with('sections.contents', 'site.user')->first();
+		$page = Page::where('id', request()->id)->with(['sections'=> function ($query) {
+		    $query->orderBy('created_at', 'desc');
+		},'sections.contents', 'site.user'])->first();
+		
 		if ($page->site->user->id != auth()->id()) {
 		 	return response()->json('err', 401);
 		}
@@ -19,24 +22,49 @@ class SectionController extends Controller
 	public function store() {
     	$page = Page::findOrFail(request()->id);
     	$site = $page->site;
-    	if ($site->theme->name == 'E-Learning') {
-	    	if ($page->title == 'News') {
+    	if ($site->theme->location == 'templates.web-apps.elearning') {
+	    	if ($page->slug == 'news') {
 	    		$news = $page->sections()->create(['title' => 'news', 'order' => 0]);
 	    		$news->contents()->create(['type' => 'heading', 'content' => request('title')]);
 	    		$news->contents()->create(['type' => 'img', 'content' => request('url')]);
 	    		$news->contents()->create(['type' => 'paragraph', 'content' => request('description')]);
 	    		return response()->json(['msg' => 'success', 'news' => compact('news')]);
-	    	} else if ($page->title == 'Home Page' || $page->title == 'About') {
-	    		$home = $page->sections()->create(['title' => 'home', 'order' => 0]);
-	    		$home->contents()->create(['type' => 'heading', 'content' => request('heading')]);
-	    		$home->contents()->create(['type' => 'img', 'content' => request('img')]);
-	    		$home->contents()->create(['type' => 'paragraph', 'content' => request('paragraph')]);
-	    		return response()->json(['msg' => 'success', 'home' => compact('home')]);
-	    	} 
+	    	} else if ($page->slug == '' || $page->slug == 'about') {
+	    		$section = $page->sections()->create(['title' => $page->slug, 'order' => 0]);
+	    		$section->contents()->create(['type' => 'heading', 'content' => request('heading')]);
+	    		$section->contents()->create(['type' => 'img', 'content' => request('img')]);
+	    		$section->contents()->create(['type' => 'paragraph', 'content' => request('paragraph')]);
+	    		return response()->json(['msg' => 'success', 'home' => compact('section')]);
+	    	} else if ($page->slug == 'courses') {
+	    		$section = $page->sections()->create(['title' => request('title')]);
+	    		$section->extras()->create(['type' => 'paragraph', 'content' => request('paragraph')]);
+	    		foreach (request('tags') as $tag) {
+		    		$section->extras()->create(['type' => 'tag', 'content' => $tag]);
+	    		}
+	    		return response()->json(['msg' => 'success', 'section' => compact('section')]);
+	    	}
     	}
     	return response(500);
     }
-	public function edit() {
+
+    public function show() {
+        $section = Section::where('id', request()->id)->with('contents','extras', 'page')->first();
+		$site = auth()->user()->sites()->where('address', $section->page->site->address)->with('pages')->first();
+		if (!$site) {
+			return back();
+		}
+		return view($site->theme->location . '.dashboard.sections.show', compact('site','section'));
+    }
+
+    public function showAPI() {
+        $section = Section::where('id', request()->id)->with('contents','extras', 'page')->first();
+        if (!$section) {
+        	return response()->json(500);
+        }
+        return response()->json(compact('section'), 200);
+    }
+
+	public function update() {
 		$section = Section::findOrFail(request()->id);
 		$site = auth()->user()->sites()->where('address', $section->page->site->address)->first();
 		if (!$site) {
@@ -45,6 +73,19 @@ class SectionController extends Controller
 		$contents = $section->contents->toArray();
 		return response()->json($contents);
 	}
+
+	public function editExtras() {
+	    $section = Section::findOrFail(request()->id);
+	    $section->title = request('title');
+		$section->save();
+	    $section->extras()->where('type', 'paragraph')->update(['content' => request('paragraph')]);
+	    $section->extras()->where('type', 'tag')->delete();
+	 	foreach (request('tags') as $tag) {
+    		$section->extras()->create(['type' => 'tag', 'content' => $tag]);
+		}
+		return response()->json(['msg' => 'success', 'section' => compact('section')]);
+	}
+
 	public function message() {
 		$page = Page::findOrFail(request()->id);
 		$site = $page->site;

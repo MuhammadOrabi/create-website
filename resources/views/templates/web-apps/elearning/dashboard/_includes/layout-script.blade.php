@@ -1,3 +1,8 @@
+@php
+	$slugs = array('' , 'about', 'news', 'contact', 'courses', 'signup');
+	$sideNavPages = $site->pages->whereIn('slug', $slugs)->all();
+@endphp
+
 <script type="text/javascript">
 	const app = new Vue({
 		el: '#app',
@@ -22,7 +27,7 @@
 		          	text: 'Pages',
 		          	model: false,
 		          	children: [
-		          		@foreach($site->pages as $page)
+		          		@foreach($sideNavPages as $page)
 		            		{ 
 		            			icon: 'keyboard_arrow_right', 
 		            			text: '{{ $page->title }}', link: '/dashboard/pages/{{ $page->id }}/edit'

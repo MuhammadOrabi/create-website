@@ -18,7 +18,7 @@ class ThemeController extends Controller
     		return response()->json($tags);
     	}
     	$tag_website = Tag::create(['tag' => 'website', 'img' => '/img/websites/type-website.svg']);
-    	$tag_portfolio = Tag::create(['tag' => 'portfolio', 'img' => '/img/portofolios/type-portfolio.svg']);
+    	$tag_portfolio = Tag::create(['tag' => 'Portfolio', 'img' => '/img/portfolios/type-portfolio.svg']);
     	$tag_webApp = Tag::create(['tag' => 'webApp', 'img' => '/img/web-apps/type-webapp.svg']);
     	$tag_blog = Tag::create(['tag' => 'blog', 'img' => '/img/blogs/type-blog.svg']);
 
@@ -46,6 +46,13 @@ class ThemeController extends Controller
         $portfolio_theme1 = $tag_portfolio->themes()->create(
         	['name' => 'Portfolio', 'location' => 'templates.portfolios.theme1', 'type' => 'portfolio']
         );
+        $portfolio_theme1->imgs()->create(['url' => '/img/portfolios/theme1/1.png']);
+        $portfolio_theme1->imgs()->create(['url' => '/img/portfolios/theme1/2.png']);
+        $portfolio_theme1->imgs()->create(['url' => '/img/portfolios/theme1/3.png']);
+        $portfolio_theme1->imgs()->create(['url' => '/img/portfolios/theme1/4.png']);
+        $portfolio_theme1->imgs()->create(['url' => '/img/portfolios/theme1/5.png']);
+        $portfolio_theme1->imgs()->create(['url' => '/img/portfolios/theme1/6.png']);
+        $portfolio_theme1->imgs()->create(['url' => '/img/portfolios/theme1/7.png']);
         return redirect('/');
     }
 }

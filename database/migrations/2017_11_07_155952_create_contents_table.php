@@ -16,6 +16,7 @@ class CreateContentsTable extends Migration
 		Schema::create('contents', function (Blueprint $table) {
 			$table->increments('id');
 			$table->string('type');
+			$table->string('title')->nullable();
 			$table->longText('content')->nullable();
 			$table->integer('section_id')->nullable();
 			$table->integer('constant_id')->nullable();

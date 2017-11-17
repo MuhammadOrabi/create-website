@@ -15,9 +15,11 @@ class UserController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index()
-	{
-		//
+	public function index() {
+		$user = request()->user();
+	    $site = $user->sites()->where('address', request()->address)->get()->first();
+	    $users = User::where('address', $site->address)->orderBy('created_at', 'desc')->get();
+	    return response()->json(compact('users'));
 	}
 
 	/**
@@ -77,9 +79,8 @@ class UserController extends Controller
 		$credentials = ['email' => request('email'), 'password' => request('password'), 'address' => request('address') ];
     	if (auth()->once($credentials)) {
 	        $user = User::where('email', request('email'))->where('address', request('address'))->first();
-// alter the if condition to require sending activation mail 
     		if (!$user->active) {
-        		// return response()->json(['status' => true, 'errors' => null, 'msg' => 'Please contact us for more information!']);
+        		return response()->json(['status' => true, 'errors' => null, 'msg' => 'Please contact us for more information!']);
 	        }
 			return response()->json(['token' => $user->getToken('Sign In'), 'user' => $user]);	
     	}
@@ -115,9 +116,36 @@ class UserController extends Controller
 	 * @param  \App\User  $user
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request, User $user)
-	{
-		//
+	public function update() {
+		$admin = request()->user();
+		$site = $admin->sites()->where('address', request()->address)->get()->first();
+	    $users = request()->all();
+        foreach ($users as $user) {
+        	$user = User::find($user['id']);
+        	if ($site->address == $user->address) {
+        		switch (request()->option) {
+        			case '1':
+    					$activate = $user->activate ? $user->activate : $user->activate()->create(['code' => str_random(40)]);
+						$activate->save();
+        				\Mail::to($user)->send(new activateMail($user));
+        				break;
+        			case '2':
+        				$user->active = 1;
+        				$user->save();
+        				break;
+        			case '3':
+        				$user->active = 0;
+        				$user->save();
+        				break;
+        			case '4':
+        				$user->delete();
+        				break;
+        		}
+        	} else {
+				return response()->json('error');
+        	}
+        }
+		return response()->json('success');
 	}
 
 	/**

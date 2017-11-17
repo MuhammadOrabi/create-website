@@ -1,7 +1,7 @@
 @extends('layouts.vuetify')
 
 @section('title')
-	Dashboard - {{ $site->address }}
+	Dashboard - {{ $site->name }}
 @stop
 
 @section('content')

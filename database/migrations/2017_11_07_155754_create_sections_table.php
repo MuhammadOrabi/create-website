@@ -15,7 +15,7 @@ class CreateSectionsTable extends Migration
 	{
 		Schema::create('sections', function (Blueprint $table) {
 			$table->increments('id');
-			$table->string('title');
+			$table->string('title')->nullable();
 			$table->string('type')->nullable();
 			$table->integer('order')->default(0);
 			$table->integer('page_id');

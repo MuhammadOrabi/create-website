@@ -91,14 +91,14 @@
 			      	<v-btn v-if="nav.logo && nav.text" flat :class="siteNameVisibility" 
 			      		style="text-transform: capitalize" :href="nav.link">@{{ nav.text }}</v-btn>
 			      	<v-spacer></v-spacer>
-			      	<v-toolbar-items class="hidden-xs-only">
+			      	<v-toolbar-items class="hidden-md-and-down">
 		  				<v-btn flat v-for="(nav, i) in toolBarMenu" :key="i" :href="nav.link" class="cap" v-if="!nav.children">
 		  					<v-icon left v-if="nav.icon">@{{ nav.icon }}</v-icon>
 		  					@{{ nav.text }}
 		  				</v-btn>
 		  			</v-toolbar-items>
 			      	<v-toolbar-side-icon @click="right = !right" v-if="rightSubNavCheck" class="hidden-lg-only"></v-toolbar-side-icon>
-			      	<v-menu open-on-hover offset-y v-if="authMenu" class="hidden-xs-only">
+			      	<v-menu open-on-hover offset-y v-if="authMenu" class="hidden-md-and-down">
 				      	<v-btn flat slot="activator" class="cap">
 				      		@{{ authUserName }}
 				      		<v-icon>arrow_drop_down</v-icon>

@@ -1,7 +1,7 @@
 @extends('layouts.vuetify')
 
 @section('title')
-	Sign Up - {{ $site->address }}
+	Sign Up - {{ $site->name }}
 @stop
 
 @section('content')

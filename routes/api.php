@@ -23,9 +23,10 @@ Route::middleware('auth:api')->group(function () {
 	});
 
 	Route::prefix('sections')->group(function () {
-		Route::get('{id}', 'SectionController@index');
-		Route::get('{id}/edit', 'SectionController@edit');
 		Route::post('{id}', 'SectionController@store');
+		Route::get('{id}', 'SectionController@index');
+		Route::get('{id}/edit', 'SectionController@update');
+		Route::put('{id}/edit', 'SectionController@editExtras');
 		Route::delete('{id}', 'SectionController@destroyAPI');
 	});
 	
@@ -40,6 +41,12 @@ Route::middleware('auth:api')->group(function () {
 
 	Route::prefix('user')->group(function () {
 		Route::get('/', 'UserController@show');
+		Route::get('/{address}', 'UserController@index');
+		Route::put('/{address}/edit/{option}', 'UserController@update');
+
+	});
+
+	Route::prefix('extras')->group(function () {
 	});
 
 });
@@ -48,3 +55,12 @@ Route::prefix('user')->group(function () {
 	Route::post('/', 'UserController@store');
 	Route::post('login', 'UserController@login');
 });
+
+Route::prefix('sections')->group(function () {
+	Route::get('/{id}', 'SectionController@showAPI');
+});
+Route::prefix('pages')->group(function () {
+	Route::get('/{id}', 'PageController@show');
+});
+
+Route::post('/contact/{id}', 'SectionController@message');

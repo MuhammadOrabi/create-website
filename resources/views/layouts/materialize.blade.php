@@ -13,6 +13,7 @@
 	<!-- Styles -->
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link href="/css/home-page/app.css" rel="stylesheet">
+	@yield('styles')
 	<script>
 		window.Laravel = {!! json_encode([
 			'csrfToken' => csrf_token(),
@@ -26,5 +27,6 @@
 
 	<!-- Scripts -->
 	<script src="js/home-page/app.js"></script>
+	@yield('scripts')
 </body>
 </html>

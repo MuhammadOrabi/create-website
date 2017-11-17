@@ -32,8 +32,8 @@ Route::middleware('auth')->group(function () {
 
 	Route::prefix('dashboard')->group(function () {
 		Route::get('/pages/{id}/edit', 'PageController@edit')->name('page.edit');
-		// Route::get('/sections/{id}', 'SectionController@index')->name('sections');
-		// Route::get('/content/{id}/edit', 'ContentController@edit')->name('content.edit');
+		Route::get('/sections/{id}', 'SectionController@show')->name('sections.show');
+		// Route::get('/contents/{id}/edit', 'ContentController@edit')->name('contents.edit');
 		Route::get('/{type}/{address}', 'PageController@index')->name('page.index');
 	});
 	Route::put('/const/{id}', 'ConstantController@update')->name('const.update');

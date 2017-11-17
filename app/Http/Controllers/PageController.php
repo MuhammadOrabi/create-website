@@ -33,4 +33,8 @@ class PageController extends Controller
 		return view($site->theme->location . '.dashboard.pages.show', compact('page', 'site'));
 	}
 
+	public function show() {
+	    $page = Page::where('id', request()->id)->with('sections.extras')->first();
+	    return response()->json(compact('page'), 200);
+	}
 }

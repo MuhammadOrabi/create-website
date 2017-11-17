@@ -1,0 +1,256 @@
+@import "node_modules/materialize-css/sass/materialize";
+@import "node_modules/font-awesome/scss/font-awesome";
+
+
+
+body {
+	background: rgb(15, 15, 15);
+}
+
+div.nav-wrapper {
+	background: rgb(34, 34, 34);
+	padding-right: 25%;
+	margin-right: 20%;
+}
+
+nav {
+	background: rgb(34, 34, 34);
+	position: fixed;
+	margin-top: -5px;
+	z-index: 1;
+}
+a.hvr-shutter-out-horizontal
+{
+	font-size: 30px;
+	font-family: "Bodoni MT Condensed";
+}
+
+
+
+/* -------DELETE------------*/
+.m4
+{
+	background: yellow;
+
+}
+/* --------DELETE----------*/
+
+
+.xx
+{
+	background: rgb(33, 150, 243);
+	margin-bottom: 2%;
+	margin-top: 2%;
+	padding-top: 2%;
+
+}
+.hireME {
+ 	margin-left: 5%;
+}
+.quotes
+{
+	padding-top: 2%;
+	color: #fff;
+	font-size: 20px;
+	padding-left: 5%;
+	padding-right: 5%;
+}
+
+
+.sec {
+	background: rgb(34, 34, 34);
+	width: 100%;
+	margin-top: 7%;
+}
+.sec3 {
+	padding-bottom: 3%;
+	padding-left: 2%;
+
+}
+
+.sec4 {
+	padding-left: 10%;
+	padding-right: 10%;
+	padding-top: 2%;
+	padding-bottom: 3%;
+}
+
+div.sec4 h2 {
+	color: #fff;
+}
+
+
+.profile_pic {
+	border-radius: 50%;
+	width: 60%;
+
+}
+.profile_pic2 {
+	border-radius: 50%;
+	width: 60%;
+	height: 50%;
+	
+}
+
+
+div.sec1_p_div h3 {
+	font-family: "Bodoni MT Condensed";
+	color: #fff;
+	margin-left: 10%;
+}
+div.sec2 h3 {
+	margin-left: 6%;
+	padding-top:3%;
+	color: #fff; 
+}
+.p1 {
+	color: #fff;
+	margin-left: 10%;
+	font-size: 25px;
+}
+
+.p2 {
+	color: rgb(112, 112, 112);
+	margin-left: 6%;
+	margin-right: 10%;
+	font-size: 17px;
+}
+
+h5 {
+	text-align: center;
+	color: #fff;
+	padding-top: 2%;
+	font-family: "Times New Roman (Headings CS)";
+}
+
+.personal_details {
+	background: rgb(61, 61, 61);
+	padding-left: 10%;
+	padding-right: 10%;
+
+}
+
+
+
+.per_sec2 {
+	
+	color: #fff;
+
+}
+
+
+
+.z {
+
+color: #fff;
+background: rgb(61, 61, 61);
+}
+
+
+.c {
+	background: #fff;
+	border-radius: 5px;
+}
+
+/*  -----progress bar -------- */
+.l {
+	color: #fff;
+	font-size: 20px;
+
+}
+/*  fixed-left/right side body start
+==================================== */
+.fixed-left-side-body {
+  top: 40px;
+  bottom: 0;
+  left: 10px;
+  width: 24%;
+  float: left;
+  position: fixed;
+  min-height: 100%;
+  overflow-x: hidden;
+  background-color: #222222;
+ 
+}
+.fixed-left-side-body .profile {
+  padding: 0px 0px;
+  position: relative;
+  margin-bottom: 0px;
+}
+.fixed-left-side-body .profile-image {
+  padding: 0px 40px 0px 0px;
+  height: 300px;
+  width: 350px;
+}
+
+.fixed-left-side-body .profile-name {
+  padding: 5px 0px;
+  background-color: #2c2c2c;
+  box-shadow: 0px 10px 40px 15px rgba(1, 1, 1, 0.1);
+}
+.fixed-left-side-body .profile-name h1.user-name {
+  font-size: 34px;
+  margin-bottom: 10px;
+  color: #fff;
+  font-family: 'Merienda', cursive;
+}
+
+
+
+.photoshop-color {
+	color: #2196F3;
+}
+
+.name_p {
+	color: #fff;
+}
+
+.social-btn li {
+	display: inline-block;
+	padding-left: 1%;
+	padding-right: 1%;
+	margin-left: 11%;
+	margin-top: 5%;
+
+}
+
+
+.social-btn li:hover {
+	/* background: #fff */;
+}
+.up_arrow {
+	margin-left: 2%;
+	float: right;
+
+}
+.btn-large {
+	margin-bottom: 2%;
+}
+
+.work_e_p {
+	display: inline-block;
+	color: #fff;
+	font-size: 20px;
+}
+
+.w_e_1 {
+	color: rgb(216, 39, 142);
+
+}
+
+.w_e_2 {
+	color: rgb(217, 224, 13);
+
+}
+.w_e_3 {
+	color: rgb(96, 136, 188);
+
+}
+
+.w_e_s {
+	color:rgb(117, 117, 117);
+}
+
+.back {
+	background:rgb(34, 34, 34); 
+}

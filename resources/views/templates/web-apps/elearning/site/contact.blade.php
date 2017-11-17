@@ -1,12 +1,12 @@
 @extends('layouts.vuetify')
 
 @section('title')
-	Contact - {{ $site->address }}
+	Contact - {{ $site->name }}
 @stop
 
 @section('content')
 	<v-layout row wrap justify-start>
-		
+		<site-contact id="{{ $page->id }}"></site-contact>
 	</v-layout>
 @stop
 

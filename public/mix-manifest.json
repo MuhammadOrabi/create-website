@@ -5,5 +5,7 @@
     "/js/home-page/app.js": "/js/home-page/app.js",
     "/css/home-page/app.css": "/css/home-page/app.css",
     "/css/vuetify/app.css": "/css/vuetify/app.css",
-    "/css/templates/websites/bizlight/app.css": "/css/templates/websites/bizlight/app.css"
+    "/css/templates/websites/bizlight/app.css": "/css/templates/websites/bizlight/app.css",
+    "/css/templates/portfolios/theme1/app.css": "/css/templates/portfolios/theme1/app.css",
+    "/js/templates/portfolios/theme1/app.js": "/js/templates/portfolios/theme1/app.js"
 }

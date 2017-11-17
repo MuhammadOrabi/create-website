@@ -56,7 +56,6 @@
 	  			axios.get('/api/sections/' + this.id + '/edit', { headers: { 'Authorization': 'Bearer ' + this.token } })
 				.then(res => {
 					let par = res.data[0];
-					console.log(par);
 					this.p = par.content || 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum obcaecati fugit tenetur officiis, expedita modi fugiat quo animi, minima eveniet sed commodi architecto maxime nobis velit ipsam libero, voluptate tempora!';
 					this.pid = par.id;
 				}).catch(err => console.log(err));

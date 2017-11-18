@@ -34,7 +34,7 @@ class PageController extends Controller
 	}
 
 	public function show() {
-	    $page = Page::where('id', request()->id)->with('sections.extras')->first();
+	    $page = Page::where('id', request()->id)->with('sections.extras', 'sections.contents')->first();
 	    return response()->json(compact('page'), 200);
 	}
 }

@@ -1,7 +1,7 @@
 @extends('layouts.vuetify')
 
 @section('title')
-	Courese - {{ $site->name }}
+	Course - {{ $site->name }}
 @stop
 
 

@@ -1,11 +1,22 @@
 <template>
-  	<v-layout row justify-center>
+  	<v-layout justify-center>
   		<v-snackbar :timeout="6000" top :color="context" v-model="snackbar" >
 			{{ msg }}
 			<v-btn dark flat @click="snackbar = false">Close</v-btn>
 		</v-snackbar>
+		<v-btn dark small color="primary" :href="`/s/${address}/course/${sectionid}`" v-if="r" target="_blank">
+    		<v-icon>visibility</v-icon>
+  		</v-btn>
+  		<v-btn dark small color="green" @click.stop="getData" v-if="u">
+    		<v-icon>edit</v-icon>
+  		</v-btn>
+  		<v-btn dark small color="indigo" @click.stop="showCreate" v-if="c">
+    		<v-icon>add</v-icon>
+  		</v-btn>
+  		<v-btn dark small color="red" v-if="d" @click="deleteCourse">
+    		<v-icon>delete</v-icon>
+  		</v-btn>
     	<v-dialog v-model="dialog" persistent max-width="70%">
-      		<v-btn color="primary" dark slot="activator">{{ operation }} Course</v-btn>
       		<v-card>
 		        <v-card-title>
 		          	<span class="headline" style="text-transform: capitalize">{{ operation }} Course</span>
@@ -46,8 +57,8 @@
 import _ from 'underscore';
 export default {
 
-  	name: 'CreateUpdateCourse',
-  	props: ['token', 'address', 'id', 'operation', 'sectionid'],
+  	name: 'CRUD-Courses',
+  	props: {token: String, address: String, id: String, sectionid: String, c: Boolean, u: Boolean, d: Boolean, r: Boolean},
   	data () {
     	return {
     		title: '',
@@ -57,14 +68,10 @@ export default {
     		snackbar: false,
     		context: '',
     		msg: '',
-    		dialog: false
-
+    		dialog: false,
+    		operation: '',
+    		fab: false
     	}
-  	},
-  	mounted() {
-  		if (this.operation == 'update') {
-  			this.getData();
-  		}
   	},
   	computed: {
   		invalid() {
@@ -83,8 +90,17 @@ export default {
 				this.tags = _.pluck(_.where(section.extras, {type: 'tag'}), 'content');
 				this.paragraph = _.findWhere(section.extras, {type: 'paragraph'}).content;
 				this.title = section.title;
+				this.dialog = true; 
+				this.operation = 'update';
 			})
 			.catch(err => console.log(err));
+  		},
+  		showCreate() {
+  			this.dialog = true; 
+  			this.operation = 'create';
+  			this.tags = [''];
+			this.paragraph = '';
+			this.title = '';
   		},
   		create() {
   			const vm = this;
@@ -111,6 +127,9 @@ export default {
 				location.reload();
 			})
 			.catch(err => console.log(err));
+  		},
+  		deleteCourse() {
+  			
   		}
   	}
 }

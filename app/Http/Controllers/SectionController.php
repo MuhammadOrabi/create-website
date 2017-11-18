@@ -12,10 +12,7 @@ class SectionController extends Controller
 		$page = Page::where('id', request()->id)->with(['sections'=> function ($query) {
 		    $query->orderBy('created_at', 'desc');
 		},'sections.contents', 'site.user'])->first();
-		
-		if ($page->site->user->id != auth()->id()) {
-		 	return response()->json('err', 401);
-		}
+				
 		return response()->json(compact('page'));
 	}
 
@@ -41,6 +38,9 @@ class SectionController extends Controller
 	    		foreach (request('tags') as $tag) {
 		    		$section->extras()->create(['type' => 'tag', 'content' => $tag]);
 	    		}
+	    		$forum = Page::where('slug', 'forum')->first();
+	    		$courseForum = $forum->sections()->create(['title' => 'Course Forum']);
+	    		$section->extras()->create(['type' => 'forum', 'content' => $courseForum->id]);
 	    		return response()->json(['msg' => 'success', 'section' => compact('section')]);
 	    	}
     	}

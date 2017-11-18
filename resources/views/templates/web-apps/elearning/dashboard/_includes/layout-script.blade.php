@@ -61,7 +61,7 @@
 		    toolBarMenu: [{icon: 'dashboard', link: '/home', text: 'Home'}],
 		    authMenu: true,
 		    authUserName: '{{ auth()->user()->name }}',
-		    authMenuList: [{icon: 'exit_to_app', text: 'Logout', click: 'logout'}]
+		    authMenuList: [{icon: 'exit_to_app', text: 'Logout', click: 'logout'}],
 		},
 		beforeMount() {
 			this.leftSubNav = this.leftMainNav;

@@ -5,7 +5,7 @@
 @stop
 
 @section('content')
-	<site-lesson address="{{ $site->address }}" id="{{ $page->id }}"></site-lesson>
+	<site-lesson address="{{ $site->address }}" id="{{ $id }}"></site-lesson>
 @stop
 
 @section('scripts')

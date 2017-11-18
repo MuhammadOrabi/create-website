@@ -43,8 +43,6 @@
 	    	</v-flex>
 		@elseif($page->title == 'Courses')
 			<v-flex xs12>
-	    		<h1 class="headline">{{$page->title}}</h1>
-	    		<v-divider></v-divider>
 	    		<courses token="{{ auth()->user()->getToken('elearning-signUp') }}" address="{{ $site->address }}"
 	    			id="{{ $page->id }}"></courses>
 	    	</v-flex>

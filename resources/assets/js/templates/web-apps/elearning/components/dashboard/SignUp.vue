@@ -42,7 +42,6 @@ export default {
 	props: ['address', 'token', 'id'],
 	data () {
 		return {
-			tmp: '',
 			search: '',
 			selected: [],
 			pagination: {},

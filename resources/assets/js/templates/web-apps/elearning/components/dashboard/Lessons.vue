@@ -6,22 +6,25 @@
 		</v-snackbar>
 		<v-card>
 			<v-card-title class="headline">
-				Courses
+				Lessons
 				<v-spacer></v-spacer>
 				<v-text-field append-icon="search" label="Search" single-line hide-details v-model="search" ></v-text-field>
 			</v-card-title>
-			<v-data-table :headers="headers" :items="courses" :search="search" class="elevation-1">
+			<v-data-table :headers="headers" :items="lessons" :search="search" class="elevation-1">
 				<template slot="items" slot-scope="props">
 					<td class="text-xs-">{{ props.item.title }}</td>
-					<td class="text-xs-">{{ props.item.tags.toLocaleString() }}</td>
 					<td class="text-xs-">
-						{{ props.item.lessons }}
-						<v-btn dark small color="indigo" :href="`/dashboard/sections/${props.item.id}`">
-				    		<v-icon>settings</v-icon>
+						<v-btn dark small color="primary" :href="props.item.video" target="_blank">
+				    		<v-icon>ondemand_video</v-icon>
+				  		</v-btn>
+					</td>
+					<td class="text-xs-">
+						<v-btn dark small color="primary" :href="props.item.files" target="_blank">
+				    		<v-icon>insert_drive_file</v-icon>
 				  		</v-btn>
 					</td>
 					<td class="">
-						<crud-courses r u d :token="token" :address="address" :id="id" :sectionid="props.item.id + ''"></crud-courses>
+						<crud-lessons r u d :token="token" :address="address" :id="id" :contentid="props.item.id + ''"></crud-lessons>
 					</td>
 				</template>
 				<template slot="pageText" slot-scope="{ pageStart, pageStop }">
@@ -29,7 +32,7 @@
 				</template>
 			</v-data-table>
 			<div class="text-xs-center pt-2">
-				<crud-courses c :token="token" :address="address" :id="id" ></crud-courses>
+				<crud-lessons c :token="token" :address="address" :id="id" ></crud-lessons>
 			</div>
 		</v-card>
 	</v-container>
@@ -41,7 +44,7 @@ import moment from 'moment';
 
 export default {
 
-  	name: 'Courses',
+  	name: 'Lessons',
   	props: ['token', 'address', 'id'],
   	data () {
     	return {
@@ -50,10 +53,10 @@ export default {
 			pagination: {},
 			headers: [
 				{ text: 'Title', align: 'left', value: 'title' },
-				{ text: 'Tags', align: 'left', value: 'tags' },
-				{ text: 'Lessons', align: 'left', value: 'lessons' },
+				{ text: 'Video', align: 'left', value: 'video' },
+				{ text: 'Files', align: 'left', value: 'files' },
 			],
-			courses: [],
+			lessons: [],
 			context: '',
 			snackbar: false,
 			msg: ''
@@ -64,14 +67,15 @@ export default {
   	},
   	methods: {
   		getData() {
-  			axios.get('/api/pages/' + this.id)
+  			const vm = this;
+  			axios.get('/api/contents/' + this.id)
   			.then((res) => {
-  				res.data.page.sections.forEach((section) => {
-  					let tags = _.pluck(_.where(section.extras, {type: 'tag'}), 'content');
-  					let p = _.findWhere(section.extras, {type: 'paragraph'});
-  					let title = section.title;
-  					let lessons = section.contents ? section.contents.length : 0;
-  					this.courses.push({id: section.id, title: title, paragraph: p.content, tags: tags, lessons: lessons});
+  				let contents = res.data.content.section.contents; 
+  				contents.forEach((content) => {
+  					let title = content.title;
+  					let video = _.findWhere(content.extras, {type: 'video'});
+  					let files = _.findWhere(content.extras, {type: 'files'});
+  					this.lessons.push({id: content.id, title: title, paragraph: content.content, video: video.content, files: files.content});
   				});
   			})
   			.catch(err => console.log(err));

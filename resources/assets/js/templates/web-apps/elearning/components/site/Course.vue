@@ -18,14 +18,13 @@
 					<v-card class="transparent elevation-0" >
 						<v-list three-line>
 				          <template>
-				            <v-list-tile avatar :href="'/s/' + address + '/lesson/' + i" v-for="i in 4" :key="i">
+				            <v-list-tile avatar v-for="(lesson, i) in course.lessons" :href="`/s/${address}/lesson/${lesson.id}`" :key="i">
 				              	<v-list-tile-avatar>
-				                	<v-chip label>{{i}}</v-chip>
+				                	<v-chip label>{{i+1}}</v-chip>
 				              	</v-list-tile-avatar>
 				              	<v-list-tile-content>
-				                	<v-list-tile-sub-title>Lesson {{i}}</v-list-tile-sub-title>
-				                	<v-list-tile-title v-if="i == 1">Adding Our First Controller</v-list-tile-title>
-				                	<v-list-tile-title v-else>Installing Laravel and Composer</v-list-tile-title>
+				                	<v-list-tile-sub-title>Lesson {{i+1}}</v-list-tile-sub-title>
+				                	<v-list-tile-title>{{ lesson.title }}</v-list-tile-title>
 				              	</v-list-tile-content>
 				            </v-list-tile>
 				          </template>
@@ -59,7 +58,7 @@ export default {
 				let tags = _.where(section.extras, {type: 'tag'});
 				let p = _.findWhere(section.extras, {type: 'paragraph'});
 				let title = section.title;
-				this.course = {id: section.id, title: title, paragraph: p.content, tags: tags, lessons: section.content};
+				this.course = {id: section.id, title: title, paragraph: p.content, tags: tags, lessons: section.contents};
   			})
   			.catch(err => console.log(err));
   		}

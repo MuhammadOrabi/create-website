@@ -23,8 +23,7 @@ Route::middleware('auth:api')->group(function () {
 	});
 
 	Route::prefix('sections')->group(function () {
-	Route::post('{id}', 'SectionController@store');
-		Route::get('{id}', 'SectionController@index');
+		Route::post('{id}', 'SectionController@store');
 		Route::get('{id}/edit', 'SectionController@update');
 		Route::put('{id}/edit', 'SectionController@editExtras');
 		Route::delete('{id}', 'SectionController@destroyAPI');

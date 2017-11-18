@@ -6,7 +6,7 @@
 
 @section('content')
 	<v-layout row wrap justify-start>
-		<site-home-page id="{{ $page->id }}"></site-home-page>		
+		<site-about id="{{ $page->id }}"></site-about>		
 	</v-layout>
 @stop
 

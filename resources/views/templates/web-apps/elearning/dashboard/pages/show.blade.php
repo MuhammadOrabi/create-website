@@ -1,7 +1,7 @@
 @extends('layouts.vuetify')
 
 @section('title')
-	Courses - Create Website
+	{{$page->title}} - Create Website
 @stop
 
 @section('content')

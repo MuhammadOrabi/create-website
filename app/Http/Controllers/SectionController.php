@@ -8,13 +8,6 @@ use Illuminate\Http\Request;
 
 class SectionController extends Controller
 {
-	public function index() {
-		$page = Page::where('id', request()->id)->with(['sections'=> function ($query) {
-		    $query->orderBy('created_at', 'desc');
-		},'sections.contents', 'site.user'])->first();
-				
-		return response()->json(compact('page'));
-	}
 
 	public function store() {
     	$page = Page::findOrFail(request()->id);
@@ -31,6 +24,12 @@ class SectionController extends Controller
 	    		$section->contents()->create(['type' => 'heading', 'content' => request('heading')]);
 	    		$section->contents()->create(['type' => 'img', 'content' => request('img')]);
 	    		$section->contents()->create(['type' => 'paragraph', 'content' => request('paragraph')]);
+	    		$section->contents()->create(['type' => 'name', 'content' => request('name')]);
+	    		$section->contents()->create(['type' => 'title', 'content' => request('title')]);
+	    		$section->contents()->create(['type' => 'avatar', 'content' => request('avatar')]);
+	    		$section->contents()->create(['type' => 'facebook', 'content' => request('facebook')]);
+	    		$section->contents()->create(['type' => 'twitter', 'content' => request('twitter')]);
+	    		$section->contents()->create(['type' => 'github', 'content' => request('github')]);
 	    		return response()->json(['msg' => 'success', 'home' => compact('section')]);
 	    	} else if ($page->slug == 'courses') {
 	    		$section = $page->sections()->create(['title' => request('title')]);

@@ -169,6 +169,9 @@ export default {
   			} else if (this.type === 'form') {
   				this.parent._self.imgDialog = false;
 	  			this.parent._self.imgUrl = url;
+  			} else if (this.type === 'avatar') {
+  				this.parent._self.avatarDialog = false;
+	  			this.parent._self.avatar = url;
   			} else {
   				this.upload = false;
   				this.dialog = true;

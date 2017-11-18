@@ -14,7 +14,7 @@
 						</v-card-title>
 						<v-card-media :src="imgUrl" height="350px" >
 							<v-btn icon v-if="update" color="error" dark fab small right absolute class="mt-2" @click.stop="imgDialog = true">
-								<v-icon>edit</v-icon>
+								<v-icon>perm_media</v-icon>
 							</v-btn>
 						</v-card-media>
 						<v-dialog v-model="imgDialog" max-width="75%">
@@ -25,10 +25,10 @@
 							</v-flex>
 							<v-card-text v-else class="white--text">{{ paragraph }}</v-card-text>
 						<v-card-actions>
-							<v-btn color="pink" fab dark absolute top right  v-if="update" @click="save">
+							<v-btn color="pink" fab dark absolute top left  v-if="update" @click="save">
 								<v-icon>save</v-icon>
 							</v-btn>
-							<v-btn color="pink" fab dark absolute top right  v-else @click="update = !update">
+							<v-btn color="pink" fab dark absolute top left  v-else @click="update = !update">
 								<v-icon>edit</v-icon>
 							</v-btn>
 						</v-card-actions>
@@ -63,7 +63,6 @@ export default {
 		}
 	},
 	mounted() {
-		console.log(this.$store);
 		this.getData();
 	},
 	computed: {
@@ -77,7 +76,7 @@ export default {
 	methods: {
 		getData() {
 			const vm = this;
-			axios.get('/api/sections/' + this.id, { headers: { 'Authorization': 'Bearer ' + vm.token } })
+			axios.get('/api/pages/' + this.id, { headers: { 'Authorization': 'Bearer ' + vm.token } })
 			.then((res)=>{
 				let section = res.data.page.sections[0];
 				if (section) {

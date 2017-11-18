@@ -58,7 +58,7 @@ class UserController extends Controller
 		]);
 
 		$user->activate()->create(['code' => str_random(40)]);
-		\Mail::to($user)->send(new ActivateEmail($user));
+		// \Mail::to($user)->send(new ActivateEmail($user));
 
 		return response()->json(['token' => $user->getToken('Sign In'), 'user' => $user]); 
 	}

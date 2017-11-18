@@ -23,14 +23,14 @@
 		},
 		created() {
 			if ({{ Auth::guest() - 1 }}) {
-				if ({{ Auth::id() == $site->user->id }}) {
+				@if(Auth::id() == $site->user->id)
 					let session = {
 						address: '{{ $site->address }}', 
-						token: '{{  Auth::guest() - 1 ? auth()->user()->getToken('admin'): null }}',
+						token: '{{  Auth::guest() - 1 ? auth()->user()->getToken('admin'): null }}', 
 						id: 0
 					};
 					this.$store.commit('addSession', session);
-				}
+				@endif
 			}
 		},
 		beforeMount() {

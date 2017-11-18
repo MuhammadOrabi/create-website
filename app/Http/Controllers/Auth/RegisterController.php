@@ -77,6 +77,6 @@ class RegisterController extends Controller
 	}
 	protected function registered(Request $request, $user) {
         $user->activate()->create(['code' => str_random(40)]);
-        \Mail::to($user)->send(new ActivateEmail($user));
+        // \Mail::to($user)->send(new ActivateEmail($user));
     }
 }

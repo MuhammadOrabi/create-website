@@ -117,13 +117,13 @@ export default {
   			fileReader.readAsDataURL(file);
   			this.img = file;
   			this.upload = true;
-  			this.dialog = true;
+			this.dialog = true;
   		},
   		uploadImage() {
-  			this.loading = true;
+			  this.loading = true;
   			let date = new Date();
-	    	let fileName = process.env.NODE_ENV + '/' +this.address + '/' + date.toDateString() +  this.img.name;
-	    	let upload = firebase.storage().ref(fileName).put(this.img);
+	    	let fileName = process.env.NODE_ENV + '/' +this.address + '/' + date.toDateString() + '/' + this.img.name;
+	    	let upload = window.firebase.storage().ref(fileName).put(this.img);
 	    	upload.on('state_changed', (snapshot) => {
 				this.progress = Math.trunc((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
 			},
@@ -132,7 +132,7 @@ export default {
 	    },
 	    saveImg(img) {
 	    	const vm = this;
-	  		axios.post('/api/imgs', {img: img, address: vm.address}, { headers: { 'Authorization': 'Bearer ' + vm.token } })
+	  		window.axios.post('/api/imgs', {img: img, address: vm.address}, { headers: { 'Authorization': 'Bearer ' + vm.token } })
 	      	.then(res => {
 	      		if (res.data.msg === 'success') {
 	      			this.dialog = false;
@@ -146,7 +146,7 @@ export default {
 	      	.catch(err => console.log(err));
 	    },
   		getImgs() {
-  			axios.get('/api/imgs/' + this.address, { headers: { 'Authorization': 'Bearer ' + this.token }})
+  			window.axios.get('/api/imgs/' + this.address, { headers: { 'Authorization': 'Bearer ' + this.token }})
   			.then((res)=>{
   				this.images = res.data;
   			})
@@ -154,7 +154,7 @@ export default {
   		},
   		googleSearch() {
   			if (this.search.trim() === '') return;
-  			axios.get('http://127.0.0.1:5000/'+ this.search)
+  			window.axios.get('http://127.0.0.1:5000/'+ this.search)
   			.then(res => {
   				let data = _.pluck(res.data, 'pagemap');
   				this.searchImages = _.compact(_.pluck(data, 'cse_image'));

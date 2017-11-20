@@ -1,6 +1,6 @@
 <template>
 	<v-container>
-		<v-alert error dismissible v-model="alert">Try again!</v-alert>
+		<v-alert error dismissible v-if="alert">Try again!</v-alert>
 	  	<v-card class="grey lighten-4 elevation-4">
 			<v-card-title class="headline">Sign Up</v-card-title>
 			<v-card-text>

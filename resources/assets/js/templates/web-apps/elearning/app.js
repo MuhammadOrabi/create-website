@@ -1,7 +1,7 @@
 require('../../../bootstrap');
 require('../../../firebase');
 
-window.Vue = require('vue');
+const Vue = require('vue');
 import Vuetify from 'vuetify'
 import store from './store'
 import VeeValidate from 'vee-validate';
@@ -14,11 +14,13 @@ Vue.component('about', require('./components/dashboard/About.vue'));
 Vue.component('news', require('./components/dashboard/News.vue'));
 Vue.component('contact', require('./components/dashboard/Contact.vue'));
 Vue.component('media', require('./components/dashboard/Media.vue'));
+Vue.component('settings', require('./components/dashboard/Settings.vue'));
 Vue.component('sign-up', require('./components/dashboard/SignUp.vue'));
 Vue.component('courses', require('./components/dashboard/Courses.vue'));
 Vue.component('crud-courses', require('./components/dashboard/CRUD-Courses.vue'));
 Vue.component('lessons', require('./components/dashboard/Lessons.vue'));
 Vue.component('crud-lessons', require('./components/dashboard/CRUD-Lessons.vue'));
+
 
 Vue.component('site-signin', require('./components/site/Signin.vue'));
 Vue.component('site-signup', require('./components/site/Signup.vue'));
@@ -31,3 +33,5 @@ Vue.component('site-course', require('./components/site/Course.vue'));
 Vue.component('site-lesson', require('./components/site/Lesson.vue'));
 
 Vue.store = store;
+
+window.Vue = Vue;

@@ -7,10 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Constant extends Model
 {
     protected $guarded = [];
-    public function site() {
-    	return $this->belongsTo('App\Site');
+
+    public function site()
+    {
+        return $this->belongsTo('App\Site');
     }
-    public function contents() {
-    	return $this->hasMany('App\Content');
+
+    public function contents()
+    {
+        return $this->hasMany('App\Content');
     }
 }

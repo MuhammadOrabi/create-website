@@ -61,7 +61,8 @@
 				];
 				if (this.auth) {
 					this.authMenuList.push({ icon: 'person', text: 'Profile', link: '/s/{{ $site->address }}/profile' });
-					this.authMenuList.push({ icon: 'list', text: 'My Courses', link: '/s/{{ $site->address }}/courses/' + this.auth.id });
+					this.authMenuList.push({ icon: 'local_activity', text: 'Activites', link: '/s/{{ $site->address }}/activites' });
+					this.authMenuList.push({ icon: 'settings', text: 'Settings', link: '/s/{{ $site->address }}/settings' });
 					this.authMenuList.push({ divider: true });
 					this.authMenuList.push({icon: 'exit_to_app', text: 'Logout', click: 'logout'});
 				} else {
@@ -89,7 +90,8 @@
 			},
 			redirectIfNotAuthenticated() {
 				let slug = '{{ $page->slug }}';
-				if (slug === 'profile' || slug === 'lesson') {
+				let slugs = ['profile', 'lesson', 'settings', 'activites'];
+				if (slugs.includes(slug)) {
 					window.location = '/s/{{ $site->address }}/signin';
 				}
 			}

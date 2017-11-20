@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,60 +12,56 @@ use Illuminate\Http\Request;
 |
 */
 
-
-
 Route::middleware('auth:api')->group(function () {
+    Route::prefix('site')->group(function () {
+        Route::post('/', 'SiteController@store');
+        Route::get('exists/{address}', 'SiteController@exists');
+    });
 
-	Route::prefix('site')->group(function () {
-		Route::post('/', 'SiteController@store');
-		Route::get('exists/{address}', 'SiteController@exists');
-	});
+    Route::prefix('sections')->group(function () {
+        Route::post('{id}', 'SectionController@store');
+        Route::get('{id}/edit', 'SectionController@update');
+        Route::put('{id}/edit', 'SectionController@editExtras');
+        Route::delete('{id}', 'SectionController@destroyAPI');
+    });
 
-	Route::prefix('sections')->group(function () {
-		Route::post('{id}', 'SectionController@store');
-		Route::get('{id}/edit', 'SectionController@update');
-		Route::put('{id}/edit', 'SectionController@editExtras');
-		Route::delete('{id}', 'SectionController@destroyAPI');
-	});
-	
-	Route::prefix('imgs')->group(function () {
-		Route::post('/', 'ImgController@store');
-		Route::get('{address}', 'ImgController@index');
-	});
+    Route::prefix('imgs')->group(function () {
+        Route::post('/', 'ImgController@store');
+        Route::get('{address}', 'ImgController@index');
+    });
 
-	Route::prefix('contents')->group(function () {
-		Route::post('/{id}', 'ContentController@store');
-		Route::put('/{id}', 'ContentController@updateExtras');
-		Route::put('/', 'ContentController@update');
-	});
+    Route::prefix('contents')->group(function () {
+        Route::post('/{id}', 'ContentController@store');
+        Route::put('/{id}', 'ContentController@updateExtras');
+        Route::put('/', 'ContentController@update');
+    });
 
-	Route::prefix('user')->group(function () {
-		Route::get('/', 'UserController@show');
-		Route::get('/{address}', 'UserController@index');
-		Route::put('/{address}/edit/{option}', 'UserController@update');
+    Route::prefix('user')->group(function () {
+        Route::get('/', 'UserController@show');
+        Route::get('/{address}', 'UserController@index');
+        Route::put('/{address}/edit/{option}', 'UserController@updateByAdmin');
+        Route::put('/', 'UserController@update');
+    });
 
-	});
-
-	Route::prefix('extras')->group(function () {
-	});
-
+    Route::prefix('extras')->group(function () {
+    });
 });
 
 Route::prefix('user')->group(function () {
-	Route::post('/', 'UserController@store');
-	Route::post('login', 'UserController@login');
+    Route::post('/', 'UserController@store');
+    Route::post('login', 'UserController@login');
 });
 
 Route::prefix('sections')->group(function () {
-	Route::get('/{id}', 'SectionController@showAPI');
+    Route::get('/{id}', 'SectionController@showAPI');
 });
 
 Route::prefix('contents')->group(function () {
-	Route::get('/{id}', 'ContentController@show');
+    Route::get('/{id}', 'ContentController@show');
 });
 
 Route::prefix('pages')->group(function () {
-	Route::get('/{id}', 'PageController@show');
+    Route::get('/{id}', 'PageController@show');
 });
 
 Route::post('/contact/{id}', 'SectionController@message');

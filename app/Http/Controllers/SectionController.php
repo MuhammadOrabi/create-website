@@ -56,7 +56,7 @@ class SectionController extends Controller
     }
 
     public function showAPI() {
-        $section = Section::where('id', request()->id)->with('contents','extras', 'page')->first();
+        $section = Section::where('id', request()->id)->with('contents.extras','extras', 'page')->first();
         if (!$section) {
         	return response()->json(500);
         }

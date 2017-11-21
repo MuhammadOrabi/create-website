@@ -37,7 +37,7 @@
 		        },
 		        { icon: 'perm_media', text: 'Media', link: '/dashboard/media/{{ $site->address }}', active: false },
 		        { divider: true },
-		        { icon: 'settings', text: 'Settings', active: false },
+		        { icon: 'settings', text: 'Settings', link: '/dashboard/settings/{{ $site->address }}', active: false },
 		        { icon: 'help', text: 'Help', active: false },
 		        { icon: 'chat_bubble', text: 'Send feedback', active: false },
 		        { divider: true },

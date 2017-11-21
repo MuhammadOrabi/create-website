@@ -15,15 +15,10 @@
 					<td class="text-xs-">{{ props.item.title }}</td>
 					<td class="text-xs-">
 						<v-btn dark small color="primary" :href="props.item.video" target="_blank">
-				    		<v-icon>ondemand_video</v-icon>
-				  		</v-btn>
+							<v-icon>ondemand_video</v-icon>
+						</v-btn>
 					</td>
-					<td class="text-xs-">
-						<v-btn dark small color="primary" :href="props.item.files" target="_blank">
-				    		<v-icon>insert_drive_file</v-icon>
-				  		</v-btn>
-					</td>
-					<td class="">
+					<td>
 						<crud-lessons r u d :token="token" :address="address" :id="id" :contentid="props.item.id + ''"></crud-lessons>
 					</td>
 				</template>
@@ -40,47 +35,46 @@
 
 <script>
 import _ from 'underscore';
-import moment from 'moment';
 
 export default {
 
-  	name: 'Lessons',
-  	props: ['token', 'address', 'id'],
-  	data () {
-    	return {
-    		search: '',
+	name: 'Lessons',
+	props: ['token', 'address', 'id'],
+	data () {
+		return {
+			search: '',
 			selected: [],
 			pagination: {},
 			headers: [
 				{ text: 'Title', align: 'left', value: 'title' },
 				{ text: 'Video', align: 'left', value: 'video' },
-				{ text: 'Files', align: 'left', value: 'files' },
 			],
 			lessons: [],
 			context: '',
 			snackbar: false,
 			msg: ''
 		}
-  	},
-  	mounted() {
-  		this.getData();
-  	},
-  	methods: {
-  		getData() {
-  			const vm = this;
-  			axios.get('/api/contents/' + this.id)
-  			.then((res) => {
-  				let contents = res.data.content.section.contents; 
-  				contents.forEach((content) => {
-  					let title = content.title;
-  					let video = _.findWhere(content.extras, {type: 'video'});
-  					let files = _.findWhere(content.extras, {type: 'files'});
-  					this.lessons.push({id: content.id, title: title, paragraph: content.content, video: video.content, files: files.content});
-  				});
-  			})
-  			.catch(err => console.log(err));
-  		}	
-  	}
+	},
+	mounted() {
+		this.getData();
+	},
+	methods: {
+		getData() {
+			window.axios.get('/api/sections/' + this.id)
+			.then((res) => {
+				let contents = res.data.section.contents; 
+					contents.forEach((content) => {
+						if (content.title) {
+							let title = content.title;
+							let video = _.findWhere(content.extras, {type: 'video'});
+							this.lessons.push({id: content.id, title: title, paragraph: content.content, video: video.content});
+						}
+					});
+			})
+			.catch(err => console.log(err));
+		},
+			
+	}
 }
 </script>
 

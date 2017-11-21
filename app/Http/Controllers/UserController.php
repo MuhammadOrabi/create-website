@@ -46,7 +46,10 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255',
+            'email' => [
+                'required', 'string', 'email', 'max:255',
+                'email' => Rule::unique('users')->where('address', $request->address)
+            ],
             'address' => 'required|string|exists:sites',
             'password' => 'required|string|min:6|confirmed',
         ]);

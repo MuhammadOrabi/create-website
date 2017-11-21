@@ -5,7 +5,7 @@
 @stop
 
 @section('content')
-    <settings address="{{ $site->address }}"></settings>
+    <site-settings address="{{ $site->address }}"></site-settings>
 @stop
 
 @section('scripts')

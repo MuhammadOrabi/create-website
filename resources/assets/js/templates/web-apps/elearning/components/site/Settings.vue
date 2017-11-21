@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <v-snackbar :timeout="6000" top :color="context" v-model="snackbar" >
-			{{ msg }}
+			<span style="font-weight:bold" class="cap">{{context}}</span>
 			<v-btn dark flat @click="snackbar = false">Close</v-btn>
 		</v-snackbar>
         <form>
@@ -34,7 +34,6 @@
             return {
                 snackbar: false,
                 context: '',
-                msg: '',
                 avatar: 'http://via.placeholder.com/250x350',
                 name: 'Admin',
                 password: '',
@@ -77,7 +76,12 @@
                 }
                 window.axios.put('/api/user', data, { headers: { 'Authorization': 'Bearer ' + vm.token } })
                 .then(res => {
-                    console.log(res.data);
+                    if (res.data) {
+                        this.snackbar = true;
+                        this.context = res.data;
+                        this.password = '';
+                        this.passowrdConfirm = '';
+                    }
                 })
                 .catch(err => console.log(err));
             }

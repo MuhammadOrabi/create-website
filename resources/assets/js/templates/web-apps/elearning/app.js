@@ -14,14 +14,15 @@ Vue.component('about', require('./components/dashboard/About.vue'));
 Vue.component('news', require('./components/dashboard/News.vue'));
 Vue.component('contact', require('./components/dashboard/Contact.vue'));
 Vue.component('media', require('./components/dashboard/Media.vue'));
-Vue.component('settings', require('./components/dashboard/Settings.vue'));
 Vue.component('sign-up', require('./components/dashboard/SignUp.vue'));
 Vue.component('courses', require('./components/dashboard/Courses.vue'));
 Vue.component('crud-courses', require('./components/dashboard/CRUD-Courses.vue'));
 Vue.component('lessons', require('./components/dashboard/Lessons.vue'));
 Vue.component('crud-lessons', require('./components/dashboard/CRUD-Lessons.vue'));
+Vue.component('admin-account', require('./components/dashboard/AdminAccount.vue'));
 
 
+Vue.component('site-settings', require('./components/site/Settings.vue'));
 Vue.component('site-signin', require('./components/site/Signin.vue'));
 Vue.component('site-signup', require('./components/site/Signup.vue'));
 Vue.component('site-home-page', require('./components/site/homePage.vue'));

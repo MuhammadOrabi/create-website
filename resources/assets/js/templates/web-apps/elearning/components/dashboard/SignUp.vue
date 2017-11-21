@@ -30,6 +30,8 @@
 				<v-btn color="primary" flat :disabled="selected.length === 0" @click="userAction(2)" >Activate</v-btn>
 				<v-btn color="warning" flat :disabled="selected.length === 0" @click="userAction(3)" >Deactivate</v-btn>
 				<v-btn color="error" flat :disabled="selected.length === 0" @click="userAction(4)" >Delete</v-btn>
+				<v-spacer></v-spacer>
+				<v-btn @click="addAdmin">Generate Admin Account</v-btn>
 			</div>
 		</v-card>
 	</v-container>
@@ -63,7 +65,7 @@ export default {
 	methods: {
 		getData() {
 			const vm = this;
-			axios.get('/api/user/' + vm.address, { headers: { 'Authorization': 'Bearer ' + vm.token } })
+			window.axios.get('/api/user/' + vm.address, { headers: { 'Authorization': 'Bearer ' + vm.token } })
 			.then(res => {
 				this.users = res.data.users;
 			})
@@ -72,7 +74,7 @@ export default {
 		userAction(i) {
 			const vm = this;
 			let data = this.selected;
-			axios.put('/api/user/' + vm.address + '/edit/' + i, data, { headers: { 'Authorization': 'Bearer ' + vm.token } })
+			window.axios.put('/api/user/' + vm.address + '/edit/' + i, data, { headers: { 'Authorization': 'Bearer ' + vm.token } })
 			.then(res => {
 				this.context = res.data;
 				this.msg = res.data === 'success' ? 'Success' : 'Failed, Try again later!';
@@ -80,6 +82,9 @@ export default {
 				this.getData();
 			})
 			.catch(err => console.log(err));
+		},
+		addAdmin() {
+			
 		}
 	}
 }

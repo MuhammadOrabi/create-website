@@ -4,14 +4,13 @@
 			<v-container>
 				<p class="headline text-md-center">{{ lesson.title }}</p>
 				<p class="subheading text-md-center">{{ course.title }}</p><br>
-				<v-layout row xs12>
+				<v-layout row wrap>
 					<iframe width="1500" height="480" :src="video.content" frameborder="0" allowfullscreen ></iframe>
 				</v-layout>
 				<v-divider></v-divider>
 				<v-layout class="pt-5" row>
 					<v-flex justify-left xs5 class="pt-4">
 						<p class="body-1">{{ lesson.content }}</p>
-						<v-btn :href="files.content">Download Files</v-btn>
 						<v-btn flat class="cap" :href="`/s/${address}/forum`" target="_blank">
 							Stuck? Check out the course forum and post your question
 							<v-icon>open_in_new</v-icon>
@@ -42,6 +41,7 @@
 
 <script>
 import _ from 'underscore';
+
 export default {
 
   	name: 'Lesson',
@@ -51,7 +51,6 @@ export default {
     		course: [],
     		lesson: [],
     		video: '',
-    		files: ''
     	}
   	},
   	mounted() {
@@ -64,7 +63,6 @@ export default {
   				this.course = res.data.content.section;
   				this.lesson = res.data.content;
 				this.video = _.findWhere(this.lesson.extras, {type: 'video'});  				
-				this.files = _.findWhere(this.lesson.extras, {type: 'files'});  				
   			})
   			.catch(err => console.log(err))
   		}

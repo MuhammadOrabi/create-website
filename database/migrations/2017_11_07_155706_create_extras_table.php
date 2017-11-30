@@ -18,10 +18,8 @@ class CreateExtrasTable extends Migration
             $table->string('type');
             $table->longText('content');
             $table->string('title')->nullable();
-            $table->integer('user_id')->nullable()->unsigned();
-            $table->integer('site_id')->nullable()->unsigned();
-            $table->integer('section_id')->nullable()->unsigned();
-            $table->integer('content_id')->nullable()->unsigned();
+            $table->integer('extraable_id');
+            $table->string('extraable_type');
             $table->timestamps();
         });
     }

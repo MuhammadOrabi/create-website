@@ -1,0 +1,16 @@
+
+Todo:
+	Logs:
+		✔ Sign Up @done(17-11-30 11:17)
+		✔ Activate Email @done(17-11-30 11:17)
+		✔ Re-Send Activate Email @done(17-11-30 11:17)
+		✔ User Login @done(17-11-30 11:17)
+		✔ Admin Delete, Send Activate Email, De/Activate Email 's User @done(17-11-30 11:17)
+		✔ User Update His Profile @done(17-11-30 11:17)
+		☐ User/Guest Access Courses Page
+		☐ User/Guest Access Course Page
+		☐ User Access Lesson Page
+	Relations Fix:
+		☐ Update Controllers for Polymorphic Relations
+  
+

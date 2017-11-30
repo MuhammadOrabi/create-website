@@ -7,13 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 class Content extends Model
 {
     protected $guarded = [];
-    public function section() {
-    	return $this->belongsTo('App\Section');
+
+    public function contentable()
+    {
+        return $this->morphTo();
     }
-    public function extras() {
-        return $this->hasMany('App\Extra');
+
+    public function extras()
+    {
+        return $this->morphMany('App\Extra', 'extraable');
     }
-    public function constant() {
-    	return $this->belongsTo('App\Constant');
+
+    public function logs()
+    {
+        return $this->morphMany('App\Log', 'logable');
     }
 }

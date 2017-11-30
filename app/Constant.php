@@ -15,6 +15,6 @@ class Constant extends Model
 
     public function contents()
     {
-        return $this->hasMany('App\Content');
+        return $this->morphMany('App\Content', 'contentable');
     }
 }

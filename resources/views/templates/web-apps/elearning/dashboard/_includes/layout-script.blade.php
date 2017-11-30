@@ -20,7 +20,6 @@
 		    	{ icon: 'open_in_new', text: 'Open Site', link: '/s/{{ $site->address }}', target: '_blank' },
 		        { divider: true },
 		        { icon: 'assessment', text: 'Stats', link: '#', active: false },
-		        { icon: 'menu', text: 'Navigation', link: '#', active: false },
 		        {
 		          	icon: 'keyboard_arrow_up',
 		          	'icon-alt': 'keyboard_arrow_down',
@@ -30,12 +29,13 @@
 		          		@foreach($sideNavPages as $page)
 		            		{ 
 		            			icon: 'keyboard_arrow_right', 
-		            			text: '{{ $page->title }}', link: '/dashboard/pages/{{ $page->id }}/edit'
+		            			text: '{{ $page->title }}', link: '/dashboard/pages/{{ $page->id }}/edit',
+								active: true
 		            		},
 		            	@endforeach
 		          	]
 		        },
-		        { icon: 'perm_media', text: 'Media', link: '/dashboard/media/{{ $site->address }}', active: false },
+		        { icon: 'perm_media', text: 'Media', link: '/dashboard/media/{{ $site->address }}', active: true },
 		        { divider: true },
 		        { icon: 'settings', text: 'Settings', link: '/dashboard/settings/{{ $site->address }}', active: false },
 		        { icon: 'help', text: 'Help', active: false },

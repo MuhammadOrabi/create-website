@@ -19,10 +19,9 @@ Vue.component('courses', require('./components/dashboard/Courses.vue'));
 Vue.component('crud-courses', require('./components/dashboard/CRUD-Courses.vue'));
 Vue.component('lessons', require('./components/dashboard/Lessons.vue'));
 Vue.component('crud-lessons', require('./components/dashboard/CRUD-Lessons.vue'));
-Vue.component('admin-account', require('./components/dashboard/AdminAccount.vue'));
+Vue.component('crud-news', require('./components/dashboard/CRUD-News.vue'));
 
 
-Vue.component('site-settings', require('./components/site/Settings.vue'));
 Vue.component('site-signin', require('./components/site/Signin.vue'));
 Vue.component('site-signup', require('./components/site/Signup.vue'));
 Vue.component('site-home-page', require('./components/site/homePage.vue'));
@@ -32,6 +31,7 @@ Vue.component('site-news', require('./components/site/News.vue'));
 Vue.component('site-courses', require('./components/site/Courses.vue'));
 Vue.component('site-course', require('./components/site/Course.vue'));
 Vue.component('site-lesson', require('./components/site/Lesson.vue'));
+Vue.component('site-profile', require('./components/site/Profile.vue'));
 
 Vue.store = store;
 

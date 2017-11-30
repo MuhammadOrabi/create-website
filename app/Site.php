@@ -9,14 +9,14 @@ class Site extends Model
     protected $guarded = [];
 
     // Site Reltionships
-    public function theme()
-    {
-        return $this->belongsTo('App\Theme');
-    }
-
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+    public function theme()
+    {
+        return $this->belongsTo('App\Theme');
     }
 
     public function pages()
@@ -26,17 +26,22 @@ class Site extends Model
 
     public function imgs()
     {
-        return $this->hasMany('App\Img');
+        return $this->morphMany('App\Img', 'imgable');
     }
 
     public function extras()
     {
-        return $this->hasMany('App\Extra');
+        return $this->morphMany('App\Extra', 'extraable');
     }
 
     public function constants()
     {
         return $this->hasMany('App\Constant');
+    }
+
+    public function logs()
+    {
+        return $this->morphMany('App\Log', 'logable');
     }
 
     // Helper methods
@@ -108,8 +113,6 @@ class Site extends Model
     {
         $home = $this->addPage(['title' => 'Home Page', 'homePage' => true, 'slug' => '']);
         $profile = $this->addPage(['title' => 'Profile', 'homePage' => false, 'slug' => 'profile']);
-        $activites = $this->addPage(['title' => 'Activites', 'homePage' => false, 'slug' => 'activites']);
-        $settings = $this->addPage(['title' => 'Settings', 'homePage' => false, 'slug' => 'settings']);
         $signup = $this->addPage(['title' => 'Sign Up', 'homePage' => false, 'slug' => 'signup']);
         $signin = $this->addPage(['title' => 'Sign In', 'homePage' => false, 'slug' => 'signin']);
         $about = $this->addPage(['title' => 'About', 'homePage' => false, 'slug' => 'about']);

@@ -7,7 +7,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
 	plugins: [createPersist({
-			namespace: 'sessions-gp-orabi',
+			namespace: 'sessions-create-website',
 			initialState: {},
 			// ONE_WEEK 
 			expires: 2 * 60 * 60 * 1e3

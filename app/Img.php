@@ -8,23 +8,18 @@ class Img extends Model
 {
     protected $guarded = [];
 
-    public function site()
+    public function imgable()
     {
-        return $this->belongsTo('App\Site');
-    }
-
-    public function theme()
-    {
-        return $this->belongsTo('App\Theme');
-    }
-
-    public function user()
-    {
-        return $this->belongsTo('App\User');
+        return $this->morphTo();
     }
 
     public function tags()
     {
-        return $this->belongsToMany('App\Tag', 'tag_img');
+        return $this->morphToMany('App\Tag', 'taggable');
+    }
+
+    public function logs()
+    {
+        return $this->morphMany('App\Log', 'logable');
     }
 }

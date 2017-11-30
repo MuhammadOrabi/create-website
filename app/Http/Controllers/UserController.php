@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Extra;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Site;
 
 class UserController extends Controller
 {
@@ -64,7 +65,7 @@ class UserController extends Controller
             'address' => $request->address,
             'password' => bcrypt($request->password),
         ]);
-
+        $user->logs()->create(['type' => 'user_auth', 'action' => 'User Registeration']);
         $user->activate()->create(['code' => str_random(40)]);
         // \Mail::to($user)->send(new ActivateEmail($user));
 
@@ -91,9 +92,10 @@ class UserController extends Controller
             if (!$user->active) {
                 return response()->json(['status' => true, 'errors' => null, 'msg' => 'Please contact us for more information!']);
             }
+            $user->logs()->create(['type' => 'user_auth', 'action' => 'User Login']);
             return response()->json(['token' => $user->getToken('Sign In'), 'user' => $user]);
         }
-        return response()->json(['status' => true], 500);
+        return response()->json(['status' => true, 'msg' => 'Please Check your Credentials!']);
     }
 
     /**
@@ -139,17 +141,21 @@ class UserController extends Controller
                         $activate = $user->activate ? $user->activate : $user->activate()->create(['code' => str_random(40)]);
                         $activate->save();
                         \Mail::to($user)->send(new activateMail($user));
+                        $user->logs()->create(['type' => 'user_auth', 'action' => 'Admin Sends an Activate Email For User']);
                         break;
                     case '2':
                         $user->active = 1;
                         $user->save();
+                        $user->logs()->create(['type' => 'user_auth', 'action' => 'Admin Activate User\'s Email']);
                         break;
                     case '3':
                         $user->active = 0;
                         $user->save();
+                        $user->logs()->create(['type' => 'user_auth', 'action' => 'Admin De-Activate User\'s Email']);
                         break;
                     case '4':
                         $user->delete();
+                        $user->logs()->create(['type' => 'user_auth', 'action' => 'Admin Delete User\'s Account']);
                         break;
                 }
             } else {
@@ -162,21 +168,56 @@ class UserController extends Controller
     public function update()
     {
         $user = request()->user();
-        $user->name = request('name');
-        if (request('password')) {
-            $user->password = Hash::make(request('password'));
-            $user->setRememberToken(Str::random(60));
+        $site = Site::where('address', $user->address)->first();
+        if ($site->theme->location === 'templates.web-apps.elearning') {
+            $user->name = request('name');
+            $user->title = request('title');
+            if (request('password')) {
+                $user->password = Hash::make(request('password'));
+                $user->setRememberToken(Str::random(60));
+            }
+            $user->save();
+            $avatar = $user->extras()->where('type', 'avatar')->first();
+            if (!$avatar) {
+                $avatar = new Extra;
+                $avatar->type = 'avatar';
+                $avatar->user_id = $user->id;
+            }
+            $avatar->content = request('avatar');
+            $avatar->save();
+
+            $twitter = $user->extras()->where('type', 'twitter')->first();
+            if (!$twitter) {
+                $twitter = new Extra;
+                $twitter->type = 'twitter';
+                $twitter->user_id = $user->id;
+            }
+            $twitter->content = request('twitter');
+            $twitter->save();
+
+            $facebook = $user->extras()->where('type', 'facebook')->first();
+            if (!$facebook) {
+                $facebook = new Extra;
+                $facebook->type = 'facebook';
+                $facebook->user_id = $user->id;
+            }
+            $facebook->content = request('facebook');
+            $facebook->save();
+
+            $github = $user->extras()->where('type', 'github')->first();
+            if (!$github) {
+                $github = new Extra;
+                $github->type = 'github';
+                $github->user_id = $user->id;
+            }
+            $github->content = request('github');
+            $github->save();
+
+            $user->logs()->create(['type' => 'user_profile', 'action' => 'User Update his Profile']);
+            return response()->json('success', 200);
         }
-        $user->save();
-        $avatar = $user->extras()->where('type', 'avatar')->first();
-        if (!$avatar) {
-            $avatar = new Extra;
-            $avatar->type = 'avatar';
-            $avatar->user_id = $user->id;
-        }
-        $avatar->content = request('avatar');
-        $avatar->save();
-        return response()->json('success', 200);
+
+        return response(500);
     }
 
     /**

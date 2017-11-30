@@ -1,22 +1,22 @@
 <template>
 	<div>
 		<div :class="'alert alert-' + msg + ' alert-dismissible fade show float'" role="alert" v-if="msg">
-		  	<strong class="m-5" style="text-transform: capitalize">{{ msg }}</strong> 
-		  	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-		    	<span aria-hidden="true">&times;</span>
-		 	</button>
+			<strong class="m-5" style="text-transform: capitalize">{{ msg }}</strong> 
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
 		</div>
 		<button class="btn btn-success" id="button" @click="save" >Save</button>
 		<div class="container-fluid">
 			<div class="row">
 				<div class="push-1 col-md-8">
 					<div class="card">
-			  			<div class="card-header">Who we Are?</div>
-			  			<div class="card-block">
-				  			<textarea class="form-control border-0" v-model="p" autofocus rows="8" 
+						<div class="card-header">Who we Are?</div>
+						<div class="card-block">
+							<textarea class="form-control border-0" v-model="p" autofocus rows="8" 
 									v-if="input || p == ''" @mouseleave="input = false"></textarea>
-						    <p class="card-text p-4" v-else @mouseover="input = true">{{ p }}</p>
-				  		</div>
+							<p class="card-text p-4" v-else @mouseover="input = true">{{ p }}</p>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -27,40 +27,40 @@
 <script>
 	export default {
 
-	  	name: 'About',
-	  	props: ['token', 'id'],
-	  	data () {
-		    return {
-		    	p: '',
-		    	input: false,
-		    	pid: 0,
-		    	msg: false,
-		    	succ: false
-		    };
-	  	},
-	  	mounted() {
-	  		this.getData();
-	  	},
-	  	methods: {
-	  		save() {
-	  			let token = 'Bearer ' +  this.token;
-	  			let data = [
-	  				{id: this.pid, content: this.p}
-	  			];
-	  			axios.put('/api/contents', data, { headers: { 'Authorization': token } })
+		name: 'About',
+		props: ['token', 'id'],
+		data () {
+			return {
+				p: '',
+				input: false,
+				pid: 0,
+				msg: false,
+				succ: false
+			};
+		},
+		mounted() {
+			this.getData();
+		},
+		methods: {
+			save() {
+				let token = 'Bearer ' +  this.token;
+				let data = [
+					{id: this.pid, content: this.p}
+				];
+				window.axios.put('/api/contents', data, { headers: { 'Authorization': token } })
 				.then(res => {
 					this.msg = res.data;
 				}).catch(err => console.log(err));
-	  		},
-	  		getData() {
-	  			axios.get('/api/sections/' + this.id + '/edit', { headers: { 'Authorization': 'Bearer ' + this.token } })
+			},
+			getData() {
+				window.axios.get('/api/sections/' + this.id + '/edit', { headers: { 'Authorization': 'Bearer ' + this.token } })
 				.then(res => {
 					let par = res.data[0];
 					this.p = par.content || 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum obcaecati fugit tenetur officiis, expedita modi fugiat quo animi, minima eveniet sed commodi architecto maxime nobis velit ipsam libero, voluptate tempora!';
 					this.pid = par.id;
 				}).catch(err => console.log(err));
-	  		}
-	  	}
+			}
+		}
 	};
 </script>
 

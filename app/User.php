@@ -40,13 +40,20 @@ class User extends Authenticatable
 
     public function extras()
     {
-        return $this->hasMany('App\Extra');
+        return $this->morphMany('App\Extra', 'extraable');
     }
 
     public function imgs()
     {
-        return $this->hasMany('App\Img');
+        return $this->morphMany('App\Img', 'imgable');
     }
+
+    public function logs()
+    {
+        return $this->hasMany('App\Log');
+    }
+
+    // Helper Functions
 
     public function addSite($address, $theme_id)
     {

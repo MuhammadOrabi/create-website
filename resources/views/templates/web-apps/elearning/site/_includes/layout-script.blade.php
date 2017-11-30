@@ -18,18 +18,25 @@
 		    rightSubNav: [],
 		    leftSubNavCheck: false,
 		    leftSubNav: [],
-		    authUserName: '',
 		    authMenuList: []
 		},
 		beforeMount() {
 			this.rightSubNav = this.toolBarMenu;
 			let auth = this.auth;
 			if (auth) {
-				axios.get('/api/user', { headers: { 'Authorization': 'Bearer ' + auth.token } })
-				.then(res => {
-					this.authUserName = res.data.user.name;
-				})
-				.catch(err => console.log(err));
+				this.authMenuList.push({ icon: 'person', text: 'Profile', link: '/s/{{ $site->address }}/profile' });
+				this.authMenuList.push({ divider: true });
+				this.authMenuList.push({icon: 'exit_to_app', text: 'Logout', click: 'logout'});
+
+				this.rightSubNav.push({
+					icon: 'keyboard_arrow_up',
+					'icon-alt': 'keyboard_arrow_down',
+					text: this.authUserName,
+					model: false,
+					children: [
+						{icon: 'exit_to_app', text: 'Logout', click: 'logout'}
+					]
+				});
 
 				this.redirectIfAuthenticated();
 			} else {
@@ -40,6 +47,9 @@
 			auth() {
   				return this.$store.getters.session('{{ $site->address }}');
   			},
+			authUserName() {
+				return this.auth.name;
+			},
   			toolBarMenu() {
 	  			let menu = [
 	  				{ icon: 'poll', text: 'News', link: '/s/{{ $site->address }}/news' },
@@ -47,13 +57,7 @@
 	  				{ icon: 'email', text: 'Contact', link: '/s/{{ $site->address }}/contact' },
 	  				{ icon: 'list', text: 'Courses', link: '/s/{{ $site->address }}/courses' }
 				];
-				if (this.auth) {
-					this.authMenuList.push({ icon: 'person', text: 'Profile', link: '/s/{{ $site->address }}/profile' });
-					this.authMenuList.push({ icon: 'local_activity', text: 'Activites', link: '/s/{{ $site->address }}/activites' });
-					this.authMenuList.push({ icon: 'settings', text: 'Settings', link: '/s/{{ $site->address }}/settings' });
-					this.authMenuList.push({ divider: true });
-					this.authMenuList.push({icon: 'exit_to_app', text: 'Logout', click: 'logout'});
-				} else {
+				if (!this.auth) {
 					menu.push({ icon: 'face', text: 'Sign up', link: '/s/{{ $site->address }}/signup'});
 					menu.push({ icon: 'lock_open', text: 'Sign in', link: '/s/{{ $site->address }}/signin' });
 				}
@@ -78,7 +82,7 @@
 			},
 			redirectIfNotAuthenticated() {
 				let slug = '{{ $page->slug }}';
-				let slugs = ['profile', 'lesson', 'settings', 'activites'];
+				let slugs = ['profile', 'lesson'];
 				if (slugs.includes(slug)) {
 					window.location = '/s/{{ $site->address }}/signin';
 				}

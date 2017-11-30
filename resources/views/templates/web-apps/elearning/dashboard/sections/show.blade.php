@@ -4,8 +4,6 @@
 	{{ $section->title }} - Create Website
 @stop
 
-
-
 @section('content')
 	<v-layout row wrap justify-start>
 		<v-flex xs12>

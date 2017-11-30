@@ -17,9 +17,8 @@ class CreateSitesTable extends Migration
             $table->increments('id');
             $table->string('name')->nullable();
             $table->string('address')->unique();
-            $table->integer('theme_id')->nullable();
-            $table->integer('user_id')->nullable();
-            $table->integer('constant_id')->nullable();
+            $table->integer('user_id');
+            $table->integer('theme_id');
             $table->timestamps();
         });
     }

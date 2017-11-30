@@ -4,17 +4,17 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Extra extends Model
+class Log extends Model
 {
     protected $guarded = [];
 
-    public function extraable()
+    public function logable()
     {
         return $this->morphTo();
     }
 
-    public function logs()
+    public function user()
     {
-        return $this->morphMany('App\Log', 'logable');
+        return $this->belongsTo('App\User');
     }
 }

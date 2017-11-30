@@ -22,8 +22,6 @@
 	    	</v-flex>
 		@elseif($page->title == 'News')
 			<v-flex xs12>
-	    		<h1 class="headline">{{$page->title}}</h1>
-	    		<v-divider></v-divider>
 	    		<news token="{{ auth()->user()->getToken('elearning-news') }}" address="{{ $site->address }}"
 	    			id="{{ $page->id }}" ></news>
 	    	</v-flex>

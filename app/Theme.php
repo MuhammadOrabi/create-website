@@ -6,14 +6,25 @@ use Illuminate\Database\Eloquent\Model;
 
 class Theme extends Model
 {
-   	protected $guarded = [];
-    public function sites() {
+    protected $guarded = [];
+
+    public function sites()
+    {
         return $this->hasMany('App\Site');
     }
-    public function imgs() {
-        return $this->hasMany('App\Img');
+
+    public function imgs()
+    {
+        return $this->morphMany('App\Img', 'imgable');
     }
-    public function tags() {
-        return $this->belongsToMany('App\Tag', 'tag_theme');
+
+    public function tags()
+    {
+        return $this->morphToMany('App\Tag', 'taggable');
+    }
+
+    public function logs()
+    {
+        return $this->morphMany('App\Log', 'logable');
     }
 }

@@ -125,28 +125,40 @@
 		  		<h5>PROFESSIONAL SKILLS</h5>
 		  		<br><br>	
 		  			<div class="col l6 s12">
-			  			<label class="l">Photoshop</label>
-			  			<div class="progress"  style="width: 70%"></div>
+						<label class="l">Photoshop</label>
+						<div class="progress">
+							<div class="determinate" style="width: 70%"></div>
+						</div>
 		  			</div>
 		  			<div class="col l6 s12">
 		  				<label  class="l">HTML5</label>
-		  				<div class="progress" style="width: 90%"></div>
+		  				<div class="progress">
+							<div class="determinate" style="width: 90%"></div>
+						</div>
 		  			</div>
 		  			<div class="col l6 s12">
 		  				<label  class="l">Jquery</label>
-		  				<div class="progress" style="width: 40%"></div>
+		  				<div class="progress">
+							<div class="determinate" style="width: 40%"></div>
+						</div>
 		  			</div>
 		  			<div class="col l6 s12">
 		  				<label  class="l">Css3</label>
-		  				<div class="progress" style="width: 50%"></div>
+		  				<div class="progress">
+							<div class="determinate" style="width: 50%"></div>
+						</div>
 		  			</div>
 		  			<div class="col l6 s12">
 		  				<label  class="l">PHP</label>
-		  				<div class="progress" style="width: 30%"></div>
+		  				<div class="progress">
+							<div class="determinate" style="width: 30%"></div>
+						</div>
 		  			</div>
 		  			<div class="col l6 s12">
 		  				<label  class="l">Marketing</label>
-		  				<div class="progress" style="width: 90%"></div>
+		  				<div class="progress">
+							<div class="determinate" style="width: 90%"></div>
+						</div>
 		  			</div>
 				</div>
 		  		<!-- End section 3 -->

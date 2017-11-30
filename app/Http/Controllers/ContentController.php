@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Content;
 use App\Section;
 use Illuminate\Http\Request;
+use App\Extra;
 
 class ContentController extends Controller
 {
@@ -15,7 +16,7 @@ class ContentController extends Controller
         if ($site) {
             if ($site->theme->location == 'templates.web-apps.elearning') {
                 $content = $section->contents()->create(['type' => 'lesson', 'title' => request('title'), 'content' => request('paragraph')]);
-                $content->extras()->create(['type' => 'video', 'content' => request('video')]);
+                $content->extras()->create(['type' => 'video', 'title' => request('fileName'), 'content' => request('video')]);
                 return response()->json('success', 200);
             }
         } else {
@@ -65,5 +66,13 @@ class ContentController extends Controller
         } else {
             return response(400);
         }
+    }
+
+    public function destroy()
+    {
+        $content = Content::where('id', request()->id)->first();
+        Extra::where('content_id', $content->id)->delete();
+        $content->delete();
+        return response($content->id);
     }
 }

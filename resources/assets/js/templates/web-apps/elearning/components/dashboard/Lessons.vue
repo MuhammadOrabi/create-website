@@ -12,22 +12,30 @@
 			</v-card-title>
 			<v-data-table :headers="headers" :items="lessons" :search="search" class="elevation-1">
 				<template slot="items" slot-scope="props">
-					<td class="text-xs-">{{ props.item.title }}</td>
-					<td class="text-xs-">
-						<v-btn dark small color="primary" :href="props.item.video" target="_blank">
-							<v-icon>ondemand_video</v-icon>
-						</v-btn>
-					</td>
-					<td>
-						<crud-lessons r u d :token="token" :address="address" :id="id" :contentid="props.item.id + ''"></crud-lessons>
-					</td>
+					<tr @click="props.expanded = !props.expanded">
+						<td class="text-xs-">{{ props.item.title }}</td>
+						<td class="text-xs-">
+							<v-btn dark small color="primary" :href="props.item.video" target="_blank">
+								<v-icon>ondemand_video</v-icon>
+							</v-btn>
+						</td>
+						<td>
+							<crud-lessons r u d :parent="parent" :token="token" :address="address" 
+								:id="id" :contentid="props.item.id + ''"></crud-lessons>
+						</td>
+					</tr>
+				</template>
+				<template slot="expand" slot-scope="props">
+					<v-card flat>
+						<v-card-text>{{ props.item.paragraph }}</v-card-text>
+					</v-card>
 				</template>
 				<template slot="pageText" slot-scope="{ pageStart, pageStop }">
 					From {{ pageStart }} to {{ pageStop }}
 				</template>
 			</v-data-table>
 			<div class="text-xs-center pt-2">
-				<crud-lessons c :token="token" :address="address" :id="id" ></crud-lessons>
+				<crud-lessons :parent="parent" c :token="token" :address="address" :id="id" ></crud-lessons>
 			</div>
 		</v-card>
 	</v-container>
@@ -55,6 +63,11 @@ export default {
 			msg: ''
 		}
 	},
+	computed: {
+		parent() {
+			return this;
+		}
+	},
 	mounted() {
 		this.getData();
 	},
@@ -62,6 +75,7 @@ export default {
 		getData() {
 			window.axios.get('/api/sections/' + this.id)
 			.then((res) => {
+				this.lessons = [];
 				let contents = res.data.section.contents; 
 					contents.forEach((content) => {
 						if (content.title) {

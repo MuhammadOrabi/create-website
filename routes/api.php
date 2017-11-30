@@ -34,6 +34,7 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/{id}', 'ContentController@store');
         Route::put('/{id}', 'ContentController@updateExtras');
         Route::put('/', 'ContentController@update');
+        Route::delete('/{id}', 'ContentController@destroy');
     });
 
     Route::prefix('user')->group(function () {

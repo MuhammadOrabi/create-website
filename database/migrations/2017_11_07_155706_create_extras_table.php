@@ -6,32 +6,33 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateExtrasTable extends Migration
 {
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
-	public function up()
-	{
-		Schema::create('extras', function (Blueprint $table) {
-			$table->increments('id');
-			$table->string('type');
-			$table->longText('content');
-			$table->integer('user_id')->nullable()->unsigned();
-			$table->integer('site_id')->nullable()->unsigned();
-			$table->integer('section_id')->nullable()->unsigned();
-			$table->integer('content_id')->nullable()->unsigned();
-			$table->timestamps();
-		});
-	}
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('extras', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('type');
+            $table->longText('content');
+            $table->string('title')->nullable();
+            $table->integer('user_id')->nullable()->unsigned();
+            $table->integer('site_id')->nullable()->unsigned();
+            $table->integer('section_id')->nullable()->unsigned();
+            $table->integer('content_id')->nullable()->unsigned();
+            $table->timestamps();
+        });
+    }
 
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
-	public function down()
-	{
-		Schema::dropIfExists('extras');
-	}
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('extras');
+    }
 }

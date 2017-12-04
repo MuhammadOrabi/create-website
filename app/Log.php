@@ -8,13 +8,43 @@ class Log extends Model
 {
     protected $guarded = [];
 
-    public function logable()
+    public function users()
     {
-        return $this->morphTo();
+        return $this->morphedByMany('App\User', 'loggable');
     }
 
-    public function user()
+    public function sites()
     {
-        return $this->belongsTo('App\User');
+        return $this->morphedByMany('App\Site', 'loggable');
+    }
+
+    public function themes()
+    {
+        return $this->morphedByMany('App\Theme', 'loggable');
+    }
+
+    public function pages()
+    {
+        return $this->morphedByMany('App\Page', 'loggable');
+    }
+
+    public function sections()
+    {
+        return $this->morphedByMany('App\Section', 'loggable');
+    }
+
+    public function contents()
+    {
+        return $this->morphedByMany('App\Content', 'loggable');
+    }
+
+    public function imgs()
+    {
+        return $this->morphedByMany('App\Img', 'loggable');
+    }
+
+    public function extras()
+    {
+        return $this->morphedByMany('App\Extra', 'loggable');
     }
 }

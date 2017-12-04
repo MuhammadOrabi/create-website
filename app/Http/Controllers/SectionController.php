@@ -6,7 +6,6 @@ use App\Page;
 use App\Section;
 use Illuminate\Http\Request;
 use App\Content;
-use App\Extra;
 
 class SectionController extends Controller
 {
@@ -124,10 +123,10 @@ class SectionController extends Controller
     {
         $section = Section::findOrFail(request()->id);
         $section->contents()->each(function ($content) {
-            Extra::where('content_id', $content->id)->delete();
+            $content->extras()->delete();
             $content->delete();
         });
-        Extra::where('section_id', $section->id)->delete();
+        $section->extras()->delete();
         $section->delete();
         return back();
     }
@@ -136,10 +135,10 @@ class SectionController extends Controller
     {
         $section = Section::findOrFail(request()->id);
         $section->contents()->each(function ($content) {
-            Extra::where('content_id', $content->id)->delete();
+            $content->extras()->delete();
             $content->delete();
         });
-        Extra::where('section_id', $section->id)->delete();
+        $section->extras()->delete();
         $section->delete();
         return response()->json('success');
     }

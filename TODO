@@ -10,7 +10,6 @@ Todo:
 		☐ User/Guest Access Courses Page
 		☐ User/Guest Access Course Page
 		☐ User Access Lesson Page
-	Relations Fix:
-		☐ Update Controllers for Polymorphic Relations
-  
 
+
+$log->users()->sync($user, false)

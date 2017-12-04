@@ -53,6 +53,11 @@ export default {
 			video: '',
 		}
 	},
+	computed: {
+		auth() {
+			return this.$store.getters.session(this.address);
+		}
+	},
 	mounted() {
 		this.getData();
 	},
@@ -60,11 +65,25 @@ export default {
 		getData() {
 			window.axios.get(`/api/contents/${this.id}`)
 			.then(res => {
-				this.course = res.data.content.section;
 				this.lesson = res.data.content;
-				this.video = _.findWhere(this.lesson.extras, {type: 'video'});  				
+				this.course = res.data.content.contentable;
+				this.video = _.findWhere(this.lesson.extras, {type: 'video'});
+				this.log();					
 			})
-			.catch(err => console.log(err))
+			.catch(() => window.location = '/s/' + this.address + '/courses');
+		},
+		log() {
+			let data = {};
+			data.user = this.auth.id;
+			data.content = this.lesson.id;
+			data.section = this.course.id;
+			data.type = 'lesson';
+			data.action = 'Access Lesson Page';
+			window.axios.post('/api/logs', data)
+			.then(res => {
+				console.log(res.data);
+			})
+			.catch(err => console.log(err));
 		}
 	}
 }

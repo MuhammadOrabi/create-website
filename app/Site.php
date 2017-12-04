@@ -41,7 +41,7 @@ class Site extends Model
 
     public function logs()
     {
-        return $this->morphMany('App\Log', 'logable');
+        return $this->morphToMany('App\Log', 'loggable');
     }
 
     // Helper methods

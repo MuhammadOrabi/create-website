@@ -48,8 +48,14 @@ export default {
 			courses: []
 		}
 	},
+	computed: {
+		auth() {
+			return this.$store.getters.session(this.address);
+		}
+	},
 	mounted() {
 		this.getData();
+		this.log();
 	},
 	methods: {
 		getData() {
@@ -63,7 +69,21 @@ export default {
 				});
 			})
 			.catch(err => console.log(err));
-		}	
+		},
+		log() {
+			let data = {};
+			if (this.auth) {
+				data.user = this.auth.id;
+			}
+			data.address = this.address;
+			data.type = 'courses';
+			data.action = 'View Courses Page';
+			window.axios.post('/api/logs', data)
+			.then(res => {
+				console.log(res.data);
+			})
+			.catch(err => console.log(err));
+		}
 	}
 }
 </script>

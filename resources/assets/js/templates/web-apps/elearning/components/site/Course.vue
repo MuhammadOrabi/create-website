@@ -47,6 +47,11 @@ import _ from 'underscore';
 			course: []
 		}
 	},
+	computed: {
+		auth() {
+			return this.$store.getters.session(this.address);
+		}
+	},
 	mounted() {
 		this.getData();
 	},
@@ -60,10 +65,25 @@ import _ from 'underscore';
 					let p = _.findWhere(section.extras, {type: 'paragraph'});
 					let title = section.title;
 					this.course = {id: section.id, title: title, paragraph: p.content, tags: tags, lessons: section.contents};
+					this.log();
 				} else {
 					window.location = '/s/' + this.address + '/courses';
 				}
 
+			})
+			.catch(err => console.log(err));
+		},
+		log() {
+			let data = {};
+			if (this.auth) {
+				data.user = this.auth.id;
+			}
+			data.course = this.id;
+			data.type = 'course';
+			data.action = 'Access Course Page';
+			window.axios.post('/api/logs', data)
+			.then(res => {
+				console.log(res.data);
 			})
 			.catch(err => console.log(err));
 		}

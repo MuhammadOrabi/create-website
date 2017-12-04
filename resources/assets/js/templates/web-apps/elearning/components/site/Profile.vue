@@ -1,97 +1,71 @@
 <template>
-    <v-container>
-        <v-snackbar :timeout="6000" top :color="context" v-model="snackbar" >
-			{{ context }}
-			<v-btn dark flat @click="snackbar = false">Close</v-btn>
-		</v-snackbar>
-        <v-layout justify-end>
-            <v-btn dark color="teal" @click="dialog = true">Edit Profile</v-btn>
-        </v-layout>
-        <v-dialog v-model="dialog" persistent max-width="70%">
-            <v-card>
-                <v-card-title>
-                    <span class="headline" style="text-transform: capitalize">Edit Profile</span>
-                </v-card-title>
-                <v-card-text>
-                    <v-container grid-list-md>
-                        <form>
-                            <v-layout row wrap>
-                                <v-flex sm5>
-                                    <v-dialog v-model="avatarDialog" max-width="75%">
-                                        <media :address="address" :token="token" :parent="parent" type="avatar"></media>
-                                    </v-dialog>
-                                    <v-btn class="mt-2" @click="avatarDialog = true">
-                                        Avatar
-                                        <v-icon right>perm_media</v-icon>
-                                    </v-btn>
-                                    <v-avatar size="75px" v-if="avatar">
-                                        <img class="img-circle elevation-7 mb-1" :src="avatar">
-                                    </v-avatar>
-                                    <v-text-field v-model="name" label="Name" ></v-text-field>
-                                    <v-text-field v-model="title" label="Title" ></v-text-field>
-                                    <v-text-field v-model="password" label="New Password"></v-text-field>
-                                    <v-text-field v-model="passowrdConfirm" label="Confirm New Passowrd"></v-text-field>
-                                    <span v-if="msg" style="font-weight:bold; color:red">{{msg}}</span>
-                                    <span></span>
-                                </v-flex>
-                                <v-flex offset-sm1 sm5>
-                                    <v-text-field v-model="twitter" label="Twitter" ></v-text-field>
-                                    <v-text-field v-model="facebook" label="Facebook" ></v-text-field>
-                                    <v-text-field v-model="github" label="Github" ></v-text-field>
-                                </v-flex>
-                            </v-layout>
-                        </form>
-                    </v-container>
-                    <small>*indicates required field</small>
-                </v-card-text>
-                <v-card-actions>
-					<v-spacer></v-spacer>
-					<v-btn color="blue darken-1" flat @click.native="dialog = false">Close</v-btn>
-					<v-btn color="primary" @click="save">Save</v-btn>
-				</v-card-actions>
-            </v-card>
-        </v-dialog>
-        <div class="text-xs-center">
-            <v-avatar size="125px" v-if="avatar">
-                <img class="img-circle elevation-7 mb-1" :src="avatar">
-            </v-avatar>
-            <h4 v-if="name"><span style="font-weight:bold">{{name}}</span></h4>
-            <h5 v-if="title" class="text-xs-center">{{title}}</h5>
-            <v-layout justify-center>
-                <v-btn v-if="twitter" :href="twitter" target="_blank" icon class="blue--text text--darken-4">
-                    <v-icon medium>fa-twitter</v-icon>
-                </v-btn>
-                <v-btn v-if="github" :href="github" target="_blank" icon class="blue--text text--darken-4">
-                    <v-icon medium>fa-github</v-icon>
-                </v-btn>
-                <v-btn v-if="facebook" :href="facebook" target="_blank" icon class="blue--text text--darken-4">
-                    <v-icon medium>fa-facebook</v-icon>
-                </v-btn>
-            </v-layout>
-        </div>
-    </v-container>
+  <v-container>
+      <section class="teal darken-3">
+			<v-container>
+                <v-layout row >
+                    <v-flex md2 class="pt-3 hidden-sm-and-down">
+                        <v-avatar size="125px" v-if="avatar">
+                            <img class="elevation-7 mb-1" :src="avatar">
+                        </v-avatar>
+                    </v-flex>
+                    <v-flex class="pt-3 white--text">
+                        <v-avatar size="125px" v-if="avatar" class="hidden-md-and-up">
+                            <img class="elevation-7 mb-1" :src="avatar">
+                        </v-avatar>
+                        <h1 class="healine cap">{{ name }}</h1>
+                        <h1 class="title cap">{{ title }}</h1>
+                        <v-btn icon :href="facebook" target="_blank" ><v-icon class="white--text" medium>fa-facebook</v-icon></v-btn>
+                        <v-btn icon :href="twitter" target="_blank" ><v-icon class="white--text" medium>fa-twitter</v-icon></v-btn>
+                        <v-btn icon :href="github" target="_blank" ><v-icon class="white--text" medium>fa-github</v-icon></v-btn>
+                    </v-flex>                    
+                </v-layout>
+                <EditProfile :address="address" :parentVue="parent"></EditProfile>
+			</v-container>
+		</section>
+		<section>
+			<v-layout row>
+				<v-flex sm6 offset-sm1 class="pt-3">
+					<v-card class="transparent elevation-0" >
+						<v-list three-line>
+							<template>
+                                <v-subheader><b>Last Activities (Lessons)</b></v-subheader>
+                                <v-list-tile avatar v-for="(lesson, i) in lessons" v-if="lesson.contents[0]"
+                                    :href="`/s/${address}/lesson/${lesson.contents[0].id}`" :key="i">
+                                    <v-list-tile-avatar>
+                                        <v-chip label>{{i+1}}</v-chip>
+                                    </v-list-tile-avatar>
+                                    <v-list-tile-content>
+                                        <v-list-tile-sub-title>{{ lesson.sections[0].title }}</v-list-tile-sub-title>
+                                        <v-list-tile-title>{{ lesson.contents[0].title }}</v-list-tile-title>
+                                    </v-list-tile-content>
+                                </v-list-tile>
+							</template>
+						</v-list>
+					</v-card>
+				</v-flex>
+                <v-flex sm5 class="pt-3">
+                </v-flex>
+			</v-layout>
+		</section>
+  </v-container>
 </template>
 
 <script>
     const _ = window._;
+    import EditProfile from './EditProfile.vue';
     export default {
         name: 'Profile',
+        components: {EditProfile},
         props: ['address'],
         data() {
             return {
-                snackbar: false,
-                context: '',
-                msg: '',
-                dialog: false,
-                avatarDialog: false,
                 name: '',
-                password: '',
-                passowrdConfirm: '',
-                avatar: '/img/logo.png',
-                title: 'Web Developer',
+                avatar: '',
+                title: '',
                 twitter: '',
-                github: 'https://github.com/',
-                facebook: 'https://facebook.com/'
+                github: '',
+                facebook: '',
+                lessons: {},
             };
         },
         computed: {
@@ -109,7 +83,7 @@
             this.getData();
         },
         methods: {
-            getData() {
+             getData() {
                 const vm = this;
                 window.axios.get('/api/user',  { headers: { 'Authorization': 'Bearer ' + vm.token } })
                 .then(res => {
@@ -119,42 +93,16 @@
                         let userAvatar = _.findWhere(res.data.user.extras, {type: 'avatar'});
                         this.avatar = userAvatar? userAvatar.content : 'http://via.placeholder.com/250x350';
                         let twitter = _.findWhere(res.data.user.extras, {type: 'twitter'});
-                        this.twitter = twitter? twitter.content: 'https://twitter.com/';
+                        this.twitter = twitter? twitter.content: 'https://twitter.com';
                         let facebook = _.findWhere(res.data.user.extras, {type: 'facebook'});
-                        this.facebook = facebook? facebook.content: 'https://facebook.com/';                        
+                        this.facebook = facebook? facebook.content: 'https://facebook.com';                        
                         let github = _.findWhere(res.data.user.extras, {type: 'github'});
-                        this.github = github? github.content: 'https://github.com/'; 
+                        this.github = github? github.content: 'https://github.com'; 
+                        this.lessons = _.where(res.data.user.logs, {type: 'lesson'});
                     }
                 })
                 .catch(err => console.log(err));
             },
-            save() {
-                const vm = this;
-                let data = {
-                    name: this.name, avatar: this.avatar, title: this.title, 
-                    twitter: this.twitter, facebook: this.facebook, github: this.github
-                };
-                if (this.password.trim()) {
-                    if (this.password === this.passowrdConfirm) {
-                        data.password = this.password;
-                    } else {
-                        this.msg = 'Please Confirm Password!';
-                        return;
-                    }
-                }
-                window.axios.put('/api/user', data, { headers: { 'Authorization': 'Bearer ' + vm.token } })
-                .then(res => {
-                    if (res.data === 'success') {
-                        this.dialog = false;
-                        this.snackbar = true;
-                        this.context = res.data;
-                        this.password = '';
-                        this.passowrdConfirm = '';
-                        this.msg = '';
-                    }
-                })
-                .catch(err => console.log(err));
-            }
         }
     }
 </script>

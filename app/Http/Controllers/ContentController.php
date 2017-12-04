@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Content;
 use App\Section;
 use Illuminate\Http\Request;
-use App\Extra;
 
 class ContentController extends Controller
 {
@@ -38,7 +37,7 @@ class ContentController extends Controller
     public function updateExtras()
     {
         $content = Content::findOrFail(request()->id);
-        $site = auth()->user()->sites()->where('address', $content->section->page->site->address)->first();
+        $site = auth()->user()->sites()->where('address', $content->contentable->page->site->address)->first();
         if ($site) {
             if ($site->theme->location == 'templates.web-apps.elearning') {
                 if (request('title') && request('paragraph')) {
@@ -57,8 +56,8 @@ class ContentController extends Controller
 
     public function show()
     {
-        $content = Content::where('id', request()->id)->with('extras', 'section.contents.extras')->first();
-        $site = $content->section->page->site;
+        $content = Content::where('id', request()->id)->with('extras', 'contentable.contents.extras')->first();
+        $site = $content->contentable->page->site;
         if ($site) {
             if ($site->theme->location == 'templates.web-apps.elearning') {
                 return response()->json(compact('content'));
@@ -71,7 +70,7 @@ class ContentController extends Controller
     public function destroy()
     {
         $content = Content::where('id', request()->id)->first();
-        Extra::where('content_id', $content->id)->delete();
+        $content->extras()->delete();
         $content->delete();
         return response($content->id);
     }

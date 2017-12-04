@@ -83,6 +83,9 @@ export default {
 			alert: false
 		}
 	},
+	mounted() {
+		this.log();
+	},
 	computed: {
 		invalid() {
 			if (this.password === '' || this.name === '' || this.email === '') {
@@ -105,7 +108,20 @@ export default {
 				}
 				let session = {address: vm.address, token: res.data.token, id: res.data.user.id, name: res.data.user.name};
 				this.$store.commit('addSession', session);
+				this.log('User Signed Up', session.id);
 				window.location = '/s/' + this.address + '/profile';
+			})
+			.catch(err => console.log(err));
+		},
+		log(action, id) {
+			let data = {};
+			data.user = id ? id : null;
+			data.address = this.address;
+			data.type = 'signup';
+			data.action = action ? action : 'Access Sign Up Page';
+			window.axios.post('/api/logs', data)
+			.then(res => {
+				console.log(res.data);
 			})
 			.catch(err => console.log(err));
 		}

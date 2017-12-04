@@ -7,10 +7,10 @@
 	const app = new Vue({
 		el: '#app',
 		data: {
-			drawer: false,
-		    drawerRight: false,
-		    right: false,
-		    left: false,
+			drawer: null,
+		    drawerRight: null,
+		    right: null,
+		    left: null,
 		    siteNameVisibility: 'title',
 		    nav: {text: 'Create Website', link: '/', logo: '/img/logo.png'},
 		    rightMainNavCheck: false,

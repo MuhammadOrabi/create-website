@@ -66,3 +66,7 @@ Route::prefix('pages')->group(function () {
 });
 
 Route::post('/contact/{id}', 'SectionController@message');
+
+Route::prefix('logs')->group(function () {
+    Route::post('/', 'LogController@store');
+});

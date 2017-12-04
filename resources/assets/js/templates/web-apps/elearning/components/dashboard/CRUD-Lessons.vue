@@ -130,6 +130,7 @@ export default {
 			this.paragraph = '';
 			this.title = '';
 			this.video = '';
+			this.browsedVideo = null;
 			this.files = '';
 		},
 		onPickVideo() {
@@ -198,17 +199,16 @@ export default {
 		},
 		deleteLesson() {
 			const vm = this;
-			window.firebase.storage().ref().child(this.fileName).delete()
-			.then(() => {
-				window.axios.delete(`/api/contents/${vm.contentid}`, { headers: { 'Authorization': 'Bearer ' + vm.token } })
-				.then(res => {
-					this.snackbar = true;
-					this.context = res.data ? 'success' : 'error';
-					this.msg = res.data ? 'Deleted' : 'Try Again!';
-					this.parent._self.getData();
-				})
-				.catch(err => console.log(err));
+			window.axios.delete(`/api/contents/${vm.contentid}`, { headers: { 'Authorization': 'Bearer ' + vm.token } })
+			.then(res => {
+				this.snackbar = true;
+				this.context = res.data ? 'success' : 'error';
+				this.msg = res.data ? 'Deleted' : 'Try Again!';
+				this.parent._self.getData();
 			})
+			.catch(err => console.log(err));
+			window.firebase.storage().ref().child(this.fileName).delete()
+			.then(res => console.log(res))
 			.catch(err => console.log(err));
 		},
 	}

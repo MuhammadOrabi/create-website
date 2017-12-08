@@ -3,27 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Tag;
-use Illuminate\Http\Request;
 
 class ThemeController extends Controller
 {
-	public function index() {
-	    $tags = Tag::with('themes.imgs')->get();
-	    return response()->json($tags);
-	}
-	
-    public function create() {
-    	$tags = Tag::with('themes.imgs')->get();
-    	if ($tags->isNotEmpty()) {
-    		return response()->json($tags);
-    	}
-    	$tag_website = Tag::create(['tag' => 'website', 'img' => '/img/websites/type-website.svg']);
-    	$tag_portfolio = Tag::create(['tag' => 'Portfolio', 'img' => '/img/portfolios/type-portfolio.svg']);
-    	$tag_webApp = Tag::create(['tag' => 'webApp', 'img' => '/img/web-apps/type-webapp.svg']);
-    	$tag_blog = Tag::create(['tag' => 'blog', 'img' => '/img/blogs/type-blog.svg']);
+    public function index()
+    {
+        $tags = Tag::with('themes.imgs')->get();
+        return response()->json($tags);
+    }
+
+    public function create()
+    {
+        $tags = Tag::with('themes.imgs')->get();
+        if ($tags->isNotEmpty()) {
+            return response()->json($tags);
+        }
+        $tag_website = Tag::create(['tag' => 'website', 'img' => '/img/websites/type-website.svg']);
+        $tag_portfolio = Tag::create(['tag' => 'Portfolio', 'img' => '/img/portfolios/type-portfolio.svg']);
+        $tag_webApp = Tag::create(['tag' => 'webApp', 'img' => '/img/web-apps/type-webapp.svg']);
+        $tag_blog = Tag::create(['tag' => 'blog', 'img' => '/img/blogs/type-blog.svg']);
 
         $bizlight = $tag_website->themes()->create(
-        	['name' => 'Bizlight', 'location' => 'templates.websites.bizlight', 'type' => 'agency']
+            ['name' => 'Bizlight', 'location' => 'templates.websites.bizlight', 'type' => 'agency']
         );
         $bizlight->imgs()->create(['url' => '/img/websites/Bizlight/1.png']);
         $bizlight->imgs()->create(['url' => '/img/websites/Bizlight/2.png']);
@@ -34,7 +35,7 @@ class ThemeController extends Controller
         $bizlight->imgs()->create(['url' => '/img/websites/Bizlight/7.png']);
 
         $elearning = $tag_webApp->themes()->create(
-        	['name' => 'E-Learning', 'location' => 'templates.web-apps.elearning', 'type' => 'eLearning']
+            ['name' => 'E-Learning', 'location' => 'templates.web-apps.elearning', 'type' => 'eLearning']
         );
         $elearning->imgs()->create(['url' => '/img/web-apps/elearning/1.png']);
         $elearning->imgs()->create(['url' => '/img/web-apps/elearning/2.png']);
@@ -44,7 +45,7 @@ class ThemeController extends Controller
         $elearning->imgs()->create(['url' => '/img/web-apps/elearning/6.png']);
 
         $portfolio_theme1 = $tag_portfolio->themes()->create(
-        	['name' => 'Portfolio', 'location' => 'templates.portfolios.theme1', 'type' => 'portfolio']
+            ['name' => 'Portfolio', 'location' => 'templates.portfolios.theme1', 'type' => 'portfolio']
         );
         $portfolio_theme1->imgs()->create(['url' => '/img/portfolios/theme1/1.png']);
         $portfolio_theme1->imgs()->create(['url' => '/img/portfolios/theme1/2.png']);

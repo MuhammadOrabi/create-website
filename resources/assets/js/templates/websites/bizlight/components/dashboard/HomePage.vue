@@ -1,16 +1,16 @@
 <template>
 	<section>
 		<div :class="'alert alert-' + msg + ' alert-dismissible fade show float'" role="alert" v-if="msg.length">
-		  	<strong class="m-5" style="text-transform: capitalize">{{ msg }}</strong> 
-		  	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-		    	<span aria-hidden="true">&times;</span>
-		 	</button>
+			<strong class="m-5" style="text-transform: capitalize">{{ msg }}</strong> 
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
 		</div>
 		<button class="btn btn-success" @click="save" >Save</button>
 		<show-case ref="showcase" :token="token" :id="showcase"></show-case>
-		<section-b ref="sectionb" :token="token" :id="sectionb"></section-b>
-		<section-a ref="sectiona" :token="token" :id="sectiona"></section-a>
-		<section-c ref="sectionc" :token="token" :id="sectionc"></section-c>
+		<section-b ref="sectionb" :token="token" :id="sectionb" :address="address"></section-b>
+		<section-a ref="sectiona" :token="token" :id="sectiona" :address="address"></section-a>
+		<section-c ref="sectionc" :token="token" :id="sectionc" :address="address"></section-c>
 	</section>
 </template>
 

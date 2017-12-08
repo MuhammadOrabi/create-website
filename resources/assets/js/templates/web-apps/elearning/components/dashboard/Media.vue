@@ -7,7 +7,7 @@
 		<v-tabs dark fixed centered>
 			<v-tabs-bar class="grey" >
 				<v-tabs-slider class="yellow"></v-tabs-slider>
-				<v-tabs-item href="#tab-1" >
+				<v-tabs-item href="#tab-1">
 					My Images
 				</v-tabs-item>
 				<v-tabs-item href="#tab-2" >
@@ -27,17 +27,24 @@
 								</v-btn>
 								<input type="file" style="display: none" ref="fileInput" accept="image/*" @change="onFilePicked">
 							</v-flex>
+							<v-flex v-if="imgFile">
+								<v-card >
+								</v-card>
+								<v-card flat tile>
+									<v-card-media class="image" :src="imgFile" height="150px"></v-card-media>
+									<v-card-actions v-if="upload">
+										<v-btn :loading="loading" :disabled="loading" color="warning white--text"
+											round  @click="uploadImage" v-if="img">
+											Upload
+											<span slot="loader">Uploading...</span>
+											<v-icon right dark>cloud_upload</v-icon>
+										</v-btn>
+									</v-card-actions>
+								</v-card>
+							</v-flex>
 						</v-card-actions>
 						<v-dialog v-model="dialog" max-width="50%" scrollable>
 							<v-card>
-								<v-card-actions v-if="upload">
-									<v-btn :loading="loading" :disabled="loading" color="warning white--text"
-										round  @click="uploadImage" v-if="img">
-										Upload
-										<span slot="loader">Uploading...</span>
-										<v-icon right dark>cloud_upload</v-icon>
-									</v-btn>
-								</v-card-actions>
 								<img :src="imgFile" max-width="100%" height="100%">
 							</v-card>
 						</v-dialog>
@@ -118,10 +125,9 @@ export default {
 			fileReader.readAsDataURL(file);
 			this.img = file;
 			this.upload = true;
-			this.dialog = true;
 		},
 		uploadImage() {
-				this.loading = true;
+			this.loading = true;
 			let date = new Date();
 			let fileName = process.env.NODE_ENV + '/' +this.address + '/' + date.toDateString() + '/' + this.img.name;
 			let upload = window.firebase.storage().ref(fileName).put(this.img);

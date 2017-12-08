@@ -3,7 +3,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-6">
-    				<img :src="imgsrc" class="show" width="250" height="350" alt="img" data-toggle="modal" data-target="#imgModalC">
+					<img :src="imgsrc" class="show" width="250" height="350" alt="img" data-toggle="modal" data-target="#imgModalC">
 				</div>
 				<div class="col-md-6">
 					<blockquote class="blockquote">
@@ -14,18 +14,20 @@
 				</div>
 			</div>
 		</div>
-		<div v-if="imgs.length" class="modal fade bd-example-modal-lg" id="imgModalC" 
-			tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" >
-  			<div class="modal-dialog modal-lg">
+		<div class="modal fade bd-example-modal-lg" id="imgModalC" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
 				<div class="modal-content">
-					<div class="p-5">
-						<div id="thumbs">
-                        	<img v-for="img in imgs" :src="img.url" @click="imgsrc = img.url" class="m-1 img-thumbnail"
-                        		 width="180" height="180" data-dismiss="modal">
-			            </div>
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Media</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
 					</div>
-			    </div>
-  			</div>
+					<div class="modal-body">
+						<media :address="address" :token="token" :parent="parent"></media>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
@@ -33,26 +35,29 @@
 <script>
 	export default {
 
-	  	name: 'SectionC',
-	  	props: ['token', 'id'],
-	  	data () {
-		    return {
-		    	input: false,
-		    	p: null,
-		    	pid: 0,
-		    	imgs: [],
-    			imgsrc: '',
-    			imgid: 0,
-    			msg: ''
-		    };
-	  	},
-	  	mounted() {
-	  		this.getData();
-	  		this.imgs = this.$parent.$data.imgs;
-	  	},
-	  	methods: {
-	  		getData() {
-	  			axios.get('/api/sections/' + this.id + '/edit', { headers: { 'Authorization': 'Bearer ' + this.token } })
+		name: 'SectionC',
+		props: ['token', 'id', 'address'],
+		data () {
+			return {
+				input: false,
+				p: null,
+				pid: 0,
+				imgsrc: '',
+				imgid: 0,
+				msg: ''
+			};
+		},
+		computed: {
+			parent() {
+				return this;
+			}
+		},
+		mounted() {
+			this.getData();
+		},
+		methods: {
+			getData() {
+				window.axios.get('/api/sections/' + this.id + '/edit', { headers: { 'Authorization': 'Bearer ' + this.token } })
 				.then(res => {
 					let par = res.data[0];
 					let img = res.data[1];
@@ -61,14 +66,17 @@
 					this.p = par.content || 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum obcaecati fugit tenetur officiis, expedita modi fugiat quo animi, minima eveniet sed commodi architecto maxime nobis velit ipsam libero, voluptate tempora!';
 					this.pid = par.id;
 				}).catch(err => console.log(err));
-	  		},
-	  		save() {
-	  			return [
-	  				{id: this.pid, content: this.p},
-	  				{id: this.imgid, content: this.imgsrc}
-	  			];
-	  		}
-	  	}
+			},
+			save() {
+				return [
+					{id: this.pid, content: this.p},
+					{id: this.imgid, content: this.imgsrc}
+				];
+			},
+			toggleModal() {
+				window.$('#imgModalC').modal('toggle');
+			}
+		}
 	};
 </script>
 

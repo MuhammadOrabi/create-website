@@ -1,60 +1,62 @@
 <template>
 	<div>
 		<div class="section-b">
-	    	<div class="container-fluid">
-	    		<div class="row">
-	    			<div class="col-md-6">
-	    				<br><br><br>
-	    				<div id="accordion" role="tablist" aria-multiselectable="true">
-  							<div class="float-none">
-	  							<a v-if="check()" class="btn btn-link text-muted" @click="add">
-	  								<i class="fa fa-plus" aria-hidden="true"></i>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-6">
+						<br><br><br>
+						<div id="accordion" role="tablist" aria-multiselectable="true">
+							<div class="float-none">
+								<a v-if="check()" class="btn btn-link text-muted" @click="add">
+									<i class="fa fa-plus" aria-hidden="true"></i>
 								</a>
-  							</div>
-	  						<div v-for="(d, index) in data" :key="index" v-if="d.head != null">
-  								<div class="float-right text-danger">
-  									<a class="btn btn-link" @click="remove(index)"><i class="fa fa-minus" aria-hidden="true"></i></a>
-  								</div>
-	  							<div class="card">
-								    <div class="card-header grish" role="tab" id="headingOne">
-							  			<input type="text" class="form-control border-0" v-if="data[index].inputh || data[index].head == ''" 
-							  				v-model="data[index].head" @mouseleave="data[index].inputh = false;">
-						  				<h5 class="mb-0" v-else  @mouseover="data[index].inputh = true;" >{{d.head}}</h5>
-							        	<a class="nav-link p-0 grish" data-toggle="collapse" data-parent="#accordion" :href="'#collapse' + index" 
-							        		aria-expanded="true" aria-controls="collapseOne">
+							</div>
+							<div v-for="(d, index) in data" :key="index" v-if="d.head != null">
+								<div class="float-right text-danger">
+									<a class="btn btn-link" @click="remove(index)"><i class="fa fa-minus" aria-hidden="true"></i></a>
+								</div>
+								<div class="card">
+									<div class="card-header grish" role="tab" id="headingOne">
+										<input type="text" class="form-control border-0" v-if="data[index].inputh || data[index].head == ''" 
+											v-model="data[index].head" @mouseleave="data[index].inputh = false;">
+										<h5 class="mb-0" v-else  @mouseover="data[index].inputh = true;" >{{d.head}}</h5>
+										<a class="nav-link p-0 grish" data-toggle="collapse" data-parent="#accordion" :href="'#collapse' + index" 
+											aria-expanded="true" aria-controls="collapseOne">
 											<!-- None -->
-						    			</a>
-								    </div>
+										</a>
+									</div>
 
-	    							<div :id="'collapse' + index" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
-	      								<div class="card-block">
-		      								<textarea class="form-control border-0" v-model="data[index].data" autofocus rows="8"
-      											v-if="data[index].inputp || data[index].data == ''" @mouseleave="data[index].inputp = false"></textarea>
-	      									<p v-else class="p-3" @mouseover="data[index].inputp = true">{{ d.data }}</p>
-      									</div>
-	    							</div>
-	  							</div>
-	  						</div>
+									<div :id="'collapse' + index" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+										<div class="card-block">
+											<textarea class="form-control border-0" v-model="data[index].data" autofocus rows="8"
+												v-if="data[index].inputp || data[index].data == ''" @mouseleave="data[index].inputp = false"></textarea>
+											<p v-else class="p-3" @mouseover="data[index].inputp = true">{{ d.data }}</p>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
-	    			</div>
-	    			<div class="col-md-6">
-	    				<img :src="imgsrc" class="show" width="250" height="350" alt="img" data-toggle="modal" data-target="#imgModalB">
-	    			</div>
-	    		</div>
-	    	</div>
-	    </div>
-	    <div v-if="imgs.length" class="modal fade bd-example-modal-lg" id="imgModalB" 
-	    	tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" >
-  			<div class="modal-dialog modal-lg">
-				<div class="modal-content">
-					<div class="p-5">
-						<div id="thumbs">
-                        	<img v-for="img in imgs" :src="img.url" @click="imgsrc = img.url" class="m-1 img-thumbnail"
-                        		 width="180" height="180" data-dismiss="modal">
-			            </div>
 					</div>
-			    </div>
-  			</div>
+					<div class="col-md-6">
+						<img :src="imgsrc" class="show" width="250" height="350" alt="img" @click="toggleModal">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade bd-example-modal-lg" id="imgModalB" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Media</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<media :address="address" :token="token" :parent="parent"></media>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
@@ -66,23 +68,27 @@ export default {
 
 	name: 'SectionB',
 	props: ['token', 'id', 'address'],
-  	data () {
-    	return {
-    		data: [],
-    		show: 2,
-    		imgs: [],
-    		imgsrc: '',
-    		imgid: 0,
-    		msg: ''
-    	};
-  	},
-  	mounted() {
-  		this.getData();
-  		this.imgs = this.$parent.$data.imgs;
-  	},
-  	methods: {
-  		getData() {
-  			axios.get('/api/sections/' + this.id + '/edit', { headers: { 'Authorization': 'Bearer ' + this.token } })
+	data () {
+		return {
+			data: [],
+			show: 2,
+			imgsrc: '',
+			imgid: 0,
+			msg: '',
+			modal: false
+		};
+	},
+	computed: {
+		parent() {
+			return this;
+		}
+	},
+	mounted() {
+		this.getData();
+	},
+	methods: {
+		getData() {
+			window.axios.get('/api/sections/' + this.id + '/edit', { headers: { 'Authorization': 'Bearer ' + this.token } })
 			.then(res => {
 				let order0 = _.where(res.data, {order: 0});
 				let order1 = _.where(res.data, {order: 1});
@@ -106,29 +112,32 @@ export default {
 					inputh: false, inputp: false
 				});	
 			}).catch(err => console.log(err));
-  		},
-  		
-  		add() {
-  			let avail = _.where(this.data, {head: null});
-  			avail[0].head = 'Head';
-  			avail[0].data = 'Text....';
-  		},
-  		remove(i) {
-  			this.data[i].head = null;
-  			this.data[i].data = null;
-  		},
-  		check() {
-  			return _.where(this.data, {head: null}).length !== 0;
-  		},
-  		save() {
-  			return [
-  				{id: this.data[0].hid, content: this.data[0].head}, {id: this.data[0].pid, content: this.data[0].data},
-  				{id: this.data[1].hid, content: this.data[1].head}, {id: this.data[1].pid, content: this.data[1].data},
-  				{id: this.data[2].hid, content: this.data[2].head}, {id: this.data[2].pid, content: this.data[2].data},
-  				{id: this.imgid, content: this.imgsrc}
-  			];
-  		}
-  	}
+		},
+		
+		add() {
+			let avail = _.where(this.data, {head: null});
+			avail[0].head = 'Head';
+			avail[0].data = 'Text....';
+		},
+		remove(i) {
+			this.data[i].head = null;
+			this.data[i].data = null;
+		},
+		check() {
+			return _.where(this.data, {head: null}).length !== 0;
+		},
+		save() {
+			return [
+				{id: this.data[0].hid, content: this.data[0].head}, {id: this.data[0].pid, content: this.data[0].data},
+				{id: this.data[1].hid, content: this.data[1].head}, {id: this.data[1].pid, content: this.data[1].data},
+				{id: this.data[2].hid, content: this.data[2].head}, {id: this.data[2].pid, content: this.data[2].data},
+				{id: this.imgid, content: this.imgsrc}
+			];
+		},
+		toggleModal() {
+			window.$('#imgModalB').modal('toggle');
+		}
+	}
 };
 </script>
 

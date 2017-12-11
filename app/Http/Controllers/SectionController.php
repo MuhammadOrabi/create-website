@@ -38,9 +38,9 @@ class SectionController extends Controller
                 foreach (request('tags') as $tag) {
                     $section->extras()->create(['type' => 'tag', 'content' => $tag]);
                 }
-                // $forum = Page::where('slug', 'forum')->first();
+                // $forum = $site->pages()->where('slug', 'forum')->first();
                 // $courseForum = $forum->sections()->create(['title' => 'Course Forum']);
-                // $section->extras()->create(['type' => 'forum', 'content' => $courseForum->id]);
+                // $section->extras()->create(['type' => 'forum_id', 'content' => $courseForum->id]);
                 return response()->json(['msg' => 'success', 'section' => compact('section')]);
             }
         }

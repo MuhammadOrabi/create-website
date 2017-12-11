@@ -29,14 +29,14 @@
 						<v-list three-line>
 							<template>
                                 <v-subheader><b>Last Activities (Lessons)</b></v-subheader>
-                                <v-list-tile avatar v-for="(lesson, i) in lessons" v-if="lesson.contents[0]"
-                                    :href="`/s/${address}/lesson/${lesson.contents[0].id}`" :key="i">
+                                <v-list-tile avatar v-for="(lesson, i) in finalLessons" v-if="lesson"
+                                    :href="`/s/${address}/lesson/${lesson.id}`" :key="lesson.id">
                                     <v-list-tile-avatar>
-                                        <v-chip label>{{i+1}}</v-chip>
+                                        <v-chip label>{{ i + 1 }}</v-chip>
                                     </v-list-tile-avatar>
                                     <v-list-tile-content>
-                                        <v-list-tile-sub-title>{{ lesson.sections[0].title }}</v-list-tile-sub-title>
-                                        <v-list-tile-title>{{ lesson.contents[0].title }}</v-list-tile-title>
+                                        <v-list-tile-sub-title>{{ lesson.contentable.title }}</v-list-tile-sub-title>
+                                        <v-list-tile-title>{{ lesson.title }}</v-list-tile-title>
                                     </v-list-tile-content>
                                 </v-list-tile>
 							</template>
@@ -53,6 +53,7 @@
 <script>
     const _ = window._;
     import EditProfile from './EditProfile.vue';
+
     export default {
         name: 'Profile',
         components: {EditProfile},
@@ -65,7 +66,7 @@
                 twitter: '',
                 github: '',
                 facebook: '',
-                lessons: {},
+                lessons: null,
             };
         },
         computed: {
@@ -77,6 +78,12 @@
             },
             parent() {
                 return this;
+            },
+            finalLessons() {
+               let titles = _.uniq(_.pluck(this.lessons, 'title'));
+               return titles.map(title => {
+                   return _.findWhere(this.lessons, {title: title}); 
+               });
             }
         },
         mounted() {
@@ -98,7 +105,11 @@
                         this.facebook = facebook? facebook.content: 'https://facebook.com';                        
                         let github = _.findWhere(res.data.user.extras, {type: 'github'});
                         this.github = github? github.content: 'https://github.com'; 
-                        this.lessons = _.where(res.data.user.logs, {type: 'lesson'});
+                        let logs = _.where(res.data.user.logs, {type: 'lesson'});
+                        let lessons = _.map(logs, (log) => {
+                            return log.contents[0]? log.contents[0]: false;
+                        });
+                        this.lessons = _.compact(lessons);
                     }
                 })
                 .catch(err => console.log(err));

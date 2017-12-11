@@ -5,7 +5,9 @@
 @stop
 
 @section('content')
-
+	<v-layout row wrap justify-start>
+		<site-forum id="{{ $id }}" address="{{ $site->address }}"></site-forum>
+	</v-layout>
 @stop
 
 @section('scripts')

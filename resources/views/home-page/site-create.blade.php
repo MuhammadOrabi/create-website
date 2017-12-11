@@ -4,7 +4,7 @@
 @stop
 @section('content')
 	<v-layout justify-center>
-		<site-creator token="{{ auth()->user()->getToken('') }}" ></site-creator>
+		<site-creator dusk="site-creator" token="{{ auth()->user()->getToken('') }}" ></site-creator>
 	</v-layout>
 @stop
 @section('scripts')

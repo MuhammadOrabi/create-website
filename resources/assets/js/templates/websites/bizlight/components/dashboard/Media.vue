@@ -5,17 +5,17 @@
             <div class="card-header text-center">
                 <ul class="nav nav-tabs nav-fill card-header-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active" id="my-images-tab" data-toggle="tab" href="#my-images" role="tab" aria-controls="my-images"
-                            aria-selected="true">My Images</a>
+                        <a class="nav-link active" :id="`my-images${addon}-tab`" data-toggle="tab" :href="`#my-images${addon}`" 
+                            role="tab" :aria-controls="`my-images${addon}`" aria-selected="true">My Images</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="search-images-tab" data-toggle="tab" href="#search-images" role="tab" aria-controls="search-images"
-                            aria-selected="true">Look For Images</a>
+                        <a class="nav-link" :id="`search-images${addon}-tab`" data-toggle="tab" :href="`#search-images${addon}`" role="tab" 
+                            :aria-controls="`search-images${addon}`" aria-selected="true">Look For Images</a>
                     </li>
                 </ul>
             </div>
             <div class="card-body tab-content">
-                <div class="tab-pane fade show active" id="my-images" role="tabpanel" aria-labelledby="my-images-tab">
+                <div class="tab-pane fade show active" :id="`my-images${addon}`" role="tabpanel" :aria-labelledby="`my-images${addon}-tab`">
                     <div class="row">
                         <div class="col" v-if="loading">
                             <div class="progress">
@@ -45,7 +45,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade show" id="search-images" role="tabpanel" aria-labelledby="search-images-tab">
+                <div class="tab-pane fade show" :id="`search-images${addon}`" role="tabpanel" :aria-labelledby="`search-images${addon}-tab`">
                     Look For Images
                 </div>
             </div>
@@ -68,6 +68,11 @@
                 context: null,
                 images: []
             };
+        },
+        computed: {
+            addon() {
+                return this.parent? this.parent.$options._componentTag: '';
+            }
         },
         mounted() {
             this.getImgs();

@@ -5,6 +5,9 @@ namespace App;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use App\Helpers\WebApps\ELearning\ELearningHelper;
+use App\Helpers\Websites\Bizlight\BizlightHelper;
+use App\Portfolios\Portfolio1\Portfolio1Helper;
 
 class User extends Authenticatable
 {
@@ -60,11 +63,11 @@ class User extends Authenticatable
         $name = camel_case($address);
         $site = $this->sites()->create(compact('address', 'theme_id', 'name'));
         if ($site->theme->location == 'templates.websites.bizlight') {
-            $site->bizlight_init();
+            BizlightHelper::scaffold($site->id);
         } elseif ($site->theme->location == 'templates.web-apps.elearning') {
-            $site->sys_theme1_init();
+            ELearningHelper::scaffold($site->id);
         } elseif ($site->theme->location == 'templates.portfolios.theme1') {
-            $site->portfolio_theme1_init();
+            Portfolio1Helper::scaffold($site->id);
         }
 
         return $site;

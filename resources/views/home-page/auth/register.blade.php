@@ -57,7 +57,7 @@
 						</div>
                         <div class="row">
                             <div class="input-field center-align">
-								<button class="btn waves-effect waves-light" type="submit" name="action">Register</button><br>
+								<button class="btn waves-effect waves-light" type="submit" name="register">Register</button><br>
                             </div>
                         </div>
                     </form>

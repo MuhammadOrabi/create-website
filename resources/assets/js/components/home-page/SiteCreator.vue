@@ -34,7 +34,7 @@
 									<v-card-title>
 										<span class="headline cap">{{ tag.tag }}</span>
 									</v-card-title>
-									<v-card-media class="white--text click" height="200px" :src="tag.img" @click="chooseCat(i)" >
+									<v-card-media :dusk="tags[i].tag" class="white--text click" height="200px" :src="tag.img" @click="chooseCat(i)" >
 									</v-card-media>
 								</v-card>
 							</v-flex>
@@ -69,8 +69,8 @@
 									<v-card-actions>
 										<p class="title">{{ theme.name }}</p>
 										<v-spacer></v-spacer>
-										<v-btn color="success" flat @click="chooseTheme(theme.id)">
-											Continue
+										<v-btn :dusk="theme.name" color="success" flat @click="chooseTheme(theme.id)">
+											Continue 
 											<v-icon>arrow_right</v-icon>
 										</v-btn>
 									</v-card-actions>
@@ -87,7 +87,7 @@
 			<v-stepper-content step="3">
 				<h3>Let's give your site an address.</h3>
 				<p>Enter your site's name, or some key words that describe it - we'll use this to create your new site's address.</p>
-				<v-text-field solo label="Enter an address..." prepend-icon="search" v-model="address" autofocus></v-text-field>
+				<v-text-field dusk="address" solo label="Enter an address..." prepend-icon="search" v-model="address" autofocus></v-text-field>
 				<v-subheader :class="'caption ' + color + '--text'">{{ feedback }}</v-subheader>
 				<v-layout >
 					<v-btn @click="e1 = 2" flat>
@@ -95,7 +95,7 @@
 						Back
 					</v-btn>
 					<v-spacer></v-spacer>
-					<v-btn color="success" @click="create" :disabled="disable">
+					<v-btn color="success" dusk="create-site" @click="create" :disabled="disable">
 						Continue
 						<v-icon>arrow_right</v-icon>
 					</v-btn>

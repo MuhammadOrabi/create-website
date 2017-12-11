@@ -32,6 +32,7 @@ Vue.component('site-courses', require('./components/site/Courses.vue'));
 Vue.component('site-course', require('./components/site/Course.vue'));
 Vue.component('site-lesson', require('./components/site/Lesson.vue'));
 Vue.component('site-profile', require('./components/site/Profile.vue'));
+Vue.component('site-forum', require('./components/site/Forum.vue'));
 
 Vue.store = store;
 

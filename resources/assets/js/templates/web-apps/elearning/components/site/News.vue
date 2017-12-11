@@ -1,12 +1,12 @@
 <template>
 	<v-container >
-		<v-layout justify-center v-if="false">
+		<v-layout justify-center v-if="items.length > 0">
 			<v-flex xs10 class="pb-5">
-				<v-text-field append-icon="search" label="Search" solo v-model="search" ></v-text-field>
+				<v-text-field append-icon="search" label="Search" solo v-model="key" ></v-text-field>
 			</v-flex>
 		</v-layout>
 		<v-layout row wrap justify-center v-if="items.length > 0">
-			<v-flex xs12 md6 v-for="item in items" :key="item.id" class="pl-4">
+			<v-flex xs12 md6 v-for="item in filtered" :key="item.id" class="pl-4">
 				<v-card>
 					<v-card-media :src="item.img" height="200px" ></v-card-media>
 					<v-card-title primary-title>
@@ -28,7 +28,7 @@
 			</v-flex>
 		</v-layout>
 		<v-layout row justify-center wrap class="pt-3" v-else>
-			<span class="caption">There are No Courses yet!</span>
+			<span class="caption">There are No News yet!</span>
 		</v-layout>
 	</v-container>
 </template>
@@ -36,6 +36,7 @@
 <script>
 const _ = window._;
 import moment from 'moment';
+import * as JsSearch from 'js-search';
 
 export default {
 
@@ -44,7 +45,20 @@ export default {
 	data () {
 		return {
 			items: [],
-			search: ''
+			key: ''
+		}
+	},
+	computed: {
+		filtered() {
+			if (this.key) {
+				let search = new JsSearch.Search('id');
+				search.addIndex('title');
+				search.addIndex('date');
+				search.addDocuments(this.items);
+				return search.search(this.key);
+			} else {
+				return this.items;
+			}
 		}
 	},
 	mounted() {

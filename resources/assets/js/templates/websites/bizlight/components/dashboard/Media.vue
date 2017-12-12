@@ -125,8 +125,7 @@
                 .catch(err => console.log(err));
             },
             useImage(url) {
-                if (this.index !== null) {
-                    console.log(this.parent._self.avail[this.index].img);
+                if (this.index !== undefined) {
                     this.parent._self.data[this.index].img = url;
                 } else {
                     this.parent._self.imgsrc = url;

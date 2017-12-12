@@ -18,35 +18,35 @@
 <script>
 export default {
 
-  	name: 'ShowCase',
-  	props: ['token', 'id'],
-  	data () {
-	    return {
+	name: 'ShowCase',
+	props: ['token', 'id'],
+	data () {
+		return {
 			p: { id: 0, p: null},
-	    	h: {id: 0, h: null},
-	    	inputh: false,
-	    	inputp: false,
-	    	msg: ''
+			h: {id: 0, h: null},
+			inputh: false,
+			inputp: false,
+			msg: ''
 
-	    };
-  	},
-  	mounted() {
-  		this.getData();
-  	},
-  	methods: {
-  		save() {
-  			return [{id: this.h.id, content: this.h.h}, {id: this.p.id, content: this.p.p}];
-  		},
-  		getData() {
-  			axios.get('/api/sections/' + this.id + '/edit', { headers: { 'Authorization': 'Bearer ' + this.token } })
+		};
+	},
+	mounted() {
+		this.getData();
+	},
+	methods: {
+		save() {
+			return [{id: this.h.id, content: this.h.h}, {id: this.p.id, content: this.p.p}];
+		},
+		getData() {
+			window.axios.get('/api/sections/' + this.id + '/edit', { headers: { 'Authorization': 'Bearer ' + this.token } })
 			.then(res => {
 				this.h.h = res.data[0].content || 'Heading';
 				this.h.id = res.data[0].id;
 				this.p.p = res.data[1].content || 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.';
 				this.p.id = res.data[1].id;
 			}).catch(err => console.log(err));
-  		}
-  	}
+		}
+	}
 }
 </script>
 

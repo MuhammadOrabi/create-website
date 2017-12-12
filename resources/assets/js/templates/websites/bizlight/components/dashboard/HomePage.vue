@@ -42,17 +42,17 @@ export default {
 			let data = _.union(
 				this.$refs.showcase.save(), this.$refs.sectiona.save(), this.$refs.sectionb.save(), this.$refs.sectionc.save()
 			);
-			axios.put('/api/contents', data, { headers: { 'Authorization': 'Bearer ' + this.token } })
+			window.axios.put('/api/contents', data, { headers: { 'Authorization': 'Bearer ' + this.token } })
 			.then(res => {
 				this.msg = res.data;
 			}).catch(err => console.log(err));
 		},
 		getImgs() {
-  			axios.get('/api/imgs/' + this.address, { headers: { 'Authorization': 'Bearer ' + this.token } })
-  			.then(res => {
-  				this.imgs = res.data;
+			window.axios.get('/api/imgs/' + this.address, { headers: { 'Authorization': 'Bearer ' + this.token } })
+			.then(res => {
+				this.imgs = res.data;
 			}).catch(err => console.log(err));
-  		},
+		},
 	}
 
 }

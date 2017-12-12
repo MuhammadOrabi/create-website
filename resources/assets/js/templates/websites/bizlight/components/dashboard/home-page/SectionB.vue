@@ -75,7 +75,7 @@ export default {
 			imgsrc: '',
 			imgid: 0,
 			msg: '',
-			modal: false
+			modal: false,
 		};
 	},
 	computed: {

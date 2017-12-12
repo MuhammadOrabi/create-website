@@ -24,7 +24,7 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<media :address="address" :token="token" :parent="parent"></media>
+						<media :address="address" :token="token" :parent="parent" type="one"></media>
 					</div>
 				</div>
 			</div>

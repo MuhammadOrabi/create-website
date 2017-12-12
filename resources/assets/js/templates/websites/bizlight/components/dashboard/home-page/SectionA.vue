@@ -33,7 +33,7 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<media :address="address" :token="token" :parent="parent" :index="index"></media>
+						<media :address="address" :token="token" :parent="parent" :index="index" type="array"></media>
 					</div>
 				</div>
 			</div>

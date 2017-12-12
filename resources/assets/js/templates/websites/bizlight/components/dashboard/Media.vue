@@ -56,7 +56,7 @@
 <script>
     export default {
         name: 'Media',
-        props: ['token', 'address', 'parent', 'index'],
+        props: ['token', 'address', 'parent', 'index', 'type'],
         data() {
             return {
                 imgFile: null,
@@ -125,9 +125,9 @@
                 .catch(err => console.log(err));
             },
             useImage(url) {
-                if (this.index !== undefined) {
+                if (this.type === 'array') {
                     this.parent._self.data[this.index].img = url;
-                } else {
+                } else if (this.type === 'one') {
                     this.parent._self.imgsrc = url;
                 }
                 this.parent._self.toggleModal();

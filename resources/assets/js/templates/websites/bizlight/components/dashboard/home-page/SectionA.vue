@@ -3,22 +3,26 @@
 		<div class="section-a">
 			<div class="container-fluid">
 				<div class="row">
-					<a v-if="check" class="nav-link" @click="add()">
+					<a class="nav-link" v-if="update" @click="add()">
 						<i class="fa fa-plus" aria-hidden="true"></i>
 					</a>
-					<div class="col-md-4 text-center" v-for="(d, index) in avail" :key="index">
-						<div class="float-right text-danger">
+				</div>
+				<div class="row">
+					<div class="col-md-4 text-center" v-for="(d, index) in data" :key="index">
+						<div class="float-right text-danger" v-if="update">
 							<a class="btn btn-link" @click="remove(index)"><i class="fa fa-minus" aria-hidden="true"></i></a>
 						</div>
 						<div class="row m-5">
 							<img  @click="toggleModal(index)" :src="d.img" class="rounded-circle" width="150" height="150" alt="img" >
 						</div>
-						<input type="text" class="form-control border-0" v-if="avail[index].inputh || avail[index].h == ''" 
-							v-model="avail[index].h" @mouseleave="avail[index].inputh = false;">
-						<h3 v-else @mouseover="avail[index].inputh = true;">{{ d.h }}</h3>
-						<textarea class="form-control border-0" v-model="avail[index].p" autofocus rows="8" 
-									v-if="avail[index].inputp || avail[index].p == ''" @mouseleave="avail[index].inputp = false"></textarea>
-						<p v-else @mouseover="avail[index].inputp = true">{{ d.p }}</p>
+						<div v-if="update">
+							<froala :config="headingConfig" v-model="data[index].heading"></froala>
+							<froala :config="paragraphConfig" v-model="data[index].paragraph" ></froala>
+						</div>
+						<div v-else>
+							<h3 v-html="d.heading"></h3>
+							<p v-html="d.paragraph"></p>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -49,23 +53,43 @@ export default {
 	props: ['token', 'id', 'address'],
 	data () {
 		return {
+			update: false,
 			data: [],
 			index: 0,
 			msg: '',
-			show: null
+			show: null,
+			paragraphConfig: {
+				placeholderText: 'Paragraph!',
+				charCounterCount: true,
+				toolbarInline: true,
+				charCounterMax: 150,
+				imageUpload: false,
+				fileUpload: false,
+				toolbarButtons: [
+					'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', '-', 'insertLink', '|', 'specialCharacters', 'selectAll', 'clearFormatting', '|', 'print', 'spellChecker', 'help', 'html', '|', 'undo', 'redo'
+					],
+				quickInsertButtons: ['ul', 'ol'],
+				toolbarVisibleWithoutSelection: true
+			},
+			headingConfig: {
+				placeholderText: 'Heading!',
+				charCounterCount: true,
+				toolbarInline: true,
+				charCounterMax: 60,
+				imageUpload: false,
+				fileUpload: false,
+				toolbarButtons: [
+					'bold', 'italic', 'underline', 'strikeThrough', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'outdent', 'indent', '-', 'insertLink', '|', 'specialCharacters', 'selectAll', 'clearFormatting', '|', 'print', 'spellChecker', 'help', 'html', '|', 'undo', 'redo'
+					],
+				quickInsertButtons: [],
+				toolbarVisibleWithoutSelection: true
+			}
 		}
 	},
 	mounted() {
 		this.getData();
 	},
 	computed: {
-		check() {
-			return _.where(this.data, {h: null}).length !== 0;
-		},
-		avail () {
-			let empty =  _.where(this.data, {h: null, p: null, img: null});
-			return _.difference(this.data, empty);
-		},
 		parent() {
 			return this;
 		}
@@ -74,57 +98,37 @@ export default {
 			getData() {
 				window.axios.get('/api/sections/' + this.id + '/edit', { headers: { 'Authorization': 'Bearer ' + this.token } })
 				.then(res => {
-					let order1 = _.where(res.data, {order: 1});
-					let order2 = _.where(res.data, {order: 2});
-					let order3 = _.where(res.data, {order: 3});
-					this.data.push({
-						hid: order1[0].id, pid: order1[1].id,
-						h: order1[0].content, p: order1[1].content,
-						img: order1[2].content, imgid: order1[2].id,
-						inputh: false, inputp: false
+					if (res.data.length === 0) {
+						return;
+					}
+					let data = _.groupBy(res.data, 'order');
+					this.data = [];
+					_.each(data, (items, key) => {
+						let heading = _.findWhere(items, {type: 'heading'});
+						let paragraph = _.findWhere(items, {type: 'paragraph'});
+						let img = _.findWhere(items, {type: 'img'});
+						if (heading && paragraph) {
+							this.data.push({heading: heading.content, paragraph: paragraph.content, img: img.content, order: key});
+						}
 					});
-					this.data.push({
-						hid: order2[0].id, pid: order2[1].id,
-						h: order2[0].content, p: order2[1].content, 
-						img: order2[2].content, imgid: order2[2].id,
-						inputh: false, inputp: false
-					});
-					this.data.push({
-						hid: order3[0].id, pid: order3[1].id,
-						h: order3[0].content, p: order3[1].content, 
-						img: order3[2].content, imgid: order3[2].id,
-						inputh: false, inputp: false
-					});	
 				}).catch(err => console.log(err));
 			},
 			save() {
-				return [
-					{id: this.data[0].hid, content: this.data[0].h}, {id: this.data[0].pid, content: this.data[0].p},
-					{id: this.data[0].imgid, content: this.data[0].img},
-					{id: this.data[1].hid, content: this.data[1].h}, {id: this.data[1].pid, content: this.data[1].p},
-					{id: this.data[1].imgid, content: this.data[1].img},
-					{id: this.data[2].hid, content: this.data[2].h}, {id: this.data[2].pid, content: this.data[2].p},
-					{id: this.data[2].imgid, content: this.data[2].img}
-				];
-				
+				let data = _.difference(this.data, _.where(this.data, {heading: ''}), _.where(this.data, {paragraph: ''}));
+				return { id: this.id, data: data };
 			},
 			add() {
-				let empty = _.where(this.data, {h: null, p: null});
-				empty[0].h = 'Some Heading';
-				empty[0].p = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed aliquam ducimus voluptatum placeat nobis, ipsum rerum cum cumque illo harum fugiat quos laborum beatae soluta incidunt, aliquid animi quia.';
-				empty[0].img = 'http://via.placeholder.com/150x150';
+				this.data.push({heading: '', paragraph: '', img: 'https://dummyimage.com/150x150/000/ffffff.png&text=Click+Here!'});
 			},
 			remove(i) {
-				this.avail[i].h = null;
-				this.avail[i].p = null;
-				this.avail[i].img = null;
-			},
-			addimg(src) {
-				this.avail[this.index].img = src;
+				this.data[i].heading = null;
+				this.data = _.difference(this.data, _.where(this.data, {heading: null}));
 			},
 			toggleModal(index) {
-				this.index = index;
-				window.$('#imgModalA').modal('toggle');
+				if (this.update) {	
+					this.index = index;
+					window.$('#imgModalA').modal('toggle');
+				}
 			}
 		}
 	};

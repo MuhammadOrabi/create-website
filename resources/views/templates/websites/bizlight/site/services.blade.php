@@ -4,9 +4,6 @@
 	Services |
 @stop
 
-@php
-	$section = $page->sections->where('title', 'servicesSection')->first();		
-@endphp
 @section('content')
 	<div class="title-bar">
 		<div class="container">
@@ -25,8 +22,8 @@
 							@foreach($section->contents->groupBy('order') as $content)
 								@isset($content[0]->content)
 									<div class="well">
-										<h4>{{ $content[0]->content }}</h4>
-										<p>{{ $content[1]->content }}</p>
+										<h4>{!! $content[0]->content !!}</h4>
+										<p>{!! $content[1]->content !!}</p>
 									</div>
 								@endisset
 							@endforeach

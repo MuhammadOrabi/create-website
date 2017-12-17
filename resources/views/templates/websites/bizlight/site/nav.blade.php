@@ -1,10 +1,3 @@
-@php
-	$tw = $nav->contents->where('type', 'twitterLink')->first();
-	$fb = $nav->contents->where('type', 'facebookLink')->first();
-	$gp = $nav->contents->where('type', 'googleLink')->first();
-	$li = $nav->contents->where('type', 'linkedinLink')->first();	
-@endphp
-
 <nav class="navbar navbar-default navbar-fixed-top">
 	<div class="container">
 		<div class="navbar-header">
@@ -14,7 +7,13 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand text-capitalize" href="/s/{{ $site->address }}">{{ $site->name }}</a>
+			<a class="navbar-brand text-capitalize" href="/s/{{ $site->address }}" >
+				@if($nav['logo'])
+					<img style="display:inline-block !important;vertical-align:top !important; position: absolute; top: 10px" 
+						alt="Brand" src="{{$nav['logo']->content}}" height="50px" width="50px">
+				@endif
+				<span style="padding-left:60px">{{ $site->name }}</span>
+			</a>
 		</div>
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
@@ -24,10 +23,9 @@
 				<li><a href="/s/{{ $site->address }}/contact">Contact</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="{{ $tw->content }}" target="_blank"><i class="fa fa-twitter"></i></a></li>
-				<li><a href="{{ $fb->content }}" target="_blank"><i class="fa fa-facebook"></i></a></li>
-				<li><a href="{{ $gp->content }}" target="_blank"><i class="fa fa-google-plus"></i></a></li>
-				<li><a href="{{ $li->content }}" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+				@foreach($nav['links'] as $link)
+					<li><a href="{{ $link->content }}" target="_blank"><i class="fa fa-{{$link->title}}"></i></a></li>
+				@endforeach
 			</ul>
 		</div><!--/.nav-collapse -->
 	</div>

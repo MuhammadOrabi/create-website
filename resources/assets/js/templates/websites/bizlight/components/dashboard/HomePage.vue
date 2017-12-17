@@ -6,8 +6,9 @@
 				<span aria-hidden="true">&times;</span>
 			</button>
 		</div>
-		<button class="btn btn-success" @click="save" >Save</button>
-		<show-case ref="showcase" :token="token" :id="showcase"></show-case>
+		<button v-if="updateCheck" class="btn btn-success" @click="save" >Save</button>
+		<button v-else class="btn btn-warning" @click="update" >Update</button>
+		<show-case ref="showcase" :token="token" :id="showcase" ></show-case>
 		<section-b ref="sectionb" :token="token" :id="sectionb" :address="address"></section-b>
 		<section-a ref="sectiona" :token="token" :id="sectiona" :address="address"></section-a>
 		<section-c ref="sectionc" :token="token" :id="sectionc" :address="address"></section-c>
@@ -30,31 +31,34 @@ export default {
 	components: {SectionA, SectionB, SectionC, ShowCase},
 	data () {
 		return {
-			imgs: [],
-			msg: ''
+			msg: '',
+			updateCheck: false
 		}
 	},
-	beforeMount() {
-		this.getImgs();
-	},
 	methods: {
+		update() {
+			this.updateCheck = true;
+			this.$refs.showcase.update = true;
+			this.$refs.sectionb.update = true;
+			this.$refs.sectiona.update = true;
+			this.$refs.sectionc.update = true;
+		},
 		save() {
-			let data = _.union(
-				this.$refs.showcase.save(), this.$refs.sectiona.save(), this.$refs.sectionb.save(), this.$refs.sectionc.save()
-			);
-			window.axios.put('/api/contents', data, { headers: { 'Authorization': 'Bearer ' + this.token } })
+			let data = [this.$refs.showcase.save(), this.$refs.sectionb.save(), this.$refs.sectiona.save(), this.$refs.sectionc.save()];
+			window.axios.put('/api/contents/' + this.address, data, { headers: { 'Authorization': 'Bearer ' + this.token } })
 			.then(res => {
+				this.updateCheck = false;
+				this.$refs.showcase.update = false;
+				this.$refs.sectionb.update = false;
+				this.$refs.sectiona.update = false;
+				this.$refs.sectionc.update = false;
+				this.$refs.sectionb.getData();
+				this.$refs.sectiona.getData();
+				this.$refs.sectionc.getData();
 				this.msg = res.data;
 			}).catch(err => console.log(err));
-		},
-		getImgs() {
-			window.axios.get('/api/imgs/' + this.address, { headers: { 'Authorization': 'Bearer ' + this.token } })
-			.then(res => {
-				this.imgs = res.data;
-			}).catch(err => console.log(err));
-		},
+		}
 	}
-
 }
 </script>
 

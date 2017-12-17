@@ -7,13 +7,24 @@ body {
 /*
  	* Sidebar
 */
-
+.navbar-brand {
+	display: inline-block;
+    padding-top: .3125rem;
+    padding-bottom: .3125rem;
+    margin-right: 1rem;
+    font-size: 1.25rem;
+	line-height: inherit;
+	img {
+		display:inline-block!important;
+		vertical-align:top!important;
+	}
+}
 .sidebar {
 	position: fixed;
 	top: 51px;
 	bottom: 0;
 	left: 0;
-	z-index: 1000;
+	// z-index: 1000;	
 	padding: 20px 0;
 	overflow-x: hidden;
 	overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */

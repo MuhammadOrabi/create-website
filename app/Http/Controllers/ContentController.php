@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Content;
 use App\Section;
 use Illuminate\Http\Request;
+use App\Helpers\Websites\Bizlight\BizlightHelper;
 
 class ContentController extends Controller
 {
@@ -25,13 +26,12 @@ class ContentController extends Controller
 
     public function update()
     {
-        $data = request()->all();
-        foreach ($data as $update) {
-            $content = Content::findOrFail($update['id']);
-            $content->content = $update['content'];
-            $content->save();
+        $site = auth()->user()->sites()->where('address', request()->address)->first();
+        if ($site->theme->name === 'bizlight') {
+            $msg = BizlightHelper::doThis('createOrUpdateContent', request()->all());
+            return response()->json('success');
         }
-        return response()->json('success', 200);
+        return response(500);
     }
 
     public function updateExtras()

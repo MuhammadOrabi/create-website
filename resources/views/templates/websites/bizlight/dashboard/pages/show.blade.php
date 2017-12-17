@@ -12,11 +12,9 @@
 					sectionb="{{ $page->sections->where('title', 'section_b')->first()->id }}"
 					sectionc="{{ $page->sections->where('title', 'section_c')->first()->id }}" ></home-page>
 		@elseif($page->slug == 'about')
-			<about token="{{ auth()->user()->getToken('') }}" 
-				id="{{ $page->sections->first()->id }}" ></about>
+			<about token="{{ auth()->user()->getToken('') }}" id="{{ $page->sections->first()->id }}" address="{{ $site->address }}"></about>
 		@elseif($page->slug == 'services')
-			<services token="{{ auth()->user()->getToken('') }}" 
-				id="{{ $page->sections->first()->id }}" ></services>
+			<services token="{{ auth()->user()->getToken('') }}" id="{{ $page->sections->first()->id }}" address="{{ $site->address }}"></services>
 		@elseif($page->slug == 'contact')
 			<table class="table table-hover">
 				<thead>

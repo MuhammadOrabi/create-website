@@ -3,13 +3,12 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-6">
-					<img :src="imgsrc" class="show" width="250" height="350" alt="img" data-toggle="modal" data-target="#imgModalC">
+					<img :src="imgsrc" class="show" width="250" height="350" alt="img" @click="toggleModal">
 				</div>
 				<div class="col-md-6">
 					<blockquote class="blockquote">
-						<textarea class="form-control border-0" v-model="p" autofocus rows="8" 
-									v-if="input || p == ''" @mouseleave="input = false"></textarea>
-						<p class="mb-0" v-else @mouseover="input = true">{{ p }}</p>
+						<froala v-if="update" :config="paragraphConfig" v-model="paragraph"></froala>
+						<p class="mb-0" v-else v-html="paragraph"></p>
 					</blockquote>
 				</div>
 			</div>
@@ -33,18 +32,30 @@
 </template>
 
 <script>
+	const _ = window._;
 	export default {
 
 		name: 'SectionC',
 		props: ['token', 'id', 'address'],
 		data () {
 			return {
-				input: false,
-				p: null,
-				pid: 0,
-				imgsrc: '',
-				imgid: 0,
-				msg: ''
+				update: false,
+				paragraph: null,
+				imgsrc: 'https://dummyimage.com/600x400/000/ffffff.png&text=Click+Here!',
+				msg: '',
+				paragraphConfig: {
+					placeholderText: 'Paragraph!',
+					charCounterCount: true,
+					toolbarInline: true,
+					charCounterMax: 600,
+					imageUpload: false,
+					fileUpload: false,
+					toolbarButtons: [
+						'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', '-', 'insertLink', '|', 'specialCharacters', 'selectAll', 'clearFormatting', '|', 'print', 'spellChecker', 'help', 'html', '|', 'undo', 'redo'
+						],
+					quickInsertButtons: ['ul', 'ol'],
+					toolbarVisibleWithoutSelection: true
+				},
 			};
 		},
 		computed: {
@@ -59,22 +70,22 @@
 			getData() {
 				window.axios.get('/api/sections/' + this.id + '/edit', { headers: { 'Authorization': 'Bearer ' + this.token } })
 				.then(res => {
-					let par = res.data[0];
-					let img = res.data[1];
-					this.imgsrc = img.content || 'http://via.placeholder.com/250x350';
-					this.imgid = img.id;
-					this.p = par.content || 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum obcaecati fugit tenetur officiis, expedita modi fugiat quo animi, minima eveniet sed commodi architecto maxime nobis velit ipsam libero, voluptate tempora!';
-					this.pid = par.id;
+					if (res.data.length === 0) {
+						return;
+					}
+					let img = _.findWhere(res.data, {type: 'img'});
+					let paragraph = _.findWhere(res.data, {type: 'paragraph'});
+					this.imgsrc = img.content;
+					this.paragraph = paragraph.content;
 				}).catch(err => console.log(err));
 			},
 			save() {
-				return [
-					{id: this.pid, content: this.p},
-					{id: this.imgid, content: this.imgsrc}
-				];
+				return {id: this.id, img: this.imgsrc, paragraph: this.paragraph};
 			},
 			toggleModal() {
-				window.$('#imgModalC').modal('toggle');
+				if (this.update) {
+					window.$('#imgModalC').modal('toggle');
+				}
 			}
 		}
 	};

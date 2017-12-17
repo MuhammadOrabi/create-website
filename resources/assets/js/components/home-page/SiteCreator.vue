@@ -67,7 +67,7 @@
 										</v-carousel>
 									</v-dialog>
 									<v-card-actions>
-										<p class="title">{{ theme.name }}</p>
+										<p class="title">#{{ theme.id }}</p>
 										<v-spacer></v-spacer>
 										<v-btn :dusk="theme.name" color="success" flat @click="chooseTheme(theme.id)">
 											Continue 

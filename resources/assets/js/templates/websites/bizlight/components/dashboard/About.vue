@@ -6,16 +6,16 @@
 				<span aria-hidden="true">&times;</span>
 			</button>
 		</div>
-		<button class="btn btn-success" id="button" @click="save" >Save</button>
+		<button class="btn btn-success" id="button" v-if="update" @click="save" >Save</button>
+		<button class="btn btn-warning" id="button" v-else @click="update = true" >Update</button>
 		<div class="container-fluid">
 			<div class="row">
 				<div class="push-1 col-md-8">
 					<div class="card">
 						<div class="card-header">Who we Are?</div>
 						<div class="card-block">
-							<textarea class="form-control border-0" v-model="p" autofocus rows="8" 
-									v-if="input || p == ''" @mouseleave="input = false"></textarea>
-							<p class="card-text p-4" v-else @mouseover="input = true">{{ p }}</p>
+							<froala class="p-4" v-if="update" :config="paragraphConfig" v-model="paragraph"></froala>
+							<p class="card-text p-4" v-else v-html="paragraph"></p>
 						</div>
 					</div>
 				</div>
@@ -28,14 +28,25 @@
 	export default {
 
 		name: 'About',
-		props: ['token', 'id'],
+		props: ['token', 'id', 'address'],
 		data () {
 			return {
-				p: '',
-				input: false,
-				pid: 0,
+				update: false,
+				paragraph: '',
 				msg: false,
-				succ: false
+				paragraphConfig: {
+					placeholderText: 'Paragraph!',
+					charCounterCount: true,
+					toolbarInline: true,
+					charCounterMax: 6000,
+					imageUpload: false,
+					fileUpload: false,
+					toolbarButtons: [
+						'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', '-', 'insertLink', '|', 'specialCharacters', 'selectAll', 'clearFormatting', '|', 'print', 'spellChecker', 'help', 'html', '|', 'undo', 'redo'
+						],
+					quickInsertButtons: ['ul', 'ol'],
+					toolbarVisibleWithoutSelection: true
+				},
 			};
 		},
 		mounted() {
@@ -43,21 +54,22 @@
 		},
 		methods: {
 			save() {
-				let token = 'Bearer ' +  this.token;
 				let data = [
-					{id: this.pid, content: this.p}
+					{id: this.id, paragraph: this.paragraph}
 				];
-				window.axios.put('/api/contents', data, { headers: { 'Authorization': token } })
+				window.axios.put('/api/contents/' + this.address, data, { headers: { 'Authorization': 'Bearer ' + this.token } })
 				.then(res => {
+					this.update = false;
 					this.msg = res.data;
+					this.getData();
 				}).catch(err => console.log(err));
 			},
 			getData() {
 				window.axios.get('/api/sections/' + this.id + '/edit', { headers: { 'Authorization': 'Bearer ' + this.token } })
 				.then(res => {
-					let par = res.data[0];
-					this.p = par.content || 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum obcaecati fugit tenetur officiis, expedita modi fugiat quo animi, minima eveniet sed commodi architecto maxime nobis velit ipsam libero, voluptate tempora!';
-					this.pid = par.id;
+
+					let paragraph = res.data[0];
+					this.paragraph = paragraph? paragraph.content: '';
 				}).catch(err => console.log(err));
 			}
 		}

@@ -7,6 +7,7 @@ use App\Theme;
 use App\Site;
 use App\User;
 use App\Helpers\Websites\Bizlight\BizlightHelper;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class BizlightHelperTest extends TestCase
 {

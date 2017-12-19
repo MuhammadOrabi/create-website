@@ -11,7 +11,7 @@
 		    drawerRight: null,
 		    right: null,
 		    left: null,
-		    siteNameVisibility: 'title',
+		    siteNameVisibility: 'title cap',
 		    nav: {text: 'Create Website', link: '/', logo: '/img/logo.png'},
 		    rightMainNavCheck: false,
 		    rightMainNav: [],

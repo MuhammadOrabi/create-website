@@ -5,7 +5,7 @@
 @stop
 
 @section('content')
-	@include('home-page._includes.toolbar')
+	@include('home-page._includes.nav.toolbar')
 	<div class="container z-depth-5" style="margin-top: 20px">
 	    <div class="row">
 	        <div class="col s10 offset-s1">

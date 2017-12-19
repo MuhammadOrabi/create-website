@@ -62,11 +62,13 @@ class User extends Authenticatable
     {
         $name = camel_case($address);
         $site = $this->sites()->create(compact('address', 'theme_id', 'name'));
-        if ($site->theme->location == 'templates.websites.bizlight') {
+        if ($site->theme->name == 'bizlight') {
             BizlightHelper::scaffold($site->id);
-        } elseif ($site->theme->location == 'templates.web-apps.elearning') {
+        } elseif ($site->theme->name == 'elearning') {
             ELearningHelper::scaffold($site->id);
-        } elseif ($site->theme->location == 'templates.portfolios.theme1') {
+        } elseif ($site->theme->name == 'elearning2') {
+            ELearningHelper::scaffold($site->id);
+        } elseif ($site->theme->name == 'theme1') {
             Portfolio1Helper::scaffold($site->id);
         }
 

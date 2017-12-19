@@ -35,7 +35,7 @@ class ThemeController extends Controller
         $bizlight->imgs()->create(['url' => '/img/websites/Bizlight/7.png']);
 
         $elearning = $tag_webApp->themes()->create(
-            ['name' => 'elearning', 'location' => 'templates.web-apps.elearning', 'type' => 'eLearning']
+            ['name' => 'elearning', 'location' => 'templates.web-apps.e-learning', 'type' => 'eLearning']
         );
         $elearning->imgs()->create(['url' => '/img/web-apps/elearning/1.png']);
         $elearning->imgs()->create(['url' => '/img/web-apps/elearning/2.png']);
@@ -43,6 +43,11 @@ class ThemeController extends Controller
         $elearning->imgs()->create(['url' => '/img/web-apps/elearning/4.png']);
         $elearning->imgs()->create(['url' => '/img/web-apps/elearning/5.png']);
         $elearning->imgs()->create(['url' => '/img/web-apps/elearning/6.png']);
+
+        $elearning2 = $tag_webApp->themes()->create(
+            ['name' => 'elearning2', 'location' => 'templates.web-apps.elearning', 'type' => 'eLearning']
+        );
+        $elearning2->imgs()->create(['url' => '/img/web-apps/elearning/1.png']);
 
         $portfolio_theme1 = $tag_portfolio->themes()->create(
             ['name' => 'theme1', 'location' => 'templates.portfolios.theme1', 'type' => 'portfolio']

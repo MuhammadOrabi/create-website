@@ -1,0 +1,48 @@
+#admin-side-menu {
+	position: fixed;
+	top: 3.3rem;
+	left: -200px;
+	bottom: 0;
+	width: 200px;
+	background-color: whitesmoke;
+	overflow-y: scroll;
+	transition: left 0.3s ease-in-out;
+	&.is-active {
+		transition: left 0.3s ease-in-out;
+		left: 0;	
+	}
+	@include desktop {
+		left: 0;
+	}
+	.side-menu li a:hover {
+		color: $brand-success;
+	}
+}
+#admin-slideout-button {
+	transition: 0.3s;
+	&.is-active {
+		transition: 0.3s;
+		transform: rotateY(180deg);
+	}
+}
+.managment-area{
+	position: absolute;
+	top: 4rem;
+	left: 200px;
+	right: 0;
+}
+
+.flex-container{
+	margin: 10px 25px;
+}
+
+.submenu{
+	max-height: 0;
+	overflow: hidden;
+	transition: all 0.2s ease-in-out;
+}
+
+.menu-list li ul {
+	margin-top: 0;
+	margin-bottom: 0;
+}

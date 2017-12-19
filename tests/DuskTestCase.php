@@ -6,10 +6,17 @@ use Laravel\Dusk\TestCase as BaseTestCase;
 use Facebook\WebDriver\Chrome\ChromeOptions;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
+use Illuminate\Support\Facades\Artisan;
 
 abstract class DuskTestCase extends BaseTestCase
 {
     use CreatesApplication;
+
+    public function setUp()
+    {
+        parent::setUp();
+        Artisan::call('passport:install');
+    }
 
     /**
      * Prepare for Dusk test execution.
@@ -35,8 +42,10 @@ abstract class DuskTestCase extends BaseTestCase
         ]);
 
         return RemoteWebDriver::create(
-            'http://localhost:9515', DesiredCapabilities::chrome()->setCapability(
-                ChromeOptions::CAPABILITY, $options
+            'http://localhost:9515',
+            DesiredCapabilities::chrome()->setCapability(
+                ChromeOptions::CAPABILITY,
+                $options
             )
         );
     }

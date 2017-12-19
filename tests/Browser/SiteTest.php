@@ -5,17 +5,10 @@ namespace Tests\Browser;
 use Tests\DuskTestCase;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Support\Facades\Artisan;
 
 class SiteTest extends DuskTestCase
 {
     use DatabaseMigrations;
-
-    public function setUp()
-    {
-        parent::setUp();
-        Artisan::call('passport:install');
-    }
 
     /**
      * A Dusk test CreateSite.

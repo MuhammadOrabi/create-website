@@ -43,8 +43,10 @@
 	            	</a>
             	</li>
 	            <ul id='dropdown1' class='dropdown-content'>
-    				<li><a href="/logout">Logout</a></li>
+    				<li><a href="/logout" 
+					onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
     			</ul>
+				@include('home-page._includes.forms.logout')
 	        @endif
 		</ul>
 		@if(Request::segment(1) == 'home')

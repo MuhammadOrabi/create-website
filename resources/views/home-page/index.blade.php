@@ -5,7 +5,7 @@
 @stop
 
 @section('content')
-	@include('home-page._includes.toolbar')
+	@include('home-page._includes.nav.toolbar')
 	<div id="index-banner" class="parallax-container">
 	    <div class="section no-pad-bot">
 	      	<div class="container">

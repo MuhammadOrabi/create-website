@@ -5,7 +5,7 @@
 @stop
 
 @section('content')
-	@include('home-page._includes.toolbar')
+	@include('home-page._includes.nav.toolbar')
 	<ul id="nav-sites" class="side-nav z-depth-5 fixed">
 		@foreach($sites as $site)
 			@php

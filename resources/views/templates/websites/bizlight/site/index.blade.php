@@ -70,21 +70,22 @@
 		$par = $section_c->contents->where('type', 'paragraph')->first();
 		$img = $section_c->contents->where('type', 'img')->first();
 	@endphp
-	@if($section_c)
-		<div class="section-c">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-6">
-						<img src="{{ $img->content }}" alt="img" height="350" width="250">
-					</div>
-					<div class="col-md-6">
-						<blockquote class="blockquote">
-								<p class="mb-0">{!! $par->content !!}</p>
-						</blockquote>
-					</div>
+	<div class="section-c">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+				@if($img)
+					<img src="{{ $img->content }}" alt="img" height="350" width="250">
+				@endif
+				</div>
+				<div class="col-md-6">
+					<blockquote class="blockquote">
+					@if($par)
+						<p class="mb-0">{!! $par->content !!}</p>
+					@endif
+					</blockquote>
 				</div>
 			</div>
 		</div>
-	@endif
-
+	</div>
 @stop

@@ -12,7 +12,7 @@
 				$id = $site->pages()->where('homePage', true)->get()->first()->id;
 			@endphp
 			<li><a class="subheader">{{ $site->name }}</a></li>
-			<li><a href="/dashboard/pages/{{ $id }}/edit"  target="_blank"><i class="material-icons">edit</i>CMS</a></li> 
+			<li><a href="/dashboard/pages/{{ $id }}/edit/{{ $site->address }}"  target="_blank"><i class="material-icons">edit</i>CMS</a></li> 
 			<li><a href="/s/{{ $site->address }}" target="_blank"><i class="material-icons">launch</i>Open Site</a></li>
 		    <li><div class="divider"></div></li>
 		@endforeach

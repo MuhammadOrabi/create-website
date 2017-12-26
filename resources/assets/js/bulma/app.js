@@ -1,15 +1,17 @@
 require('../bootstrap');
 
-window.Vue = require('vue');
+const Vue = require('vue');
 
 import Buefy from 'buefy';
 
-window.Vue.use(Buefy);
+Vue.use(Buefy);
 
-window.Vue.component('site-creator', require('../components/SiteCreator'));
+Vue.component('site-creator', require('../components/SiteCreator'));
 
-const app = new window.Vue({
+const app = new Vue({
     el: '#app'
 });
 
-require('./sidebar');
+window.Vue = Vue;
+
+require('../sidebar');

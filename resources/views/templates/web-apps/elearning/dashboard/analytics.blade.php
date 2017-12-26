@@ -1,10 +1,9 @@
 @extends($site->theme->location . '.layouts.dashboard')
 
 @section('title')
-    {{ $page->title }}
+    Analytics
 @stop
 
 @section('content')
-    <h1 class="title">{{ $page->title }}</h1>
-    <hr>
+    <h1 class="title">Analytics</h1>
 @stop

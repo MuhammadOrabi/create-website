@@ -6,11 +6,11 @@
                 <span class="p-l-10">Create Website</span>
 			</a>
 			@if(Request::segment(1) == 'dashboard')
-				<a class="navbar-item is-hidden-desktop" id="admin-slideout-button">
+				<a class="navbar-item is-hidden-desktop" id="left-slideout-button">
 					<span class="icon"><i class="fa fa-arrow-circle-o-right"></i></span>
 				</a>
 			@endif
-			<button class="button navbar-burger">
+			<button class="button navbar-burger" id="right-slideout-button">
 				<span></span>
 				<span></span>
 				<span></span>
@@ -27,13 +27,10 @@
 						<a href="#" class="navbar-link">Hey, {{ Auth::user()->name }}</a>
 						<div class="navbar-dropdown is-right">
 							<a href="/home" class="navbar-item">
-								<span class="icon"><i class="fa fa-fw m-r-10 fa-user-circle-o"></i></span> Sites
+								<span class="icon"><i class="fa fa-fw m-r-10 fa-dashboard"></i></span> Sites
 							</a>
-							<a href="#" class="navbar-item">
-								<span class="icon"><i class="fa fa-fw m-r-10 fa-bell"></i></span> Notification
-							</a>
-							<a href="#" class="navbar-item">
-								<span class="icon"><i class="fa fa-fw m-r-10 fa-cog"></i></span> Dashboard
+							<a href="/create/site" class="navbar-item">
+								<span class="icon"><i class="fa fa-fw m-r-10 fa-plus"></i></span> Create New Site
 							</a>
 							<hr class="seperator">
 							<a class="navbar-item" href="/logout" 

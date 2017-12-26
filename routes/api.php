@@ -31,7 +31,7 @@ Route::middleware('auth:api')->group(function () {
     });
 
     Route::prefix('contents')->group(function () {
-        // Updates
+        // Updated
         Route::put('/{address}', 'ContentController@update');
         // End
         Route::post('/{id}', 'ContentController@store');
@@ -49,6 +49,12 @@ Route::middleware('auth:api')->group(function () {
     Route::prefix('extras')->group(function () {
     });
 });
+
+// Updated
+Route::prefix('site')->group(function () {
+    Route::get('/info/{type}/{address}', 'SiteController@info');
+});
+// End
 
 Route::prefix('user')->group(function () {
     Route::post('/', 'UserController@store');

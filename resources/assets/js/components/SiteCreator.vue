@@ -11,8 +11,8 @@
 								</figure>
 							</div>
 							<div class="card-content level">
-								<p class="subtitle is-4 is-capitalized level-left">{{ tag.tag }}</p>
-								<button class="button is-primary level-right" @click="chooseCat(i)">Next</button>
+								<p class="subtitle is-5 is-capitalized level-left">{{ tag.tag }}</p>
+								<button :dusk="tag.tag" class="button is-primary level-right" @click="chooseCat(i)">Next</button>
 							</div>
 						</div>
 					</div>
@@ -29,22 +29,27 @@
 							</div>
 							<div class="card-content level">
 								<p class="subtitle is-4 is-capitalized level-left" >#{{ theme.id }}</p>
-								<button class="button is-primary level-right" @click="chooseTheme(theme.id)">Next</button>
+								<button :dusk="theme.name" class="button is-primary level-right" @click="chooseTheme(theme.id)">Next</button>
 							</div>
 						</div>
 					</div>
 				</div>
 			</b-tab-item>
-			<b-tab-item label="Sub-Domain" icon="fa fa-arrow-right" :disabled="!id">
+			<b-tab-item label="Address" icon="fa fa-arrow-right" :disabled="!id">
+				<div class="columns">
+					<div class="column">
+						<h1 class="title">Let's give your site an address.</h1>
+					</div>
+				</div>
 				<div class="columns">
 					<div class="column"></div>
 					<div class="column is-three-quarters">
 						<b-field  label="Domain" :type="`is-${color}`" :message="feedback">
-							<b-input type="text" v-model="address" placeholder="Domain" maxlength="30" warning></b-input>
+							<b-input dusk="address" type="text" v-model="address" placeholder="Domain" maxlength="30" warning></b-input>
 						</b-field>
 					</div>
 					<div class="column">
-						<button class="button is-success m-t-30" :disabled="color !== 'success'" @click="create">
+						<button dusk="create-site" class="button is-success m-t-30" :disabled="color !== 'success'" @click="create">
 							<span class="icon is-small" v-if="color === 'success'">
 								<i class="fa fa-check"></i>
 							</span>
@@ -126,7 +131,7 @@ export default {
 			window.axios.post('/api/site', site ,{ headers: { 'Authorization': 'Bearer ' + vm.token } })
 			.then((res) => {
 				if (res.data.page) {
-					window.location = '/dashboard/pages/' + res.data.page.id + '/edit';
+					window.location = '/dashboard/pages/' + res.data.page.id + '/edit/' + this.address;
 				}
 			})
 			.catch((err) => console.log(err));

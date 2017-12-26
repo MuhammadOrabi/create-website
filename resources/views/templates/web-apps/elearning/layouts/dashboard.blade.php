@@ -7,7 +7,7 @@
         <!-- CSRF Token -->
 		<meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>@yield('title')</title>
+        <title>@yield('title') - Create Website</title>
         <link rel="stylesheet" href="/css/bulma/app.css">
         @yield('styles')
 
@@ -19,8 +19,14 @@
     </head>
     <body>
         <div id="app">
-            @yield('nav')
-            @yield('content')           
+            @include('home-page._includes.nav.bulma-nav')
+            @include($site->theme->location.'.dashboard._includes.left-sidebar')
+            <div class="managment-area">
+                <div class="flex-container">
+                    @yield('content')
+                </div>
+            </div>
+            @include('home-page._includes.nav.right-sidebar')
         </div>
         <script src="/js/bulma/app.js"></script>
         @include('notifications.toast')

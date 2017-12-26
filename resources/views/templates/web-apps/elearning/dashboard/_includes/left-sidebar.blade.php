@@ -1,14 +1,14 @@
-<div class="side-menu" id="admin-side-menu">
+<div class="side-menu" id="left-side-menu">
 	<aside class="menu m-t-30 m-l-10">
 		<p class="menu-label">General</p>
 		<ul class="menu-list">
 			<li>
-				<a href="/s/{{ $site->address }}">
+				<a href="/s/{{ $site->address }}" target="_blank">
 					<span class="icon"><i class="fa fa-fw m-r-10 fa-external-link"></i></span>Open Site
 				</a>
 			</li>
 			<li>
-				<a href="#" class="{{ Nav::hasSegment('analytics',2) }}">
+				<a href="/dashboard/analytics/{{ $site->address }}" class="{{ Nav::hasSegment('analytics',2) }}">
 					<span class="icon"><i class="fa fa-fw m-r-10 fa-bar-chart"></i></span>Analytics
 				</a>
 			</li>			
@@ -20,9 +20,9 @@
 					<span class="icon"><i class="fa fa-fw m-r-10 fa-list"></i></span>Pages
 				</a>
 				<ul class="submenu">
-					@foreach($site->pages as $page)
+					@foreach($pages as $page)
 						<li>
-							<a href="/dashboard/pages/{{ $page->id }}/edit" class="{{ Nav::hasSegment($page->id,3) }}">
+							<a href="/dashboard/pages/{{ $page->id }}/edit/{{ $site->address }}" class="{{ Nav::hasSegment($page->id,3) }}">
 								{{ $page->title }}
 							</a>
 						</li>
@@ -42,11 +42,7 @@
 					<span class="icon"><i class="fa fa-fw m-r-10 fa-gear"></i></span>Settings
 				</a>
 			</li>			
-			<li>
-				<a href="/site/create" class="{{ Nav::hasSegment('settings',2) }}">
-					<span class="icon"><i class="fa fa-fw m-r-10 fa-plus"></i></span>Create New Site
-				</a>
-			</li>			
+			<li><a href="/site/create"><span class="icon"><i class="fa fa-fw m-r-10 fa-plus"></i></span>Create New Site</a></li>			
 		</ul>
 	</aside>
 </div>

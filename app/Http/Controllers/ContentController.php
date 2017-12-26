@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Content;
 use App\Section;
 use Illuminate\Http\Request;
-use App\Helpers\Websites\Bizlight\BizlightHelper;
+use App\Helpers\Websites\WebsitesHelper;
 
 class ContentController extends Controller
 {
@@ -27,10 +27,18 @@ class ContentController extends Controller
     public function update()
     {
         $site = auth()->user()->sites()->where('address', request()->address)->first();
-        if ($site->theme->name === 'bizlight') {
-            $msg = BizlightHelper::doThis('createOrUpdateContent', request()->all());
-            return response()->json('success');
+        if (!$site) {
+            return response(500);
         }
+        $tag = $site->theme->tags()->where('type', 'category')->first();
+        if ($tag->tag === 'website') {
+            $msg = WebsitesHelper::finder($site, null, 'createOrUpdateContent', request()->all());
+            return response()->json('success');
+        } elseif ($tag->tag === 'portfolio') {
+        } elseif ($tag->tag === 'web application') {
+        } elseif ($tag->tag === 'blog') {
+        }
+
         return response(500);
     }
 

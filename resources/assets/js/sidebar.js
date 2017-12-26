@@ -1,17 +1,28 @@
-const accordions = document.getElementsByClassName('has-submenu')
-const adminSlideButton = document.getElementById('admin-slideout-button')
+const accordions = document.getElementsByClassName('has-submenu');
+const leftSlideButton = document.getElementById('left-slideout-button');
+const rightSlideButton = document.getElementById('right-slideout-button');
+const leftSideMenu = document.getElementById('left-side-menu');
+const rightSideMenu = document.getElementById('right-side-menu');
 
 function setSubmenuStyles(submenu, maxHeight, margins) {
     submenu.style.maxHeight = maxHeight
     submenu.style.marginTop = margins
     submenu.style.marginBottom = margins
 }
-if (adminSlideButton) {
-    adminSlideButton.onclick = function () {
+if (leftSlideButton && leftSideMenu) {
+    leftSlideButton.onclick = function () {
         this.classList.toggle('is-active');
-        document.getElementById('admin-side-menu').classList.toggle('is-active');
+        document.getElementById('left-side-menu').classList.toggle('is-active');
     }
 }
+
+if (rightSlideButton && rightSideMenu) {
+    rightSlideButton.onclick = function () {
+        this.classList.toggle('is-active');
+        document.getElementById('right-side-menu').classList.toggle('is-active');
+    }
+}
+
 
 for (var i = 0; i < accordions.length; i++) {
     if (accordions[i].classList.contains('is-active')) {

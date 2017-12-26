@@ -28,7 +28,7 @@ class BizlightContentHelper
                 }
             } elseif (isset($item['constant'])) {
                 if ($item['constant'] === 'top-nav') {
-                    return $this->createOrUpdateTopNav($item);
+                    $this->createOrUpdateTopNav($item);
                 }
             }
         }

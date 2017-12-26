@@ -3,6 +3,7 @@
 namespace App\Helpers\Websites\Bizlight;
 
 use App\Site;
+use App\Page;
 
 class BizlightSiteHelper
 {
@@ -13,9 +14,8 @@ class BizlightSiteHelper
         $this->site = Site::findOrFail($id);
     }
 
-    public function showSlug($info)
+    public function site($slug)
     {
-        $slug = $info['slug'];
         if ($slug === 'index') {
             $location = $this->site->theme->location . '.site.' . $slug;
             $data = $this->homePage();
@@ -31,6 +31,21 @@ class BizlightSiteHelper
         } elseif ($slug === 'contact') {
             $location = $this->site->theme->location . '.site.' . $slug;
             $data = $this->contact();
+            return compact('location', 'data');
+        }
+    }
+
+    public function dashboard($page)
+    {
+        if (is_int($page)) {
+            $page = Page::where('id', $page)->with('sections.contents')->first();
+            $location = $this->site->theme->location . '.dashboard.pages.show';
+            $site = $this->site;
+            $data = collect([$page]);
+            return compact('location', 'data');
+        } elseif (is_string($page)) {
+            $data = ['site' => $this->site];
+            $location = $this->site->theme->location . '.dashboard.' . $page;
             return compact('location', 'data');
         }
     }

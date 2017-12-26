@@ -2,6 +2,8 @@
 
 @section('content')
     <div class="container">
+	@php
+	@endphp
 		<h1>{{ $page->title }}</h1>
 		<hr>
 		@if($page->slug == '')

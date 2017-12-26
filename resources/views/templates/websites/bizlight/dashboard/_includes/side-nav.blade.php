@@ -29,7 +29,8 @@
 				<ul class="nav flex-column p-3">
 					@foreach($site->pages as $navPage)
 						<li class="nav-item">
-							<a class="nav-link {{ navHasSegment($navPage->id, 3) }}" href="/dashboard/pages/{{ $navPage->id }}/edit">
+							<a class="nav-link {{ navHasSegment($navPage->id, 3) }}" 
+								href="/dashboard/pages/{{ $navPage->id }}/edit/{{ $site->address }}">
 								<i class="fa fa-chevron-right" aria-hidden="true"></i>  {{$navPage->title}}
 							</a>
 						</li>

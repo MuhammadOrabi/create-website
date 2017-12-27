@@ -24,6 +24,14 @@ class ELearningSiteHelper
             $location = $this->site->theme->location . '.site.auth.' . $slug;
             $data = ['site' => $this->site, 'slug' => $slug];
             return compact('location', 'data');
+        } elseif ($this->site->pages()->where('slug', $slug)->first()) {
+            $location = $this->site->theme->location . '.site.' . $slug;
+            $data = ['site' => $this->site, 'slug' => $slug];
+            return compact('location', 'data');
+        } else {
+            $location = $this->site->theme->location . '.site.index';
+            $data = ['site' => $this->site, 'slug' => 'index'];
+            return compact('location', 'data');
         }
     }
 

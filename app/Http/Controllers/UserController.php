@@ -55,7 +55,8 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 500);
+            $errors = $validator->errors();
+            return response()->json(compact('errors'));
         }
 
         $user = User::create([
@@ -81,18 +82,19 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['status' => true, 'errors' => $validator->errors(), 'msg' => 'Try again!']);
+            return ['error' => true, 'errors' => $validator->errors(), 'msg' => 'Something went wrong!'];
         }
 
         $credentials = ['email' => request('email'), 'password' => request('password'), 'address' => request('address')];
         if (auth()->once($credentials)) {
             $user = User::where('email', request('email'))->where('address', request('address'))->first();
             if (!$user->active) {
-                return response()->json(['status' => true, 'errors' => null, 'msg' => 'Please contact us for more information!']);
+                return response()->json(['error' => true, 'errors' => null,
+                    'msg' => 'You have to active your email, contact us for more information!']);
             }
             return response()->json(['token' => $user->getToken('Sign In'), 'user' => $user]);
         }
-        return response()->json(['status' => true, 'msg' => 'Please Check your Credentials!']);
+        return response()->json(['error' => true, 'msg' => 'Please Check your Credentials!']);
     }
 
     /**

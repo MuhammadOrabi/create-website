@@ -10,6 +10,11 @@
         <ul class="menu-list" v-if="auth">
             <p class="menu-label is-capitalized">{{ auth.name }}</p>
             <li>
+                <a :href="`/s/${address}/profile`" :class="`${'profile' === slug? 'is-active': ''}`">
+                    <span class="icon"><i class="fa fa-fw m-r-10 fa-dashboard"></i></span> Profile
+                </a>
+            </li>
+            <li>
                 <a href="#" @click.stop="logout">
                     <span class="icon"><i class="fa fa-fw m-r-10 fa-sign-out"></i></span> Logout
                 </a>

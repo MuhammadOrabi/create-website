@@ -54,12 +54,12 @@ Route::middleware('auth:api')->group(function () {
 Route::prefix('site')->group(function () {
     Route::get('/info/{type}/{address}', 'SiteController@info');
 });
-// End
 
 Route::prefix('user')->group(function () {
-    Route::post('/', 'UserController@store');
-    Route::post('login', 'UserController@login');
+    Route::post('/site/register', 'UserController@store');
+    Route::post('/site/login', 'UserController@login');
 });
+// End
 
 Route::prefix('sections')->group(function () {
     Route::get('/{id}', 'SectionController@showAPI');

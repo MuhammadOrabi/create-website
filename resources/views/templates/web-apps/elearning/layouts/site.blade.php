@@ -18,7 +18,7 @@
 		</script>
     </head>
     <body>
-        <div id="app">
+        <div id="app" style="display: none;" >
             @include($site->theme->location.'.site._includes.nav')
             <div class="flex-container">
                 @yield('content')
@@ -26,7 +26,14 @@
             @include($site->theme->location.'.site._includes.right-sidebar')
         </div>
         <script src="/js/templates/web-apps/elearning/app.js"></script>
+        @include($site->theme->location.'.site._includes.auth-script')
         @include('notifications.toast')
-        @yield('scripts')        
+        @yield('scripts')
+        <script type="text/javascript">
+			window.onload = function () {
+				var app = document.getElementById('app');
+				app.style.display = '';
+			}
+		</script>
     </body>
 </html>

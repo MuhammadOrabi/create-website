@@ -1,7 +1,7 @@
  <nav class="navbar has-shadow is-fixed-top" style="transform: translateY(0px);">
 	<div class="container">
 		<div class="navbar-brand">
-			<a href="/" class="navbar-item is-paddingless">
+			<a href="/" class="navbar-item">
 				<img src="/img/logo.png" alt="Logo">
                 <span class="p-l-10">Create Website</span>
 			</a>

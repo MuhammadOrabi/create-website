@@ -1,5 +1,5 @@
 @extends($site->theme->location.'.layouts.site')
 
 @section('content')
-    <h1 class="title">Register</h1>
+    <site-register address="{{$site->address}}"></site-register>
 @stop

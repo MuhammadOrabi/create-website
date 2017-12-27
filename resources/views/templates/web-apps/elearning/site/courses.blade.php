@@ -1,5 +1,5 @@
 @extends($site->theme->location.'.layouts.site')
 
 @section('content')
-    <site-login address="{{ $site->address }}"></site-login>
+    <h1 class="title">Courses</h1>
 @stop

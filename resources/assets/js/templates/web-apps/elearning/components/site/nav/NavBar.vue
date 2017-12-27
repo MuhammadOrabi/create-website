@@ -1,9 +1,9 @@
 <template>
     <div class="container">
 		<div class="navbar-brand">
-			<a :href="`/s/${address}`" class="navbar-item is-paddingless">
-				<img :src="logo.content" alt="Logo" v-if="logo">
-                <span class="p-l-10 is-capitalized" v-if="site">{{ site.name }}</span>
+			<a :href="`/s/${address}`" class="navbar-item">
+				<img :src="logo.content" alt="Logo" class="p-r-10" v-if="logo">
+                <span class="is-capitalized" v-if="site">{{ site.name }}</span>
 			</a>
 			<button class="button navbar-burger" id="right-slideout-button">
 				<span></span>
@@ -21,6 +21,9 @@
                 <div v-if="auth" class="navbar-item has-dropdown is-hoverable">
                     <a href="#" class="navbar-link is-capitalized">{{ auth.name }}</a>
                     <div class="navbar-dropdown is-right">
+                        <a class="navbar-item" :href="`/s/${address}/profile`">
+                            <span class="icon"><i class="fa fa-fw m-r-10 fa-dashboard"></i></span> Profile
+                        </a>
                         <a class="navbar-item" @click="logout">
                             <span class="icon"><i class="fa fa-fw m-r-10 fa-sign-out"></i></span> Logout
                         </a>
@@ -66,7 +69,6 @@
         },
         methods: {
             getData() {
-                const vm = this;
                 window.axios.get('/api/site/info/nav/' + this.address)
                 .then(res => {
                     this.logo = _.findWhere(res.data.extras, {type: 'logo'});

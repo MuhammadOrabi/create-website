@@ -24,9 +24,9 @@
                 @yield('content')
             </div>
             @include($site->theme->location.'.site._includes.right-sidebar')
+            <auth slug="{{ $slug }}" address="{{ $site->address }}"></auth>
         </div>
         <script src="/js/templates/web-apps/elearning/app.js"></script>
-        @include($site->theme->location.'.site._includes.auth-script')
         @include('notifications.toast')
         @yield('scripts')
         <script type="text/javascript">

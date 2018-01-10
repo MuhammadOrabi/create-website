@@ -5,5 +5,5 @@
 @stop
 
 @section('content')
-    <h1 class="title">Media</h1>
+    <media address="{{ $site->address }}" token="{{ auth()->user()->getToken('media') }}"></media>
 @stop

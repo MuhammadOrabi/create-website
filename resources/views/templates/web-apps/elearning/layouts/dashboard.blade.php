@@ -28,7 +28,7 @@
             </div>
             @include('home-page._includes.nav.right-sidebar')
         </div>
-        <script src="/js/bulma/app.js"></script>
+        <script src="/js/templates/web-apps/elearning/app.js"></script>
         @include('notifications.toast')
         @yield('scripts')        
     </body>

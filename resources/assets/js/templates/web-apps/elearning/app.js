@@ -15,6 +15,8 @@ Vue.component('site-register', require('./components/site/auth/Register.vue'));
 Vue.component('site-login', require('./components/site/auth/Login.vue'));
 Vue.component('auth', require('./components/site/auth/Auth.vue'));
 
+Vue.component('media', require('./components/dashboard/Media.vue'));
+
 
 const app = new Vue({
     el: '#app',

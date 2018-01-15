@@ -49,9 +49,9 @@
 			login() {
 				const vm = this;
 				let data = {email: vm.email, password: vm.password, address: vm.address};
-				window.axios.post('/api/user/site/login', data)
+				window.axios.post('/api/users/site/login', data)
 				.then(res => {
-					if (res.status) {
+					if (!res.data.user) {
 						this.$toast.open({
 							duration: 5000,
 							message: res.data.msg,

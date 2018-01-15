@@ -7,20 +7,20 @@
 				</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link {{ navHasSegment('analytics', 2) }}" href="/dashboard/analytics/{{ $site->address }}">
+				<a class="nav-link {{ navHasSegment('analytics', 2, 'active') }}" href="/dashboard/analytics/{{ $site->address }}">
 					<i class="fa fa-bar-chart" aria-hidden="true"></i> Analytics
 				</a>
 			</li>
 		</ul>
 		<ul class="nav flex-column">
 			<li class="nav-item">
-				<a class="nav-link {{ navHasSegment('navigation', 2) }}" href="/dashboard/navigation/{{ $site->address }}">
+				<a class="nav-link {{ navHasSegment('navigation', 2, 'active') }}" href="/dashboard/navigation/{{ $site->address }}">
 					<i class="fa fa-navicon" aria-hidden="true"></i> Navigation
 				</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link {{ navHasSegment($site->pages->pluck('id')->toArray(), 3) }}" data-toggle="collapse" href="#collapseOne" 
-					aria-expanded="true" aria-controls="collapseOne">
+				<a class="nav-link {{ navHasSegment($site->pages->pluck('id')->toArray(), 3, 'active') }}" data-toggle="collapse"
+					href="#collapseOne"  aria-expanded="true" aria-controls="collapseOne">
 		          	<i class="fa fa-chevron-down" aria-hidden="true"></i> Pages
 		        </a>
 			</li>
@@ -29,7 +29,7 @@
 				<ul class="nav flex-column p-3">
 					@foreach($site->pages as $navPage)
 						<li class="nav-item">
-							<a class="nav-link {{ navHasSegment($navPage->id, 3) }}" 
+							<a class="nav-link {{ navHasSegment($navPage->id, 3, 'active') }}" 
 								href="/dashboard/pages/{{ $navPage->id }}/edit/{{ $site->address }}">
 								<i class="fa fa-chevron-right" aria-hidden="true"></i>  {{$navPage->title}}
 							</a>
@@ -38,14 +38,14 @@
 				</ul>
 			</div>
 			<li class="nav-item">
-				<a class="nav-link {{ navHasSegment('media', 2) }}" href="/dashboard/media/{{ $site->address }}">
+				<a class="nav-link {{ navHasSegment('media', 2, 'active') }}" href="/dashboard/media/{{ $site->address }}">
 					<i class="fa fa-picture-o" aria-hidden="true"></i> Media
 				</a>
 			</li>
 		</ul>
 		<ul class="nav flex-column">
 			<li class="nav-item">
-				<a class="nav-link {{ navHasSegment('settings', 2) }}" href="/dashboard/settings/{{ $site->address }}">
+				<a class="nav-link {{ navHasSegment('settings', 2, 'active') }}" href="/dashboard/settings/{{ $site->address }}">
 					<i class="fa fa-gear" aria-hidden="true"></i> Settings
 				</a>
 			</li>

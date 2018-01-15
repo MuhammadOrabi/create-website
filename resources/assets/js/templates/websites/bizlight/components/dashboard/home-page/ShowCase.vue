@@ -63,7 +63,7 @@ export default {
 			return {id: this.id, heading: this.heading, paragraph: this.paragraph};
 		},
 		getData() {
-			window.axios.get('/api/sections/' + this.id + '/edit', { headers: { 'Authorization': 'Bearer ' + this.token } })
+			window.axios.get('/api/dashboard/sections/' + this.id, { headers: { 'Authorization': 'Bearer ' + this.token } })
 			.then(res => {
 				if (res.data.length === 0) {
 					return;

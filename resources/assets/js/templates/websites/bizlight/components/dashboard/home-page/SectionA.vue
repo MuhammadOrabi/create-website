@@ -95,43 +95,43 @@ export default {
 		}
 	},
 	methods: {
-			getData() {
-				window.axios.get('/api/sections/' + this.id + '/edit', { headers: { 'Authorization': 'Bearer ' + this.token } })
-				.then(res => {
-					if (res.data.length === 0) {
-						return;
-					}
-					let data = _.groupBy(res.data, 'order');
-					this.data = [];
-					_.each(data, (items, key) => {
-						let heading = _.findWhere(items, {type: 'heading'});
-						let paragraph = _.findWhere(items, {type: 'paragraph'});
-						let img = _.findWhere(items, {type: 'img'});
-						if (heading && paragraph) {
-							this.data.push({heading: heading.content, paragraph: paragraph.content, img: img.content, order: key});
-						}
-					});
-				}).catch(err => console.log(err));
-			},
-			save() {
-				let data = _.difference(this.data, _.where(this.data, {heading: ''}), _.where(this.data, {paragraph: ''}));
-				return { id: this.id, data: data };
-			},
-			add() {
-				this.data.push({heading: '', paragraph: '', img: 'https://dummyimage.com/150x150/000/ffffff.png&text=Click+Here!'});
-			},
-			remove(i) {
-				this.data[i].heading = null;
-				this.data = _.difference(this.data, _.where(this.data, {heading: null}));
-			},
-			toggleModal(index) {
-				if (this.update) {	
-					this.index = index;
-					window.$('#imgModalA').modal('toggle');
+		getData() {
+			window.axios.get('/api/dashboard/sections/' + this.id , { headers: { 'Authorization': 'Bearer ' + this.token } })
+			.then(res => {
+				if (res.data.length === 0) {
+					return;
 				}
+				let data = _.groupBy(res.data, 'order');
+				this.data = [];
+				_.each(data, (items, key) => {
+					let heading = _.findWhere(items, {type: 'heading'});
+					let paragraph = _.findWhere(items, {type: 'paragraph'});
+					let img = _.findWhere(items, {type: 'img'});
+					if (heading && paragraph) {
+						this.data.push({heading: heading.content, paragraph: paragraph.content, img: img.content, order: key});
+					}
+				});
+			}).catch(err => console.log(err));
+		},
+		save() {
+			let data = _.difference(this.data, _.where(this.data, {heading: ''}), _.where(this.data, {paragraph: ''}));
+			return { id: this.id, data: data };
+		},
+		add() {
+			this.data.push({heading: '', paragraph: '', img: 'https://dummyimage.com/150x150/000/ffffff.png&text=Click+Here!'});
+		},
+		remove(i) {
+			this.data[i].heading = null;
+			this.data = _.difference(this.data, _.where(this.data, {heading: null}));
+		},
+		toggleModal(index) {
+			if (this.update) {	
+				this.index = index;
+				window.$('#imgModalA').modal('toggle');
 			}
 		}
-	};
+	}
+};
 </script>
 
 <style lang="css" scoped>

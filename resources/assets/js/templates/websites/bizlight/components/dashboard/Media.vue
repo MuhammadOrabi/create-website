@@ -106,7 +106,7 @@
             },
             saveImg(img) {
                 const vm = this;
-                window.axios.post('/api/imgs', {img: img, address: vm.address}, { headers: { 'Authorization': 'Bearer ' + vm.token } })
+                window.axios.post('/api/dashboard/imgs', {img: img, address: vm.address}, { headers: { 'Authorization': 'Bearer ' + vm.token } })
                 .then(res => {
                     if (res.data.msg === 'success') {
                         this.model = false;
@@ -118,7 +118,7 @@
                 .catch(err => console.log(err));
             },
             getImgs() {
-                window.axios.get('/api/imgs/' + this.address, { headers: { 'Authorization': 'Bearer ' + this.token }})
+                window.axios.get('/api/dashboard/imgs/' + this.address, { headers: { 'Authorization': 'Bearer ' + this.token }})
                 .then((res)=>{
                     this.images = res.data;
                 })

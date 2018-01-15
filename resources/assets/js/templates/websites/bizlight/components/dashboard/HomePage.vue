@@ -45,7 +45,7 @@ export default {
 		},
 		save() {
 			let data = [this.$refs.showcase.save(), this.$refs.sectionb.save(), this.$refs.sectiona.save(), this.$refs.sectionc.save()];
-			window.axios.put('/api/contents/' + this.address, data, { headers: { 'Authorization': 'Bearer ' + this.token } })
+			window.axios.put('/api/dashboard/contents/' + this.address, data, { headers: { 'Authorization': 'Bearer ' + this.token } })
 			.then(res => {
 				this.updateCheck = false;
 				this.$refs.showcase.update = false;

@@ -22,18 +22,26 @@ class ELearningHelper
         $forum = $site->addPage(['title' => 'forum', 'homePage' => false, 'slug' => 'forum']);
     }
 
-    public static function doThis($site, $page, $op, $data)
+    public static function doThis($site, $page, $op, $data, $component)
     {
         if ($op === 'createOrUpdateContent') {
         } elseif ($op === 'site') {
-            $site = new ELearningSiteHelper($site->id);
-            return $site->site($page);
+            $eLearning = new ELearningSiteHelper($site->id);
+            return $eLearning->site($page);
         } elseif ($op === 'dashboard') {
-            $site = new ELearningSiteHelper($site->id);
-            return $site->dashboard($page);
+            $eLearning = new ELearningSiteHelper($site->id);
+            return $eLearning->dashboard($page);
         } elseif ($op === 'api-info') {
-            $site = new ELearningSiteHelper($site->id);
-            return $site->apiInfo($data);
+            $eLearning = new ELearningSiteHelper($site->id);
+            return $eLearning->apiInfo($data);
+        } elseif ($op === 'createSection') {
+            return SectionHelper::which($page, 'create', $data);
+        } elseif ($op === 'getSection') {
+            return SectionHelper::which($page, 'get', $data, $component);
+        } elseif ($op === 'updateSection') {
+            return SectionHelper::which($page, 'update', $data, $component);
+        } elseif ($op === 'deleteSection') {
+            return SectionHelper::which($page, 'delete', $data, $component);
         }
     }
 }

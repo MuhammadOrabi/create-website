@@ -102,7 +102,7 @@
                 data[0].twitter = this.twitter ? 'https://twitter.com/' + this.twitter : null;
                 data[0].google = this.google ? 'https://plus.google.com/' + this.google : null;
                 data[0].linkedin = this.linkedin ? 'https://www.linkedin.com/in/' + this.linkedin : null;
-                window.axios.put('/api/contents/' + this.address, data, { headers: { 'Authorization': 'Bearer ' + this.token } })
+                window.axios.put('/api/dashboard/contents/' + this.address, data, { headers: { 'Authorization': 'Bearer ' + this.token } })
 				.then(res => {
 					this.msg = res.data;
 					this.getData();

@@ -79,7 +79,7 @@
 			save() {
 				let services = _.difference(this.data, _.where(this.data, {heading: ''}), _.where(this.data, {paragraph: ''}));
 				let data = [{ id: this.id, data: services }];
-				window.axios.put('/api/contents/' + this.address, data, { headers: { 'Authorization': 'Bearer ' + this.token } })
+				window.axios.put('/api/dashboard/contents/' + this.address, data, { headers: { 'Authorization': 'Bearer ' + this.token } })
 				.then(res => {
 					this.update = false;
 					this.getData();
@@ -87,7 +87,7 @@
 				}).catch(err => console.log(err));
 			},
 			getData() {
-				window.axios.get('/api/sections/' + this.id + '/edit', { headers: { 'Authorization': 'Bearer ' + this.token } })
+				window.axios.get('/api/dashboard/sections/' + this.id, { headers: { 'Authorization': 'Bearer ' + this.token } })
 				.then(res => {
 					if (res.data.length === 0) {
 						return;

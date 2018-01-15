@@ -57,7 +57,7 @@
 				let data = [
 					{id: this.id, paragraph: this.paragraph}
 				];
-				window.axios.put('/api/contents/' + this.address, data, { headers: { 'Authorization': 'Bearer ' + this.token } })
+				window.axios.put('/api/dashboard/contents/' + this.address, data, { headers: { 'Authorization': 'Bearer ' + this.token } })
 				.then(res => {
 					this.update = false;
 					this.msg = res.data;
@@ -65,7 +65,7 @@
 				}).catch(err => console.log(err));
 			},
 			getData() {
-				window.axios.get('/api/sections/' + this.id + '/edit', { headers: { 'Authorization': 'Bearer ' + this.token } })
+				window.axios.get('/api/dashboard/sections/' + this.id, { headers: { 'Authorization': 'Bearer ' + this.token } })
 				.then(res => {
 
 					let paragraph = res.data[0];

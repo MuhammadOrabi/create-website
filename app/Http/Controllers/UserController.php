@@ -141,23 +141,18 @@ class UserController extends Controller
         foreach ($users as $user) {
             $user = User::find($user['id']);
             if ($site->address == $user->address) {
-                switch (request()->option) {
-                    case '1':
-                        $activate = $user->activate ? $user->activate : $user->activate()->create(['code' => str_random(40)]);
-                        $activate->save();
-                        \Mail::to($user)->send(new activateMail($user));
-                        break;
-                    case '2':
-                        $user->active = 1;
-                        $user->save();
-                        break;
-                    case '3':
-                        $user->active = 0;
-                        $user->save();
-                        break;
-                    case '4':
-                        $user->delete();
-                        break;
+                if (request()->option === '1') {
+                    $activate = $user->activate ? $user->activate : $user->activate()->create(['code' => str_random(40)]);
+                    $activate->save();
+                    \Mail::to($user)->send(new activateMail($user));
+                } elseif (request()->option === '2') {
+                    $user->active = 1;
+                    $user->save();
+                } elseif (request()->option === '3') {
+                    $user->active = 0;
+                    $user->save();
+                } elseif (request()->option === '4') {
+                    $user->delete();
                 }
             } else {
                 return response()->json('error');

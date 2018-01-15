@@ -69,7 +69,7 @@
         },
         methods: {
             getData() {
-                window.axios.get('/api/site/info/nav/' + this.address)
+                window.axios.get('/api/sites/info/nav/' + this.address)
                 .then(res => {
                     this.logo = _.findWhere(res.data.extras, {type: 'logo'});
                     this.site = res.data;

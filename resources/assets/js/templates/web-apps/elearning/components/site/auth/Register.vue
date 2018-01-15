@@ -72,7 +72,7 @@
 			register() {
 				const vm = this;
 				let data = {name: vm.name, email: vm.email, address: vm.address, password: vm.password, password_confirmation: vm.passowrdConfirm};
-				window.axios.post('/api/user/site/register', data)
+				window.axios.post('/api/users/site/register', data)
 				.then(res => {
 					this.password = ''; 
 					this.passowrdConfirm = ''; 

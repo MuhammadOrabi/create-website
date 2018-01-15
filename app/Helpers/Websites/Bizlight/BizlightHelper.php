@@ -38,6 +38,8 @@ class BizlightHelper
         } elseif ($op === 'dashboard') {
             $site = new BizlightSiteHelper($site->id);
             return $site->dashboard($page);
+        } elseif ($op === 'getSection') {
+            return SectionHelper::which($page, 'get', $data);
         }
     }
 }

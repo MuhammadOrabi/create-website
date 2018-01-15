@@ -111,7 +111,7 @@ export default {
 				this.color = 'danger';
 				return;
 			}
-			window.axios.get('/api/site/exists/' + vm.address, { headers: { 'Authorization': 'Bearer ' + vm.token } })
+			window.axios.get('/api/dashboard/sites/exists/' + vm.address, { headers: { 'Authorization': 'Bearer ' + vm.token } })
 			.then((res) => {
 				if (res.data === 'danger') {
 					vm.feedback = 'This address is taken, try another one!';
@@ -128,7 +128,7 @@ export default {
 		create() {
 			var vm = this;
 			let site = { theme: vm.id, address: vm.address };
-			window.axios.post('/api/site', site ,{ headers: { 'Authorization': 'Bearer ' + vm.token } })
+			window.axios.post('/api/dashboard/sites', site ,{ headers: { 'Authorization': 'Bearer ' + vm.token } })
 			.then((res) => {
 				if (res.data.page) {
 					window.location = '/dashboard/pages/' + res.data.page.id + '/edit/' + this.address;

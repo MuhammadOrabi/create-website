@@ -6,13 +6,23 @@ use App\Page;
 use App\Section;
 use Illuminate\Http\Request;
 use App\Content;
+use App\Helpers\WebApps\WebAppsHelper;
+use App\Helpers\Websites\WebsitesHelper;
 
 class SectionController extends Controller
 {
     public function store()
     {
         $page = Page::findOrFail(request()->id);
-        $site = $page->site;
+        $tag = $page->site->theme->tags()->where('type', 'category')->first();
+        if ($tag->tag === 'website') {
+        } elseif ($tag->tag === 'portfolio') {
+        } elseif ($tag->tag === 'web application') {
+            $data = WebAppsHelper::finder($page->site, $page, 'createSection', request()->all());
+            return response()->json($data);
+        } elseif ($tag->tag === 'blog') {
+        }
+
         if ($site->theme->location == 'templates.web-apps.elearning') {
             if ($page->slug == 'news') {
                 $news = $page->sections()->create(['title' => 'news', 'order' => 0]);
@@ -32,19 +42,24 @@ class SectionController extends Controller
                 $section->contents()->create(['type' => 'twitter', 'content' => request('twitter')]);
                 $section->contents()->create(['type' => 'github', 'content' => request('github')]);
                 return response()->json(['msg' => 'success', 'home' => compact('section')]);
-            } elseif ($page->slug == 'courses') {
-                $section = $page->sections()->create(['title' => request('title')]);
-                $section->extras()->create(['type' => 'paragraph', 'content' => request('paragraph')]);
-                foreach (request('tags') as $tag) {
-                    $section->extras()->create(['type' => 'tag', 'content' => $tag]);
-                }
-                // $forum = $site->pages()->where('slug', 'forum')->first();
-                // $courseForum = $forum->sections()->create(['title' => 'Course Forum']);
-                // $section->extras()->create(['type' => 'forum_id', 'content' => $courseForum->id]);
-                return response()->json(['msg' => 'success', 'section' => compact('section')]);
             }
         }
         return response(500);
+    }
+
+    public function edit()
+    {
+        $section = Section::findOrFail(request()->id);
+        $tag = $section->page->site->theme->tags()->where('type', 'category')->first();
+        if ($tag->tag === 'website') {
+            $data = WebsitesHelper::finder($section->page->site, $section->page, 'getSection', $section);
+            return response()->json($data);
+        } elseif ($tag->tag === 'portfolio') {
+        } elseif ($tag->tag === 'web application') {
+            $data = WebAppsHelper::finder($section->page->site, $section->page, 'getSection', null, $section);
+            return response()->json($data);
+        } elseif ($tag->tag === 'blog') {
+        }
     }
 
     public function show()
@@ -69,25 +84,14 @@ class SectionController extends Controller
     public function update()
     {
         $section = Section::findOrFail(request()->id);
-        $site = auth()->user()->sites()->where('address', $section->page->site->address)->first();
-        if (!$site) {
-            return response()->json('err', 500);
+        $tag = $section->page->site->theme->tags()->where('type', 'category')->first();
+        if ($tag->tag === 'website') {
+        } elseif ($tag->tag === 'portfolio') {
+        } elseif ($tag->tag === 'web application') {
+            $data = WebAppsHelper::finder($section->page->site, $section->page, 'updateSection', request()->all(), $section);
+            return response()->json($data);
+        } elseif ($tag->tag === 'blog') {
         }
-        $contents = $section->contents->toArray();
-        return response()->json($contents);
-    }
-
-    public function editExtras()
-    {
-        $section = Section::findOrFail(request()->id);
-        $section->title = request('title');
-        $section->save();
-        $section->extras()->where('type', 'paragraph')->update(['content' => request('paragraph')]);
-        $section->extras()->where('type', 'tag')->delete();
-        foreach (request('tags') as $tag) {
-            $section->extras()->create(['type' => 'tag', 'content' => $tag]);
-        }
-        return response()->json(['msg' => 'success', 'section' => compact('section')]);
     }
 
     public function message()
@@ -121,25 +125,25 @@ class SectionController extends Controller
 
     public function destroy()
     {
-        $section = Section::findOrFail(request()->id);
-        $section->contents()->each(function ($content) {
-            $content->extras()->delete();
-            $content->delete();
-        });
-        $section->extras()->delete();
-        $section->delete();
-        return back();
-    }
-
-    public function destroyAPI()
-    {
-        $section = Section::findOrFail(request()->id);
-        $section->contents()->each(function ($content) {
-            $content->extras()->delete();
-            $content->delete();
-        });
-        $section->extras()->delete();
-        $section->delete();
-        return response()->json('success');
+        if (request()->ajax()) {
+            $section = Section::findOrFail(request()->id);
+            $tag = $section->page->site->theme->tags()->where('type', 'category')->first();
+            if ($tag->tag === 'website') {
+            } elseif ($tag->tag === 'portfolio') {
+            } elseif ($tag->tag === 'web application') {
+                $data = WebAppsHelper::finder($section->page->site, $section->page, 'deleteSection', null, $section);
+                return response()->json($data);
+            } elseif ($tag->tag === 'blog') {
+            }
+        } else {
+            $section = Section::findOrFail(request()->id);
+            $section->contents()->each(function ($content) {
+                $content->extras()->delete();
+                $content->delete();
+            });
+            $section->extras()->delete();
+            $section->delete();
+            return back();
+        }
     }
 }

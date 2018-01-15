@@ -2,7 +2,6 @@ require('../../../bootstrap');
 require('../../../firebase');
 require('../../../vue-froala-wysiwyg');
 
-
 import VueFroala from 'vue-froala-wysiwyg';
 import Popper from 'popper.js';
 window.Popper = Popper;

@@ -1,6 +1,6 @@
 <template>
     <section>
-        <b-table :data="courses" detailed detail-key="id" :mobile-cards="true">
+        <b-table :data="lessons" detailed detail-key="id" :mobile-cards="true">
             <template slot-scope="props">
                 <b-table-column field="title" label="Title">
                     {{ props.row.title }}
@@ -12,9 +12,7 @@
 
                 <b-table-column label="Lessons">
                     {{ props.row.lessons }}
-                    <a :href="`/dashboard/lessons/${props.row.id}/${address}`" class="button is-link is-rounded is-inverted">
-                        <b-icon pack="fa" icon="cog"></b-icon>
-                    </a>
+                    
                 </b-table-column>
 
                 <b-table-column label="Created at">
@@ -22,7 +20,15 @@
                 </b-table-column>
 
                 <b-table-column label="Actions">
-                    <courses-crud r u d :address="address" :token="token" :parent="parent" :sectionid="props.row.id + ''"></courses-crud>              
+                    <a class="button is-info is-inverted">
+                        <b-icon pack="fa" icon="eye"></b-icon>
+                    </a>
+                    <a class="button is-primary is-inverted">
+                        <b-icon pack="fa" icon="pencil-square-o"></b-icon>
+                    </a>
+                    <span class="button is-danger is-inverted">
+                        <b-icon pack="fa" icon="trash-o"></b-icon>
+                    </span>
                 </b-table-column>
             </template>
 
@@ -47,29 +53,32 @@
                         <p>
                             <b-icon icon="emoticon-sad" size="is-large"></b-icon>
                         </p>
-                        <p>You don't have any Courses!, Create Course Here</p>
+                        <p>You don't have any Lessons!, Create Lesson Here</p>
                         <p>
                             <b-icon icon="arrow-down" size="is-large"></b-icon>
                         </p>
                     </div>
                 </section>
             </template>
-            <template slot="footer">
-                <courses-crud c :address="address" :token="token" :parent="parent" :id="id"></courses-crud>
+            <template slot="footer" >
+                <div class="has-text-centered">
+                    <a :href="`/dashboard/lessons/create/${id}/${address}`" class="button is-link is-inverted" >
+                        <b-icon pack="fa" icon="plus"></b-icon>
+                    </a>
+                </div>
             </template>
         </b-table>
     </section>
 </template>
 
 <script>
-    import moment from "moment";
     const _ = window._;
     export default {
-        name: 'Courses',
+        name: 'Lessons',
         props: ['id', 'address', 'token'],
         data() {
             return {
-                courses: [],
+                lessons: []
             };
         },
         computed: {
@@ -81,20 +90,11 @@
             this.getData();
         },
         methods: {
-            moment,
             getData() {
-                window.axios.get('/api/pages/' + this.id)
-                .then((res) => {
-                    this.courses = [];
-                    res.data.page.sections.forEach((section) => {
-                        let tags = _.pluck(_.where(section.extras, {type: 'tag'}), 'content');
-                        let p = _.findWhere(section.extras, {type: 'paragraph'});
-                        let title = section.title;
-                        let lessons = section.contents ? section.contents.length : 0;
-                        this.courses.push(
-                            {id: section.id, title: title, paragraph: p.content, tags: tags, lessons: lessons, created_at: section.created_at}
-                        );
-                    });
+                const vm = this;
+                window.axios.get('/api/dashboard/sections/' + vm.id, { headers: { 'Authorization': 'Bearer ' + vm.token } })
+                .then(res => {
+                    this.lessons = res.data.contents ;
                 })
                 .catch(err => console.log(err));
             }

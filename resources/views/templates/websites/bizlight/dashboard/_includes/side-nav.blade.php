@@ -30,7 +30,7 @@
 					@foreach($site->pages as $navPage)
 						<li class="nav-item">
 							<a class="nav-link {{ navHasSegment($navPage->id, 3, 'active') }}" 
-								href="/dashboard/pages/{{ $navPage->id }}/edit/{{ $site->address }}">
+								href="/dashboard/pages/{{ $navPage->id }}/{{ $site->address }}">
 								<i class="fa fa-chevron-right" aria-hidden="true"></i>  {{$navPage->title}}
 							</a>
 						</li>

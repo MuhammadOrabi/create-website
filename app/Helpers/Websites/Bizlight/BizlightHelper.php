@@ -37,7 +37,7 @@ class BizlightHelper
             return $site->site($page);
         } elseif ($op === 'dashboard') {
             $site = new BizlightSiteHelper($site->id);
-            return $site->dashboard($page);
+            return $site->dashboard($page, $data);
         } elseif ($op === 'getSection') {
             return SectionHelper::which($page, 'get', $data);
         }

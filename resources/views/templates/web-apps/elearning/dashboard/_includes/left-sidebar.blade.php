@@ -22,7 +22,7 @@
 				<ul class="submenu">
 					@foreach($pages as $page)
 						<li>
-							<a href="/dashboard/pages/{{ $page->id }}/edit/{{ $site->address }}" class="{{ Nav::hasSegment($page->id,3) }}">
+							<a href="/dashboard/pages/{{ $page->id }}/{{ $site->address }}" class="{{ Nav::hasSegment($page->id,3) }}">
 								{{ $page->title }}
 							</a>
 						</li>

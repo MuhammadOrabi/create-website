@@ -30,7 +30,7 @@ class ELearningHelper
             return $eLearning->site($page);
         } elseif ($op === 'dashboard') {
             $eLearning = new ELearningSiteHelper($site->id);
-            return $eLearning->dashboard($page);
+            return $eLearning->dashboard($page, $data, $component);
         } elseif ($op === 'api-info') {
             $eLearning = new ELearningSiteHelper($site->id);
             return $eLearning->apiInfo($data);
@@ -42,6 +42,12 @@ class ELearningHelper
             return SectionHelper::which($page, 'update', $data, $component);
         } elseif ($op === 'deleteSection') {
             return SectionHelper::which($page, 'delete', $data, $component);
+        } elseif ($op === 'dashboard-load-section') {
+            $eLearning = new ELearningSiteHelper($site->id);
+            return $eLearning->loadSection($data, $component);
+        } elseif ($op === 'dashboard-load-action') {
+            $eLearning = new ELearningSiteHelper($site->id);
+            return $eLearning->loadAction($data, $component);
         }
     }
 }

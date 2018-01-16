@@ -4,6 +4,7 @@ namespace App\Helpers\WebApps\ELearning;
 
 use App\Site;
 use App\Page;
+use App\Section;
 
 class ELearningSiteHelper
 {
@@ -35,20 +36,44 @@ class ELearningSiteHelper
         }
     }
 
-    public function dashboard($page)
+    public function dashboard($page, $data = null, $component = null)
     {
-        if (is_int($page)) {
-            $pages = $this->sidebar();
-            $page = $pages->where('id', $page)->first()->load('sections.contents');
-            $location = $this->site->theme->location . '.dashboard.pages.show';
-            $data = ['page' => $page, 'site' => $this->site, 'pages' => $pages];
-            return compact('location', 'data');
-        } elseif (is_string($page)) {
-            $pages = $this->sidebar();
-            $location = $this->site->theme->location . '.dashboard.' . $page;
-            $data = ['site' => $this->site, 'pages' => $pages];
-            return compact('location', 'data');
+        $pages = $this->sidebar();
+        $location = $this->site->theme->location . '.dashboard.' . $page;
+        $data = ['site' => $this->site, 'pages' => $pages];
+        return compact('location', 'data');
+    }
+
+    public function loadSection($data, $component)
+    {
+        $pages = $this->sidebar();
+        if ($data === 'pages') {
+            $page = $pages->where('id', $component)->first();
+            if (!$page) {
+                abort(404);
+            }
+            $page->load('sections.contents');
+            $section = null;
+        } elseif ($data === 'lessons') {
+            $section = Section::findOrFail($component);
+            $page = $section->page;
         }
+        $location = $this->site->theme->location . '.dashboard.' . $data . '.show';
+        $data = ['page' => $page, 'site' => $this->site, 'pages' => $pages, 'section' => $section];
+        return compact('location', 'data');
+    }
+
+    public function loadAction($data, $component)
+    {
+        $pages = $this->sidebar();
+        $section = null;
+        if ($data['type'] === 'lessons') {
+            $section = Section::findOrFail($component);
+            $page = $section->page;
+        }
+        $location = $this->site->theme->location . '.dashboard.' . $data['type'] . '.' . $data['action'];
+        $data = ['page' => $page, 'site' => $this->site, 'pages' => $pages, 'section' => $section];
+        return compact('location', 'data');
     }
 
     public function sidebar()

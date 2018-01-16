@@ -30,10 +30,10 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('dashboard')->group(function () {
         // Updated
-        Route::get('/pages/{id}/edit/{address}', 'PageController@edit')->name('page.edit');
+        Route::get('/{type}/{id}/{address}', 'PageController@show')->name('page.show');
+        Route::get('/{type}/{action}/{id}/{address}', 'PageController@edit');
         Route::get('/{type}/{address}', 'PageController@index')->name('page.index');
         // End Updated
-        Route::get('/sections/{id}', 'SectionController@show')->name('sections.show');
     });
     Route::put('/const/{id}', 'ConstantController@update')->name('const.update');
     Route::put('/site/{id}', 'SiteController@update')->name('site.update');

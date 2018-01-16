@@ -14,7 +14,7 @@
                 <b-icon pack="fa" icon="trash-o"></b-icon>
             </span>
         </div>
-        <b-modal :active.sync="isModalActive" width="960">
+        <b-modal :active.sync="isModalActive">
             <div class="box">
                 <h1 v-if="c" class="title is-1 has-text-centered">Create Course</h1>                
                 <h1 v-if="u" class="title is-1 has-text-centered">Update Course</h1>                
@@ -38,7 +38,6 @@
                 <button class="button is-primary" v-if="u" @click="update" :disabled="!valid">Update</button>
             </div>    
         </b-modal>
-
     </section>
 </template>
 
@@ -62,8 +61,8 @@
 					imageUpload: false,
 					fileUpload: false,
 					toolbarButtons: [
-						'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript',  'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle',  'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'insertLink',  'specialCharacters','selectAll', 'clearFormatting',  'print', 'help', 'html',  'undo', 'redo'
-						],
+						'fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript',  'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle',  'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'insertLink',  'specialCharacters','selectAll', 'clearFormatting',  'print', 'help', 'html',  'undo', 'redo'
+					],
 					quickInsertButtons: ['ul', 'ol'],
 					toolbarVisibleWithoutSelection: true
 				},

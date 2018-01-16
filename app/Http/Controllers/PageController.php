@@ -39,12 +39,13 @@ class PageController extends Controller
 
         $tag = $site->theme->tags()->where('type', 'category')->first();
         if ($tag->tag === 'website') {
-            $data = WebsitesHelper::finder($site, intval(request()->id), 'dashboard', null);
-            $page = $data['data'][0];
-            return view($data['location'], compact('page', 'site'));
         } elseif ($tag->tag === 'portfolio') {
         } elseif ($tag->tag === 'web application') {
-            $data = WebAppsHelper::finder($site, intval(request()->id), 'dashboard', null);
+            $info = ['type' => request()->type, 'action' => request()->action];
+            $data = WebAppsHelper::finder($site, null, 'dashboard-load-action', $info, request()->id);
+            if (!view()->exists($data['location'])) {
+                return back();
+            }
             return view($data['location'], $data['data']);
         } elseif ($tag->tag === 'blog') {
         }
@@ -52,9 +53,34 @@ class PageController extends Controller
 
     public function show()
     {
-        $page = Page::where('id', request()->id)->with(['sections' => function ($query) {
-            $query->orderBy('created_at', 'desc');
-        }, 'sections.contents', 'sections.extras', 'site.user'])->first();
-        return response()->json(compact('page'), 200);
+        if (request()->ajax()) {
+            $page = Page::where('id', request()->id)->with(['sections' => function ($query) {
+                $query->orderBy('created_at', 'desc');
+            }, 'sections.contents', 'sections.extras', 'site.user'])->first();
+            return response()->json(compact('page'), 200);
+        } else {
+            $site = auth()->user()->sites()->where('address', request()->address)->first();
+            if (!$site) {
+                return redirect()->home();
+            }
+
+            $tag = $site->theme->tags()->where('type', 'category')->first();
+            if ($tag->tag === 'website') {
+                $data = WebsitesHelper::finder($site, intval(request()->id), 'dashboard', request()->type);
+                $page = $data['data'][0];
+                if (!view()->exists($data['location'])) {
+                    return back();
+                }
+                return view($data['location'], compact('page', 'site'));
+            } elseif ($tag->tag === 'portfolio') {
+            } elseif ($tag->tag === 'web application') {
+                $data = WebAppsHelper::finder($site, null, 'dashboard-load-section', request()->type, request()->id);
+                if (!view()->exists($data['location'])) {
+                    return back();
+                }
+                return view($data['location'], $data['data']);
+            } elseif ($tag->tag === 'blog') {
+            }
+        }
     }
 }

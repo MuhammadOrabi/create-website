@@ -24,6 +24,8 @@ Vue.component('media', require('./components/dashboard/Media.vue'));
 Vue.component('users', require('./components/dashboard/Users.vue'));
 Vue.component('courses', require('./components/dashboard/Courses.vue'));
 Vue.component('courses-crud', require('./components/dashboard/Courses-CRUD.vue'));
+Vue.component('lessons', require('./components/dashboard/Lessons.vue'));
+Vue.component('lessons-cu', require('./components/dashboard/Lessons-CU.vue'));
 
 
 const app = new Vue({

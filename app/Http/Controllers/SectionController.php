@@ -51,14 +51,22 @@ class SectionController extends Controller
     {
         $section = Section::findOrFail(request()->id);
         $tag = $section->page->site->theme->tags()->where('type', 'category')->first();
-        if ($tag->tag === 'website') {
-            $data = WebsitesHelper::finder($section->page->site, $section->page, 'getSection', $section);
-            return response()->json($data);
-        } elseif ($tag->tag === 'portfolio') {
-        } elseif ($tag->tag === 'web application') {
-            $data = WebAppsHelper::finder($section->page->site, $section->page, 'getSection', null, $section);
-            return response()->json($data);
-        } elseif ($tag->tag === 'blog') {
+        if (request()->ajax()) {
+            if ($tag->tag === 'website') {
+                $data = WebsitesHelper::finder($section->page->site, $section->page, 'getSection', $section);
+                return response()->json($data);
+            } elseif ($tag->tag === 'portfolio') {
+            } elseif ($tag->tag === 'web application') {
+                $data = WebAppsHelper::finder($section->page->site, $section->page, 'getSection', null, $section);
+                return response()->json($data);
+            } elseif ($tag->tag === 'blog') {
+            }
+        } else {
+            if ($tag->tag === 'website') {
+            } elseif ($tag->tag === 'portfolio') {
+            } elseif ($tag->tag === 'web application') {
+            } elseif ($tag->tag === 'blog') {
+            }
         }
     }
 

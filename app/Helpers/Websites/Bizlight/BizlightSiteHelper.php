@@ -35,11 +35,12 @@ class BizlightSiteHelper
         }
     }
 
-    public function dashboard($page)
+    public function dashboard($page, $data = null)
     {
         if (is_int($page)) {
-            $page = Page::where('id', $page)->with('sections.contents')->first();
-            $location = $this->site->theme->location . '.dashboard.pages.show';
+            $page = Page::findOrFail($page);
+            $page->load('sections.contents');
+            $location = $this->site->theme->location . '.dashboard.' . $data . '.show';
             $site = $this->site;
             $data = collect([$page]);
             return compact('location', 'data');

@@ -15,8 +15,9 @@
             </a>
         </div>
         <div class="column">
-            <h1 class="title">Add a lesson for {{$section->title}}</h1>            
+            <h1 class="title">Update {{$content->title}}</h1>            
         </div>
     </div>
-    <lessons-cu c address="{{ $site->address }}" token="{{ auth()->user()->getToken('lessons-cu') }}" sectionid="{{ $section->id }}"></lessons-cu>
+    <lessons-cu u address="{{ $site->address }}" token="{{ auth()->user()->getToken('lessons-cu') }}" 
+    	id="{{ $content->id }}" sectionid="{{ $section->id }}"></lessons-cu>
 @stop

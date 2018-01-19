@@ -4,10 +4,14 @@ namespace App\Helpers\Websites\Bizlight;
 
 class SectionHelper
 {
-    public static function which($page, $op, $data)
+    public static function which($page, $op, $data = null, $section = null)
     {
-        if ($op === 'get') {
-            return $data->contents->toArray();
+        if ($page->slug === 'about') {
+            return AboutHelper::index($page, $op, $data, $section);
+        } elseif ($page->slug === 'services') {
+            return ServicesHelper::index($page, $op, $data, $section);
+        } elseif ($page->homePage) {
+            return HomePageHelper::index($page, $op, $data, $section);
         }
     }
 }

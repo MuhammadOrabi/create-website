@@ -15,7 +15,7 @@ class ELearningHelper
         $signin = $site->addPage(['title' => 'Login', 'homePage' => false, 'slug' => 'login']);
         $about = $site->addPage(['title' => 'About', 'homePage' => false, 'slug' => 'about']);
         $contact = $site->addPage(['title' => 'Contact', 'homePage' => false, 'slug' => 'contact']);
-        $news = $site->addPage(['title' => 'News', 'homePage' => false, 'slug' => 'news']);
+        $articles = $site->addPage(['title' => 'Articles', 'homePage' => false, 'slug' => 'articles']);
         $courses = $site->addPage(['title' => 'Courses', 'homePage' => false, 'slug' => 'courses']);
         $course = $site->addPage(['title' => 'Course', 'homePage' => false, 'slug' => 'course']);
         $lesson = $site->addPage(['title' => 'Lesson', 'homePage' => false, 'slug' => 'lesson']);
@@ -24,8 +24,7 @@ class ELearningHelper
 
     public static function doThis($site, $page, $op, $data, $component)
     {
-        if ($op === 'createOrUpdateContent') {
-        } elseif ($op === 'site') {
+        if ($op === 'site') {
             $eLearning = new ELearningSiteHelper($site->id);
             return $eLearning->site($page);
         } elseif ($op === 'dashboard') {
@@ -48,6 +47,16 @@ class ELearningHelper
         } elseif ($op === 'dashboard-load-action') {
             $eLearning = new ELearningSiteHelper($site->id);
             return $eLearning->loadAction($data, $component);
+        } elseif ($op === 'createContent') {
+            return ContentHelper::which($page, 'create', $data, $component);
+        } elseif ($op === 'getContent') {
+            return ContentHelper::which($page, 'get', $data, $component);
+        } elseif ($op === 'updateContent') {
+            return ContentHelper::which($page, 'update', $data, $component);
+        } elseif ($op === 'deleteContent') {
+            return ContentHelper::which($page, 'delete', $data, $component);
+        } elseif ($op === 'getPage') {
+            return PageHelper::which($page, 'get');
         }
     }
 }

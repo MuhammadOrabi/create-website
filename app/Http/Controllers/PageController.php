@@ -15,7 +15,7 @@ class PageController extends Controller
         $site = auth()->user()->sites()->where('address', request()->address)->first();
         $pages = ['navigation', 'media', 'settings', 'analytics'];
         if (!$site || !in_array(request()->type, $pages)) {
-            return redirect()->home();
+            abort(404);
         }
 
         $tag = $site->theme->tags()->where('type', 'category')->first();
@@ -32,20 +32,14 @@ class PageController extends Controller
 
     public function edit()
     {
-        $site = auth()->user()->sites()->where('address', request()->address)->first();
-        if (!$site) {
-            return redirect()->home();
-        }
-
+        $site = auth()->user()->sites()->where('address', request()->address)->firstOrFail();
         $tag = $site->theme->tags()->where('type', 'category')->first();
         if ($tag->tag === 'website') {
         } elseif ($tag->tag === 'portfolio') {
         } elseif ($tag->tag === 'web application') {
             $info = ['type' => request()->type, 'action' => request()->action];
             $data = WebAppsHelper::finder($site, null, 'dashboard-load-action', $info, request()->id);
-            if (!view()->exists($data['location'])) {
-                return back();
-            }
+            abort_if(!view()->exists($data['location']), 404);
             return view($data['location'], $data['data']);
         } elseif ($tag->tag === 'blog') {
         }
@@ -54,30 +48,32 @@ class PageController extends Controller
     public function show()
     {
         if (request()->ajax()) {
-            $page = Page::where('id', request()->id)->with(['sections' => function ($query) {
-                $query->orderBy('created_at', 'desc');
-            }, 'sections.contents', 'sections.extras', 'site.user'])->first();
-            return response()->json(compact('page'), 200);
-        } else {
-            $site = auth()->user()->sites()->where('address', request()->address)->first();
-            if (!$site) {
-                return redirect()->home();
+            $page = Page::findOrFail(request()->id);
+            $site = auth()->user()->sites()->findOrFail($page->site->id);
+            $tag = $site->theme->tags()->where('type', 'category')->first();
+            if ($tag->tag === 'website') {
+            } elseif ($tag->tag === 'portfolio') {
+            } elseif ($tag->tag === 'web application') {
+                $data = WebAppsHelper::finder($site, $page, 'getPage');
+                return response()->json($data);
+            } elseif ($tag->tag === 'blog') {
             }
-
+            // $page = Page::where('id', request()->id)->with(['sections' => function ($query) {
+            //     $query->orderBy('created_at', 'desc');
+            // }, 'sections.contents', 'sections.extras', 'site.user'])->first();
+            // return response()->json(compact('page'), 200);
+        } else {
+            $site = auth()->user()->sites()->where('address', request()->address)->firstOrFail();
             $tag = $site->theme->tags()->where('type', 'category')->first();
             if ($tag->tag === 'website') {
                 $data = WebsitesHelper::finder($site, intval(request()->id), 'dashboard', request()->type);
                 $page = $data['data'][0];
-                if (!view()->exists($data['location'])) {
-                    return back();
-                }
+                abort_if(!view()->exists($data['location']), 404);
                 return view($data['location'], compact('page', 'site'));
             } elseif ($tag->tag === 'portfolio') {
             } elseif ($tag->tag === 'web application') {
                 $data = WebAppsHelper::finder($site, null, 'dashboard-load-section', request()->type, request()->id);
-                if (!view()->exists($data['location'])) {
-                    return back();
-                }
+                abort_if(!view()->exists($data['location']), 404);
                 return view($data['location'], $data['data']);
             } elseif ($tag->tag === 'blog') {
             }

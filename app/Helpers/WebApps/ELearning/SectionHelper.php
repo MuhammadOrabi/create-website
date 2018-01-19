@@ -8,6 +8,8 @@ class SectionHelper
     {
         if ($page->slug === 'courses') {
             return CourseHelper::index($page, $op, $data, $component);
+        } elseif ($page->slug === 'articles') {
+            return ArticlesHelper::index($page, $op, $data, $component);
         }
     }
 }

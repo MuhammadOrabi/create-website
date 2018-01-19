@@ -60,7 +60,11 @@ export default {
 	},
 	methods: {
 		save() {
-			return {id: this.id, heading: this.heading, paragraph: this.paragraph};
+			let data = {heading: this.heading, paragraph: this.paragraph};
+			window.axios.put('/api/dashboard/sections/' + this.id, data, { headers: { 'Authorization': 'Bearer ' + this.token } })
+			.then(res => {
+				return true;
+			}).catch(err => console.log(err));
 		},
 		getData() {
 			window.axios.get('/api/dashboard/sections/' + this.id, { headers: { 'Authorization': 'Bearer ' + this.token } })

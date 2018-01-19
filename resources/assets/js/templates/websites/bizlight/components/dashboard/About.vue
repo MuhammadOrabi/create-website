@@ -42,8 +42,10 @@
 					imageUpload: false,
 					fileUpload: false,
 					toolbarButtons: [
-						'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', '-', 'insertLink', '|', 'specialCharacters', 'selectAll', 'clearFormatting', '|', 'print', 'spellChecker', 'help', 'html', '|', 'undo', 'redo'
-						],
+						'fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript',  'fontFamily', 'fontSize', 'color', 
+						'inlineStyle', 'paragraphStyle',  'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'insertLink','help', 
+						'html',  'undo', 'redo'
+					],
 					quickInsertButtons: ['ul', 'ol'],
 					toolbarVisibleWithoutSelection: true
 				},
@@ -55,19 +57,18 @@
 		methods: {
 			save() {
 				let data = [
-					{id: this.id, paragraph: this.paragraph}
+					{paragraph: this.paragraph}
 				];
-				window.axios.put('/api/dashboard/contents/' + this.address, data, { headers: { 'Authorization': 'Bearer ' + this.token } })
+				window.axios.put('/api/dashboard/sections/' + this.id, data, { headers: { 'Authorization': 'Bearer ' + this.token } })
 				.then(res => {
 					this.update = false;
-					this.msg = res.data;
+					this.msg = 'success'
 					this.getData();
 				}).catch(err => console.log(err));
 			},
 			getData() {
 				window.axios.get('/api/dashboard/sections/' + this.id, { headers: { 'Authorization': 'Bearer ' + this.token } })
 				.then(res => {
-
 					let paragraph = res.data[0];
 					this.paragraph = paragraph? paragraph.content: '';
 				}).catch(err => console.log(err));

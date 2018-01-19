@@ -7,16 +7,18 @@
 		<h1>{{ $page->title }}</h1>
 		<hr>
 		@if($page->slug == '')
-			<home-page	token="{{ auth()->user()->getToken('') }}" 
-					address="{{ $site->address }}"
+			<home-page	token="{{ auth()->user()->getToken('') }}"
+					address="{{ $site->address }}" page="{{ $page->id }}"
 					showcase="{{ $page->sections->where('title', 'showCase')->first()->id }}" 
 					sectiona="{{ $page->sections->where('title', 'section_a')->first()->id }}"
 					sectionb="{{ $page->sections->where('title', 'section_b')->first()->id }}"
 					sectionc="{{ $page->sections->where('title', 'section_c')->first()->id }}" ></home-page>
 		@elseif($page->slug == 'about')
-			<about token="{{ auth()->user()->getToken('') }}" id="{{ $page->sections->first()->id }}" address="{{ $site->address }}"></about>
+			<about token="{{ auth()->user()->getToken('') }}" id="{{ $page->sections->first()->id }}"
+				   page="{{ $page->id }}"	address="{{ $site->address }}"></about>
 		@elseif($page->slug == 'services')
-			<services token="{{ auth()->user()->getToken('') }}" id="{{ $page->sections->first()->id }}" address="{{ $site->address }}"></services>
+			<services token="{{ auth()->user()->getToken('') }}" id="{{ $page->sections->first()->id }}" 
+					  page="{{ $page->id }}" address="{{ $site->address }}"></services>
 		@elseif($page->slug == 'contact')
 			<table class="table table-hover">
 				<thead>

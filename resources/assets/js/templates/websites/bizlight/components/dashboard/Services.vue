@@ -52,7 +52,9 @@
 					imageUpload: false,
 					fileUpload: false,
 					toolbarButtons: [
-						'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', '-', 'insertLink', '|', 'specialCharacters', 'selectAll', 'clearFormatting', '|', 'print', 'spellChecker', 'help', 'html', '|', 'undo', 'redo'
+						'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript',  'fontFamily', 'fontSize', 'color', 
+						'inlineStyle', 'paragraphStyle',  'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'insertLink','help', 
+						'html',  'undo', 'redo'
 						],
 					quickInsertButtons: ['ul', 'ol'],
 					toolbarVisibleWithoutSelection: true
@@ -65,7 +67,9 @@
 					imageUpload: false,
 					fileUpload: false,
 					toolbarButtons: [
-						'bold', 'italic', 'underline', 'strikeThrough', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'outdent', 'indent', '-', 'insertLink', '|', 'specialCharacters', 'selectAll', 'clearFormatting', '|', 'print', 'spellChecker', 'help', 'html', '|', 'undo', 'redo'
+						'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript',  'fontFamily', 'fontSize', 'color', 
+						'inlineStyle', 'paragraphStyle',  'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'insertLink','help', 
+						'html',  'undo', 'redo'
 						],
 					quickInsertButtons: [ ],
 					toolbarVisibleWithoutSelection: true
@@ -77,13 +81,12 @@
 		},
 		methods: {
 			save() {
-				let services = _.difference(this.data, _.where(this.data, {heading: ''}), _.where(this.data, {paragraph: ''}));
-				let data = [{ id: this.id, data: services }];
-				window.axios.put('/api/dashboard/contents/' + this.address, data, { headers: { 'Authorization': 'Bearer ' + this.token } })
+				let services = _.difference(this.data, _.where(this.data, {heading: ''}), _.where(this.data, {paragraph: ''}));				
+				window.axios.put('/api/dashboard/sections/' + this.id, services, { headers: { 'Authorization': 'Bearer ' + this.token } })
 				.then(res => {
 					this.update = false;
 					this.getData();
-					this.msg = res.data;
+					this.msg = 'success';
 				}).catch(err => console.log(err));
 			},
 			getData() {
@@ -92,6 +95,7 @@
 					if (res.data.length === 0) {
 						return;
 					}
+
 					let data = _.groupBy(res.data, 'order');
 					this.data = [];
 					_.each(data, (items, key) => {

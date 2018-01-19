@@ -142,8 +142,12 @@ export default {
 			this.data = _.difference(this.data, _.where(this.data, {heading: null}));
 		},
 		save() {
-			let data = _.difference(this.data, _.where(this.data, {heading: ''}), _.where(this.data, {paragraph: ''}))			
-			return { id: this.id, section: 'sectionB', img: this.imgsrc, data: data };
+			let data = _.difference(this.data, _.where(this.data, {heading: ''}), _.where(this.data, {paragraph: ''}));	
+			window.axios.put('/api/dashboard/sections/' + this.id, {data, img: this.imgsrc}, { headers: { 'Authorization': 'Bearer ' + this.token } })
+			.then(res => {
+				console.log(res.data);
+				return true;
+			}).catch(err => console.log(err));
 		},
 		toggleModal() {
 			if (this.update) {

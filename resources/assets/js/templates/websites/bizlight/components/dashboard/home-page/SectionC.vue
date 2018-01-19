@@ -80,7 +80,11 @@
 				}).catch(err => console.log(err));
 			},
 			save() {
-				return {id: this.id, img: this.imgsrc, paragraph: this.paragraph};
+				let data = {img: this.imgsrc, paragraph: this.paragraph};
+				window.axios.put('/api/dashboard/sections/' + this.id, data, { headers: { 'Authorization': 'Bearer ' + this.token } })
+				.then(res => {
+					return true;
+				}).catch(err => console.log(err));
 			},
 			toggleModal() {
 				if (this.update) {

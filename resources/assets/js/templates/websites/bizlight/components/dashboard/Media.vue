@@ -26,10 +26,10 @@
                             </div>
                         </div>  
                         <div class="col" v-else>
-                            <label class="custom-file">
-                                <input type="file" id="file2" class="custom-file-input" accept="image/*" @change="onFilePicked">
-                                <span class="custom-file-control"></span>
-                            </label>
+                            <div class="custom-file">
+							  	<input type="file" class="custom-file-input" id="customFile" accept="image/*" @change="onFilePicked">
+							  	<label class="custom-file-label" for="customFile">{{ img ? img.name : 'Choose image' }}</label>
+							</div>
                         </div>
                         <div class="col" v-if="imgFile">
                             <img :src="imgFile" alt="Image" class="img-thumbnail" height="200px" width="200px">

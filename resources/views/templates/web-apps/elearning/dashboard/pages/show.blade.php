@@ -6,9 +6,11 @@
 
 @section('content')
     <h1 class="title">{{ $page->title }}</h1>
-    @if($page->title === 'Users')
+    @if($page->slug === 'register')
         <users address="{{ $site->address }}" token="{{ auth()->user()->getToken('users-manage') }}"></users>
-    @elseif($page->title === 'Courses')
+    @elseif($page->slug === 'courses')
         <courses id="{{ $page->id }}" address="{{ $site->address }}" token="{{ auth()->user()->getToken('courses-manage') }}"></courses>
+    @elseif($page->slug === 'articles')
+    	<articles id="{{ $page->id }}" address="{{ $site->address }}" token="{{ auth()->user()->getToken('articles-manage') }}"></articles>
     @endif
 @stop

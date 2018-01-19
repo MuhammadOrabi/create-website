@@ -2,8 +2,9 @@
 
 namespace App\Helpers\WebApps\ELearning;
 
-use App\Site;
 use App\Page;
+use App\Site;
+use App\Content;
 use App\Section;
 
 class ELearningSiteHelper
@@ -55,8 +56,8 @@ class ELearningSiteHelper
             $page->load('sections.contents');
             $section = null;
         } elseif ($data === 'lessons') {
-            $section = Section::findOrFail($component);
-            $page = $section->page;
+            $page = $pages->where('slug', 'courses')->first();
+            $section = $page->sections()->findOrFail($component);
         }
         $location = $this->site->theme->location . '.dashboard.' . $data . '.show';
         $data = ['page' => $page, 'site' => $this->site, 'pages' => $pages, 'section' => $section];
@@ -65,20 +66,68 @@ class ELearningSiteHelper
 
     public function loadAction($data, $component)
     {
-        $pages = $this->sidebar();
-        $section = null;
-        if ($data['type'] === 'lessons') {
-            $section = Section::findOrFail($component);
-            $page = $section->page;
+        if ($data['action'] === 'create') {
+            if ($data['type'] === 'lessons') {
+                return $this->loadCreateLesson($data, $component);
+            } elseif ($data['type'] === 'articles') {
+                return $this->loadCreateArticles($data, $component);
+            }
+        } elseif ($data['action'] === 'update') {
+            if ($data['type'] === 'lessons') {
+                return $this->loadUpdateLesson($data, $component);
+            } elseif ($data['type'] === 'articles') {
+                return $this->loadUpdateArticles($data, $component);
+            }
         }
+        abort(404);
+    }
+
+    public function loadCreateLesson($data, $component)
+    {
+        $pages = $this->sidebar();
+        $courses = $pages->where('slug', 'courses')->first();
+        $section = $courses->sections()->findOrFail($component);
         $location = $this->site->theme->location . '.dashboard.' . $data['type'] . '.' . $data['action'];
-        $data = ['page' => $page, 'site' => $this->site, 'pages' => $pages, 'section' => $section];
+        $data = ['page' => $courses, 'site' => $this->site, 'pages' => $pages, 'section' => $section];
+        return compact('location', 'data');
+    }
+
+    public function loadUpdateLesson($data, $component)
+    {
+        $pages = $this->sidebar();
+        $courses = $pages->where('slug', 'courses')->first();
+        $content = Content::findOrFail($component);
+        $page = $content->contentable->page;
+        $location = $this->site->theme->location . '.dashboard.' . $data['type'] . '.' . $data['action'];
+        $data = [
+            'page' => $page, 'site' => $this->site,
+            'pages' => $pages, 'section' => $content->contentable,
+            'content' => $content
+        ];
+        return compact('location', 'data');
+    }
+
+    public function loadCreateArticles($data, $component)
+    {
+        $pages = $this->sidebar();
+        $articles = $pages->where('slug', 'articles')->first();
+        $location = $this->site->theme->location . '.dashboard.' . $data['type'] . '.' . $data['action'];
+        $data = ['page' => $articles, 'site' => $this->site, 'pages' => $pages];
+        return compact('location', 'data');
+    }
+
+    public function loadUpdateArticles($data, $component)
+    {
+        $pages = $this->sidebar();
+        $articles = $pages->where('slug', 'articles')->first();
+        $location = $this->site->theme->location . '.dashboard.' . $data['type'] . '.' . $data['action'];
+        $data = ['page' => $articles, 'site' => $this->site, 'pages' => $pages, 'section' => $section];
         return compact('location', 'data');
     }
 
     public function sidebar()
     {
-        $slugs = ['', 'about', 'news', 'contact', 'courses', 'register'];
+        $slugs = ['', 'about', 'articles', 'contact', 'courses', 'register'];
         $pages = collect($this->site->pages->whereIn('slug', $slugs)->all());
         $pages->where('slug', 'register')->first()->title = 'Users';
         return $pages;

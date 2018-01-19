@@ -105,14 +105,6 @@ class UserController extends Controller
      */
     public function show()
     {
-        $user = User::where('id', request()->user()->id)->where('address', '!=', 'main')
-                    ->with(['extras',
-                    'logs' => function ($query) {
-                        $query->orderBy('created_at', 'desc');
-                    },
-                    'logs.contents.contentable', 'logs.sections'])->first();
-
-        return response()->json(compact('user'));
     }
 
     /**

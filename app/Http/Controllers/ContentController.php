@@ -5,81 +5,74 @@ namespace App\Http\Controllers;
 use App\Content;
 use App\Section;
 use Illuminate\Http\Request;
-use App\Helpers\Websites\WebsitesHelper;
+use App\Helpers\WebApps\WebAppsHelper;
 
+/**
+ * Fully Updated
+ */
 class ContentController extends Controller
 {
     public function store()
     {
         $section = Section::findOrFail(request()->id);
-        $site = auth()->user()->sites()->where('address', $section->page->site->address)->first();
-        if ($site) {
-            if ($site->theme->location == 'templates.web-apps.elearning') {
-                $content = $section->contents()->create(['type' => 'lesson', 'title' => request('title'), 'content' => request('paragraph')]);
-                $content->extras()->create(['type' => 'video', 'title' => request('fileName'), 'content' => request('video')]);
-                return response()->json('success', 200);
-            }
-        } else {
-            return response(400);
+        $site = auth()->user()->sites()->where('address', $section->page->site->address)->firstOrFail();
+        $tag = $site->theme->tags()->where('type', 'category')->first();
+        if ($tag->tag === 'website') {
+        } elseif ($tag->tag === 'portfolio') {
+        } elseif ($tag->tag === 'web application') {
+            $data = WebAppsHelper::finder($site, $section->page, 'createContent', request()->all(), $section);
+            return response()->json($data);
+        } elseif ($tag->tag === 'blog') {
         }
+        return response('Something went wrong!', 500);
     }
 
     public function update()
     {
-        $site = auth()->user()->sites()->where('address', request()->address)->first();
-        if (!$site) {
-            return response(500);
-        }
+        $content = Content::findOrFail(request()->id);
+        $site = auth()->user()->sites()->where('address', $content->contentable->page->site->address)->firstOrFail();
         $tag = $site->theme->tags()->where('type', 'category')->first();
         if ($tag->tag === 'website') {
-            $msg = WebsitesHelper::finder($site, null, 'createOrUpdateContent', request()->all());
-            return response()->json('success');
         } elseif ($tag->tag === 'portfolio') {
         } elseif ($tag->tag === 'web application') {
+            $data = WebAppsHelper::finder(
+                $site,
+                $content->contentable->page,
+                'updateContent',
+                request()->all(),
+                $content
+            );
+            return response()->json($data);
         } elseif ($tag->tag === 'blog') {
         }
-
-        return response(500);
+        return response('Something went wrong!', 500);
     }
 
-    public function updateExtras()
+    public function edit()
     {
         $content = Content::findOrFail(request()->id);
-        $site = auth()->user()->sites()->where('address', $content->contentable->page->site->address)->first();
-        if ($site) {
-            if ($site->theme->location == 'templates.web-apps.elearning') {
-                if (request('title') && request('paragraph')) {
-                    $content->title = request('title');
-                    $content->content = request('paragraph');
-                    $content->save();
-                } elseif (request('video')) {
-                    $content->extras()->where('type', 'video')->update(['content' => request('video')]);
-                }
-                return response()->json('success', 200);
-            }
-        } else {
-            return response(400);
-        }
-    }
-
-    public function show()
-    {
-        $content = Content::where('id', request()->id)->with('extras', 'contentable.contents.extras')->first();
-        $site = $content->contentable->page->site;
-        if ($site) {
-            if ($site->theme->location == 'templates.web-apps.elearning') {
-                return response()->json(compact('content'));
-            }
-        } else {
-            return response(400);
+        $site = auth()->user()->sites()->findOrFail($content->contentable->page->site->id);
+        $tag = $content->contentable->page->site->theme->tags()->where('type', 'category')->first();
+        if ($tag->tag === 'website') {
+        } elseif ($tag->tag === 'portfolio') {
+        } elseif ($tag->tag === 'web application') {
+            $data = WebAppsHelper::finder($site, $content->contentable->page, 'getContent', null, $content);
+            return response()->json($data);
+        } elseif ($tag->tag === 'blog') {
         }
     }
 
     public function destroy()
     {
-        $content = Content::where('id', request()->id)->first();
-        $content->extras()->delete();
-        $content->delete();
-        return response($content->id);
+        $content = Content::findOrFail(request()->id);
+        $site = auth()->user()->sites()->findOrFail($content->contentable->page->site->id);
+        $tag = $site->theme->tags()->where('type', 'category')->first();
+        if ($tag->tag === 'website') {
+        } elseif ($tag->tag === 'portfolio') {
+        } elseif ($tag->tag === 'web application') {
+            $data = WebAppsHelper::finder($site, $content->contentable->page, 'deleteContent', null, $content);
+            return response()->json($data);
+        } elseif ($tag->tag === 'blog') {
+        }
     }
 }

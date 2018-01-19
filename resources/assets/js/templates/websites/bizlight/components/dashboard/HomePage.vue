@@ -44,19 +44,18 @@ export default {
 			this.$refs.sectionc.update = true;
 		},
 		save() {
-			let data = [this.$refs.showcase.save(), this.$refs.sectionb.save(), this.$refs.sectiona.save(), this.$refs.sectionc.save()];
-			window.axios.put('/api/dashboard/contents/' + this.address, data, { headers: { 'Authorization': 'Bearer ' + this.token } })
-			.then(res => {
-				this.updateCheck = false;
-				this.$refs.showcase.update = false;
-				this.$refs.sectionb.update = false;
-				this.$refs.sectiona.update = false;
-				this.$refs.sectionc.update = false;
-				this.$refs.sectionb.getData();
-				this.$refs.sectiona.getData();
-				this.$refs.sectionc.getData();
-				this.msg = res.data;
-			}).catch(err => console.log(err));
+			let showcase = this.$refs.showcase.save();
+			let a = this.$refs.sectiona.save();
+			let b = this.$refs.sectionb.save();
+			let c = this.$refs.sectionc.save();
+			if (a && b && c && showcase) {
+				this.msg = 'success';
+			}
+			this.updateCheck = false;
+			this.$refs.showcase.update = false;
+			this.$refs.sectionb.update = false;
+			this.$refs.sectiona.update = false;
+			this.$refs.sectionc.update = false;
 		}
 	}
 }

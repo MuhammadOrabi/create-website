@@ -61,7 +61,9 @@
 					imageUpload: false,
 					fileUpload: false,
 					toolbarButtons: [
-						'fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript',  'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle',  'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'insertLink',  'specialCharacters','selectAll', 'clearFormatting',  'print', 'help', 'html',  'undo', 'redo'
+						'fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript',  'fontFamily', 'fontSize', 'color', 
+						'inlineStyle', 'paragraphStyle',  'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'insertLink','help', 
+						'html',  'undo', 'redo'
 					],
 					quickInsertButtons: ['ul', 'ol'],
 					toolbarVisibleWithoutSelection: true

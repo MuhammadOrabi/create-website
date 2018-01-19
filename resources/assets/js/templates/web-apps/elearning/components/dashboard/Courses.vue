@@ -83,10 +83,10 @@
         methods: {
             moment,
             getData() {
-                window.axios.get('/api/pages/' + this.id)
+                window.axios.get('/api/dashboard/pages/' + this.id, { headers: { 'Authorization': 'Bearer ' + this.token } })
                 .then((res) => {
                     this.courses = [];
-                    res.data.page.sections.forEach((section) => {
+                    res.data.sections.forEach((section) => {
                         let tags = _.pluck(_.where(section.extras, {type: 'tag'}), 'content');
                         let p = _.findWhere(section.extras, {type: 'paragraph'});
                         let title = section.title;

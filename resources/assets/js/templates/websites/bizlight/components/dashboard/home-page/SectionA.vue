@@ -79,7 +79,9 @@ export default {
 				imageUpload: false,
 				fileUpload: false,
 				toolbarButtons: [
-					'bold', 'italic', 'underline', 'strikeThrough', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'outdent', 'indent', '-', 'insertLink', '|', 'specialCharacters', 'selectAll', 'clearFormatting', '|', 'print', 'spellChecker', 'help', 'html', '|', 'undo', 'redo'
+						'fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript',  'fontFamily', 'fontSize', 'color', 
+						'inlineStyle', 'paragraphStyle',  'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'insertLink','help', 
+						'html',  'undo', 'redo'
 					],
 				quickInsertButtons: [],
 				toolbarVisibleWithoutSelection: true
@@ -115,7 +117,10 @@ export default {
 		},
 		save() {
 			let data = _.difference(this.data, _.where(this.data, {heading: ''}), _.where(this.data, {paragraph: ''}));
-			return { id: this.id, data: data };
+			window.axios.put('/api/dashboard/sections/' + this.id, data, { headers: { 'Authorization': 'Bearer ' + this.token } })
+			.then(res => {
+				return true;
+			}).catch(err => console.log(err));
 		},
 		add() {
 			this.data.push({heading: '', paragraph: '', img: 'https://dummyimage.com/150x150/000/ffffff.png&text=Click+Here!'});

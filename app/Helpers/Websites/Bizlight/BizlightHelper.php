@@ -27,11 +27,10 @@ class BizlightHelper
         $contact = $site->addPage(['title' => 'Contact', 'homePage' => false, 'slug' => 'contact']);
     }
 
-    public static function doThis($site, $page, $op, $data)
+    public static function doThis($site, $page, $op, $data, $component = null)
     {
-        if ($op === 'createOrUpdateContent') {
-            $bizlight = new BizlightContentHelper;
-            $bizlight->createOrUpdate($data);
+        if ($op === 'updateSection') {
+            return SectionHelper::which($page, 'update', $data, $component);
         } elseif ($op === 'site') {
             $site = new BizlightSiteHelper($site->id);
             return $site->site($page);
@@ -39,7 +38,7 @@ class BizlightHelper
             $site = new BizlightSiteHelper($site->id);
             return $site->dashboard($page, $data);
         } elseif ($op === 'getSection') {
-            return SectionHelper::which($page, 'get', $data);
+            return SectionHelper::which($page, 'get', null, $component);
         }
     }
 }

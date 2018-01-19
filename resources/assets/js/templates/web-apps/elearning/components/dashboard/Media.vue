@@ -1,70 +1,69 @@
 <template>
-    <div>
-        <h1 class="title">Media</h1>
-        <hr>
-         <b-tabs type="is-boxed" expanded animated>
-            <b-tab-item label="Pictures" icon-pack="fa" icon="picture-o">
-                <section class="p-t-20 columns is-multiline">
-                    <div class="column is-one-quarter" v-for="(img, i) in images" :key="i">
-                        <figure class="image is-square">
-                            <img :src="img.url">
-                        </figure>
-                    </div>
-                </section>
-            </b-tab-item>
-            <b-tab-item label="Add Pictures" icon-pack="fa" icon="plus">
-                <section class="p-t-20">
-                    <b-tabs position="is-centered" class="block" animated>
-                        <b-tab-item label="Upload">
-                            <div class="p-b-20 p-t-15 has-text-centered" v-if="imgFile">
-                                <button class="button is-success" @click="uploadImage">Upload</button>
-                            </div>
-                            <div class="columns p-t-15">
-                                <section class="column" v-if="imgFile">
-                                    <figure class="image is-148x148">
-                                        <img :src="imgFile" alt="Placeholder image">
-                                    </figure>
-                                </section>
-                                <section class="column">
-                                    <b-field>
-                                        <b-upload v-model="dropFiles" @input="onPickFile" drag-drop>
-                                            <section class="section">
-                                                <div class="content has-text-centered">
-                                                    <p><b-icon pack="fa" icon="upload" size="is-large"></b-icon></p>
-                                                    <p>Drop your files here or click to upload</p>
-                                                </div>
-                                            </section>
-                                        </b-upload>
-                                    </b-field>
+    <section class="card">
+        <div class="card-content">
+	        <b-tabs type="is-boxed" expanded animated>
+	            <b-tab-item label="Pictures" icon-pack="fa" icon="picture-o">
+	                <section class="p-t-20 columns is-multiline">
+	                    <div class="column is-one-quarter" v-for="(img, i) in images" :key="i">
+	                        <figure class="image is-square">
+	                            <img :src="img.url" @click="selectImg(img.url)">
+	                        </figure>
+	                    </div>
+	                </section>
+	            </b-tab-item>
+	            <b-tab-item label="Add Pictures" icon-pack="fa" icon="plus">
+	                <section class="p-t-20">
+	                    <b-tabs position="is-centered" class="block" animated>
+	                        <b-tab-item label="Upload">
+	                            <div class="p-b-20 p-t-15 has-text-centered" v-if="imgFile">
+	                                <button class="button is-success" @click="uploadImage">Upload</button>
+	                            </div>
+	                            <div class="columns p-t-15">
+	                                <section class="column" v-if="imgFile">
+	                                    <figure class="image is-148x148">
+	                                        <img :src="imgFile" alt="Placeholder image">
+	                                    </figure>
+	                                </section>
+	                                <section class="column">
+	                                    <b-field>
+	                                        <b-upload v-model="dropFiles" @input="onPickFile" drag-drop>
+	                                            <section class="section">
+	                                                <div class="content has-text-centered">
+	                                                    <p><b-icon pack="fa" icon="upload" size="is-large"></b-icon></p>
+	                                                    <p>Drop your files here or click to upload</p>
+	                                                </div>
+	                                            </section>
+	                                        </b-upload>
+	                                    </b-field>
 
-                                    <div class="tags">
-                                        <span v-for="(file, index) in dropFiles" :key="index" class="tag is-primary" >
-                                            {{file.name}}
-                                            <button class="delete is-small" type="button" @click="deleteDropFile(index)"></button>
-                                        </span>
-                                    </div>
-                                </section>
-                            </div>
-                        </b-tab-item>
-                        <b-tab-item label="Search">
-                            <section class="p-t-15">
-                                <b-field>
-                                    <b-input placeholder="Search..." type="search" icon-pack="fa" icon="search"></b-input>
-                                </b-field>
-                            </section>
-                        </b-tab-item>
-                    </b-tabs>
-                </section>
-            </b-tab-item>
-        </b-tabs>
-        
-    </div>
+	                                    <div class="tags">
+	                                        <span v-for="(file, index) in dropFiles" :key="index" class="tag is-primary" >
+	                                            {{file.name}}
+	                                            <button class="delete is-small" type="button" @click="deleteDropFile(index)"></button>
+	                                        </span>
+	                                    </div>
+	                                </section>
+	                            </div>
+	                        </b-tab-item>
+	                        <b-tab-item label="Search">
+	                            <section class="p-t-15">
+	                                <b-field>
+	                                    <b-input placeholder="Search..." type="search" icon-pack="fa" icon="search"></b-input>
+	                                </b-field>
+	                            </section>
+	                        </b-tab-item>
+	                    </b-tabs>
+	                </section>
+	            </b-tab-item>
+	        </b-tabs>
+	    </div>
+    </section>
 </template>
 
 <script>
     export default {
         name: 'Media',
-        props: ['address', 'token'],
+        props: ['address', 'token', 'parent'],
         data() {
             return {
                 images: [],
@@ -136,6 +135,12 @@
                 })
                 .catch(err => console.log(err));
             },
+            selectImg(img) {
+            	if (this.parent) {
+            		this.parent._self.img = img;
+            		this.parent._self.isMediaModalActive = false; 
+            	}
+            }
         }
     }
 </script>

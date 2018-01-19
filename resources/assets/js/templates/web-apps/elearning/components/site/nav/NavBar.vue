@@ -52,7 +52,7 @@
             },
             pages() {
                 let pages = [
-                    { icon: 'newspaper-o', title: 'News', slug: 'news'},
+                    { icon: 'newspaper-o', title: 'Articles', slug: 'articles'},
                     { icon: 'info-circle', title: 'About', slug: 'about'},
                     { icon: 'at', title: 'Contact', slug: 'contact'},
                     { icon: 'list', title: 'Courses', slug: 'courses'}

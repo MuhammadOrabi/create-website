@@ -15,8 +15,9 @@
 			</a>
 		</div>
 		<div class="column">
-			<h1 class="title">Add an Article</h1>            
+			<h1 class="title">Update an Article</h1>            
 		</div>
 	</div>
-	<articles-cu c address="{{ $site->address }}" token="{{ auth()->user()->getToken('articles-cu') }}" page="{{ $page->id }}"></articles-cu>
+	<articles-cu u address="{{ $site->address }}" token="{{ auth()->user()->getToken('articles-cu') }}" 
+				page="{{ $page->id }}" id="{{ $section->id }}"></articles-cu>
 @stop

@@ -10,6 +10,10 @@
                     {{ props.row.tags.toLocaleString() }}
                 </b-table-column>
 
+                <b-table-column field="type" label="Using" class="is-capitalized">
+                    {{ props.row.type }}
+                </b-table-column>
+
                 <b-table-column label="Created at">
                     {{ moment(props.row.created_at).calendar() }}
                 </b-table-column>
@@ -82,6 +86,7 @@
 						this.articles.push({
 							id: section.id,
 							title: section.title,
+							type: section.type,
 							tags: _.pluck(_.where(section.extras, {type: 'tag'}), 'content'),
 							created_at: section.created_at
 						});						

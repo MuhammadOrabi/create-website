@@ -24,14 +24,37 @@ class ArticlesHelper
 
     public static function store($page, $data)
     {
-        $section = $page->sections()->create(['title' => $data['title']]);
+        $section = $page->sections()->create(['title' => $data['title'], 'type' => $data['type']]);
         $section->contents()->create(['type' => 'paragraph', 'content' => $data['paragraph']]);
         if ($data['img']) {
-            $section->extras()->create(['type' => 'img', 'content' => $data['img']]);
+            $section->contents()->create(['type' => 'img', 'content' => $data['img']]);
         }
         foreach ($data['tags'] as $tag) {
             $section->extras()->create(['type' => 'tag', 'content' => $tag]);
         }
+        return $section;
+    }
+
+    public static function update($section, $data)
+    {
+        $section->update(['title' => $data['title'], 'type' => $data['type']]);
+        $section->contents()->where('type', 'paragraph')->update(['content' => $data['paragraph']]);
+        $section->contents()->where('type', 'img')->delete();
+        if ($data['img']) {
+            $section->contents()->create(['type' => 'img', 'content' => $data['img']]);
+        }
+        $section->extras()->where('type', 'tag')->delete();
+        foreach ($data['tags'] as $tag) {
+            $section->extras()->create(['type' => 'tag', 'content' => $tag]);
+        }
+        return $section;
+    }
+
+    public static function destroy($section)
+    {
+        $section->contents()->delete();
+        $section->extras()->delete();
+        $section->delete();
         return $section;
     }
 }

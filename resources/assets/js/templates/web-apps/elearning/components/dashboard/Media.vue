@@ -10,6 +10,11 @@
 	                        </figure>
 	                    </div>
 	                </section>
+	                <b-modal :active.sync="isImgModalActive">
+			            <p class="image is-4by3">
+			                <img :src="selectedImg">
+			            </p>
+			        </b-modal>
 	            </b-tab-item>
 	            <b-tab-item label="Add Pictures" icon-pack="fa" icon="plus">
 	                <section class="p-t-20">
@@ -71,6 +76,8 @@
                 imgFile: null,
                 uploading: false,
                 progress: null,
+                selectedImg: null,
+                isImgModalActive: false
             };
         },
         computed: {},
@@ -139,6 +146,9 @@
             	if (this.parent) {
             		this.parent._self.img = img;
             		this.parent._self.isMediaModalActive = false; 
+            	} else {
+            		this.selectedImg = img;
+            		this.isImgModalActive = true;
             	}
             }
         }

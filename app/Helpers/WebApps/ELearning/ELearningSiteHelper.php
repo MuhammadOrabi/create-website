@@ -96,7 +96,9 @@ class ELearningSiteHelper
     {
         $pages = $this->sidebar();
         $courses = $pages->where('slug', 'courses')->first();
-        $content = Content::findOrFail($component);
+        $content = Content::where('id', $component)
+                            ->whereIn('contentable_id', $courses->sections->pluck('id'))
+                            ->firstOrFail();
         $page = $content->contentable->page;
         $location = $this->site->theme->location . '.dashboard.' . $data['type'] . '.' . $data['action'];
         $data = [
@@ -120,8 +122,12 @@ class ELearningSiteHelper
     {
         $pages = $this->sidebar();
         $articles = $pages->where('slug', 'articles')->first();
+        $section = $articles->sections()->findOrFail($component);
         $location = $this->site->theme->location . '.dashboard.' . $data['type'] . '.' . $data['action'];
-        $data = ['page' => $articles, 'site' => $this->site, 'pages' => $pages, 'section' => $section];
+        $data = [
+            'page' => $articles, 'site' => $this->site,
+            'pages' => $pages, 'section' => $section,
+        ];
         return compact('location', 'data');
     }
 

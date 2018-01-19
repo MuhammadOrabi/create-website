@@ -28,6 +28,7 @@ Vue.component('lessons', require('./components/dashboard/Lessons.vue'));
 Vue.component('lessons-cu', require('./components/dashboard/Lessons-CU.vue'));
 Vue.component('articles', require('./components/dashboard/Articles.vue'));
 Vue.component('articles-cu', require('./components/dashboard/ArticlesCU.vue'));
+Vue.component('home-page', require('./components/dashboard/homePage.vue'));
 
 
 

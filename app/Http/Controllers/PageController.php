@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Page;
 use App\Site;
 use Illuminate\Http\Request;
-use App\Helpers\Websites\WebsitesHelper;
 use App\Helpers\WebApps\WebAppsHelper;
+use App\Helpers\Websites\WebsitesHelper;
 
 class PageController extends Controller
 {
@@ -58,10 +58,6 @@ class PageController extends Controller
                 return response()->json($data);
             } elseif ($tag->tag === 'blog') {
             }
-            // $page = Page::where('id', request()->id)->with(['sections' => function ($query) {
-            //     $query->orderBy('created_at', 'desc');
-            // }, 'sections.contents', 'sections.extras', 'site.user'])->first();
-            // return response()->json(compact('page'), 200);
         } else {
             $site = auth()->user()->sites()->where('address', request()->address)->firstOrFail();
             $tag = $site->theme->tags()->where('type', 'category')->first();

@@ -4,8 +4,17 @@ namespace App\Helpers\Websites\Bizlight;
 
 use App\Site;
 
+/**
+ * Helper Class For Bizlight template
+ * to perform the general Functions
+ */
 class BizlightHelper
 {
+    /**
+     * Scaffold the template for the site
+     * @param  Integer  $idSite id
+     * @return App\Site
+     */
     public static function scaffold($id)
     {
         $site = Site::findOrFail($id);
@@ -25,9 +34,19 @@ class BizlightHelper
         $top_nav = $site->constants()->create(['type' => 'top-nav']);
 
         $contact = $site->addPage(['title' => 'Contact', 'homePage' => false, 'slug' => 'contact']);
+        return $site;
     }
 
-    public static function doThis($site, $page, $op, $data, $component = null)
+    /**
+     * Find the proper helper class for the operation
+     * @param  App\Site $site       The site that the request belongs to
+     * @param  App\Page $page       The page that the request belongs to
+     * @param  String $op           What Operation is requested
+     * @param  Array $data          Request Data
+     * @param  [type] $component    Any Other Models that the request might need
+     * @return Array                Data that the Operation needs
+     */
+    public static function doThis($site, $page, $op, $data, $component)
     {
         if ($op === 'updateSection') {
             return SectionHelper::which($page, 'update', $data, $component);

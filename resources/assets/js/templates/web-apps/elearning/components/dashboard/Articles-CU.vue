@@ -9,14 +9,16 @@
 		<button class="button is-primary is-rounded" @click="isMediaModalActive = true">Add Show Case Image</button>
 		<section class="p-t-20 columns is-multiline is-centered">
             <div class="column is-three-quarters" v-if="img">
-			<button class="button is-warning is-rounded m-b-10" @click="img = null">Remove Image</button>
-                <figure class="image is-2by1">
-                    <img :src="img">
-                </figure>
+                <div class="notification">
+                    <button class="delete" @click="img = null"></button>
+                    <figure class="image is-2by1">
+                        <img :src="img">
+                    </figure>
+                </div>
             </div>
         </section>
 		<b-modal :active.sync="isMediaModalActive" >
-            <media v-bind="mediaProps" :parent="parent"></media>
+            <media v-bind="mediaProps" :imgUrl.sync="img" :active.sync="isMediaModalActive"></media>
         </b-modal>
 		<b-tabs position="is-centered" class="block" v-model="editors">
 			<b-tab-item label="Using Text Editor">
@@ -48,7 +50,7 @@
 <script>
 import marked from 'marked';
 export default {
-  	name: 'ArticlesCU',
+  	name: 'Articles-CU',
   	props: {address: String, token: String, id: String, page: String, c: Boolean, u: Boolean},
   	data () {
     	return {
@@ -83,9 +85,6 @@ export default {
     	}
   	},
   	computed: {
-  		parent() {
-  			return this;
-  		},
   		paragraph() {
       		return marked(this.markedown, { sanitize: true });
   		},

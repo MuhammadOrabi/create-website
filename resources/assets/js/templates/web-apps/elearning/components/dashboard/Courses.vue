@@ -22,7 +22,7 @@
                 </b-table-column>
 
                 <b-table-column label="Actions">
-                    <courses-crud r u d :address="address" :token="token" :parent="parent" :sectionid="props.row.id + ''"></courses-crud>              
+                    <courses-crud r u d :address="address" :token="token" @getData="getData" :sectionid="props.row.id + ''"></courses-crud>              
                 </b-table-column>
             </template>
 
@@ -55,7 +55,7 @@
                 </section>
             </template>
             <template slot="footer">
-                <courses-crud c :address="address" :token="token" :parent="parent" :id="id"></courses-crud>
+                <courses-crud c :address="address" :token="token" @getData="getData" :id="id"></courses-crud>
             </template>
         </b-table>
     </section>
@@ -71,11 +71,6 @@
             return {
                 courses: [],
             };
-        },
-        computed: {
-            parent() {
-                return this;
-            }
         },
         mounted() {
             this.getData();

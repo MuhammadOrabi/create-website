@@ -68,7 +68,7 @@
 <script>
     export default {
         name: 'Media',
-        props: ['address', 'token', 'parent'],
+        props: ['address', 'token', 'imgUrl', 'active'],
         data() {
             return {
                 images: [],
@@ -143,9 +143,9 @@
                 .catch(err => console.log(err));
             },
             selectImg(img) {
-            	if (this.parent) {
-            		this.parent._self.img = img;
-            		this.parent._self.isMediaModalActive = false; 
+            	if (this.active) {
+                    this.$emit('update:imgUrl', img);
+                    this.$emit('update:active', false);
             	} else {
             		this.selectedImg = img;
             		this.isImgModalActive = true;

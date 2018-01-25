@@ -7,7 +7,7 @@
 @section('content')
     <h1 class="title">{{ $page->title }}</h1>
     @if($page->homePage)
-    	<home-page address="{{ $site->address }}" token="{{ auth()->user()->getToken('users-manage') }}"></home-page>
+    	<home-page address="{{ $site->address }}" token="{{ auth()->user()->getToken('users-manage') }}" id="{{ $page->id }}"></home-page>
     @elseif($page->slug === 'register')
         <users address="{{ $site->address }}" token="{{ auth()->user()->getToken('users-manage') }}"></users>
     @elseif($page->slug === 'courses')

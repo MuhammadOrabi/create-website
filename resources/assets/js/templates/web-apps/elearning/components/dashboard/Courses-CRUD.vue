@@ -45,7 +45,7 @@
     const _ = window._;
     export default {
         name: 'Courses-CRUD',
-        props: {token: String, address: String, id: String, sectionid: String, c: Boolean, u: Boolean, d: Boolean, r: Boolean, parent: Object},
+        props: {token: String, address: String, id: String, sectionid: String, c: Boolean, u: Boolean, d: Boolean, r: Boolean},
         data() {
             return {
                 isModalActive: false,
@@ -113,7 +113,7 @@
                         position: 'is-top',
                         type: 'is-success'
                     });
-                    this.parent._self.getData();
+                    this.$emit('getData');
                 })
                 .catch(err => console.log(err));
             },
@@ -140,7 +140,7 @@
                         position: 'is-top',
                         type: 'is-success'
                     });
-                    this.parent._self.getData();      
+                    this.$emit('getData');      
                 })
                 .catch(err => console.log(err));
             },
@@ -149,7 +149,7 @@
                 window.axios.delete('/api/dashboard/sections/' + vm.sectionid, { headers: { 'Authorization': 'Bearer ' + vm.token } })
                 .then(() => {
                     this.$toast.open('Course deleted!');
-                    this.parent._self.getData();                   
+                    this.$emit('getData');                   
                 })
                 .catch(err => console.log(err));
             }

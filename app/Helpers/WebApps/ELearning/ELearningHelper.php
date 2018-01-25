@@ -10,6 +10,10 @@ class ELearningHelper
     {
         $site = Site::findOrFail($id);
         $home = $site->addPage(['title' => 'Home Page', 'homePage' => true, 'slug' => '']);
+        $home->sections()->create(['title' => 'showcase']);
+        $home->sections()->create(['title' => 'articles']);
+        $home->sections()->create(['title' => 'courses']);
+
         $profile = $site->addPage(['title' => 'Profile', 'homePage' => false, 'slug' => 'profile']);
         $signup = $site->addPage(['title' => 'Register', 'homePage' => false, 'slug' => 'register']);
         $signin = $site->addPage(['title' => 'Login', 'homePage' => false, 'slug' => 'login']);
@@ -27,36 +31,42 @@ class ELearningHelper
         if ($op === 'site') {
             $eLearning = new ELearningSiteHelper($site->id);
             return $eLearning->site($page);
-        } elseif ($op === 'dashboard') {
+        } elseif ('dashboard' === $op) {
             $eLearning = new ELearningSiteHelper($site->id);
+
             return $eLearning->dashboard($page, $data, $component);
-        } elseif ($op === 'api-info') {
+        } elseif ('api-info' === $op) {
             $eLearning = new ELearningSiteHelper($site->id);
+
             return $eLearning->apiInfo($data);
-        } elseif ($op === 'createSection') {
+        } elseif ('createSection' === $op) {
             return SectionHelper::which($page, 'create', $data);
-        } elseif ($op === 'getSection') {
+        } elseif ('getSection' === $op) {
             return SectionHelper::which($page, 'get', $data, $component);
-        } elseif ($op === 'updateSection') {
+        } elseif ('updateSection' === $op) {
             return SectionHelper::which($page, 'update', $data, $component);
-        } elseif ($op === 'deleteSection') {
+        } elseif ('deleteSection' === $op) {
             return SectionHelper::which($page, 'delete', $data, $component);
-        } elseif ($op === 'dashboard-load-section') {
+        } elseif ('dashboard-load-section' === $op) {
             $eLearning = new ELearningSiteHelper($site->id);
+
             return $eLearning->loadSection($data, $component);
-        } elseif ($op === 'dashboard-load-action') {
+        } elseif ('dashboard-load-action' === $op) {
             $eLearning = new ELearningSiteHelper($site->id);
+
             return $eLearning->loadAction($data, $component);
-        } elseif ($op === 'createContent') {
+        } elseif ('createContent' === $op) {
             return ContentHelper::which($page, 'create', $data, $component);
-        } elseif ($op === 'getContent') {
+        } elseif ('getContent' === $op) {
             return ContentHelper::which($page, 'get', $data, $component);
-        } elseif ($op === 'updateContent') {
+        } elseif ('updateContent' === $op) {
             return ContentHelper::which($page, 'update', $data, $component);
-        } elseif ($op === 'deleteContent') {
+        } elseif ('deleteContent' === $op) {
             return ContentHelper::which($page, 'delete', $data, $component);
-        } elseif ($op === 'getPage') {
+        } elseif ('getPage' === $op) {
             return PageHelper::which($page, 'get');
+        } elseif ($op === 'updatePage') {
+            return PageHelper::which($page, 'update', $data);
         }
     }
 }

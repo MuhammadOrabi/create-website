@@ -22,6 +22,7 @@ Route::prefix('dashboard')->middleware('auth:api')->group(function () {
     
     Route::prefix('pages')->group(function () {
         Route::get('/{id}', 'PageController@show');
+        Route::put('/{id}', 'PageController@update');
     });
 
     Route::prefix('sections')->group(function () {

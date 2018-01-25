@@ -67,11 +67,6 @@
 				loading: true
             };
         },
-        computed: {
-            parent() {
-                return this;
-            }
-        },
         mounted() {
             this.getData();
         },

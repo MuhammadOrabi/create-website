@@ -8,8 +8,6 @@ class CreateSectionsTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
@@ -18,6 +16,7 @@ class CreateSectionsTable extends Migration
             $table->string('title')->nullable();
             $table->string('type')->nullable();
             $table->integer('order')->default(0);
+            $table->boolean('active')->default(1);
             $table->integer('page_id');
             $table->timestamps();
         });
@@ -25,8 +24,6 @@ class CreateSectionsTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

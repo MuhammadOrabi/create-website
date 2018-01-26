@@ -16,8 +16,12 @@ class ELearningSiteHelper
         $this->site = Site::findOrFail($id);
     }
 
-    public function site($slug)
+    public function site($slug, $id)
     {
+        abort_if(
+            !in_array($slug, ['course', 'profile', 'lesson', 'article']) && $id,
+            404
+        );
         if ($slug === 'index') {
             $location = $this->site->theme->location . '.site.' . $slug;
             $data = ['site' => $this->site, 'slug' => $slug];
@@ -26,13 +30,10 @@ class ELearningSiteHelper
             $location = $this->site->theme->location . '.site.auth.' . $slug;
             $data = ['site' => $this->site, 'slug' => $slug];
             return compact('location', 'data');
-        } elseif ($this->site->pages()->where('slug', $slug)->first()) {
-            $location = $this->site->theme->location . '.site.' . $slug;
-            $data = ['site' => $this->site, 'slug' => $slug];
-            return compact('location', 'data');
         } else {
-            $location = $this->site->theme->location . '.site.index';
-            $data = ['site' => $this->site, 'slug' => 'index'];
+            $page = $this->site->pages()->where('slug', $slug)->firstOrFail();
+            $location = $this->site->theme->location . '.site.' . $slug;
+            $data = ['site' => $this->site, 'page' => $page, 'slug' => $slug, 'id' => $id];
             return compact('location', 'data');
         }
     }

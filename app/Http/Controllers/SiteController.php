@@ -44,17 +44,14 @@ class SiteController extends Controller
 
     public function show()
     {
-        $site = Site::where('address', request()->address)->with('pages.sections.contents', 'constants.contents')->first();
-        if (!$site) {
-            return redirect()->route('home');
-        }
+        $site = Site::where('address', request()->address)->firstOrFail();
         $slug = request()->slug;
         if (!$slug) {
             // if the homepage slug
             $slug = 'index';
-        } elseif (!$site->pages->pluck('slug')->contains($slug)) {
+        } else {
             // if the slug doesn't belong to any of the site pages
-            return redirect()->route('site', ['address' => request()->address]);
+            abort_if(! $site->pages->pluck('slug')->contains($slug), 404);
         }
 
         $tag = $site->theme->tags()->where('type', 'category')->first();
@@ -63,7 +60,7 @@ class SiteController extends Controller
             return view($data['location'], $data['data']);
         } elseif ($tag->tag === 'portfolio') {
         } elseif ($tag->tag === 'web application') {
-            $data = WebAppsHelper::finder($site, $slug, 'site', null);
+            $data = WebAppsHelper::finder($site, $slug, 'site', request()->id);
             return view($data['location'], $data['data']);
         } elseif ($tag->tag === 'blog') {
         }
@@ -71,7 +68,7 @@ class SiteController extends Controller
 
     public function info()
     {
-        $site = Site::where('address', request()->address)->first();
+        $site = Site::where('address', request()->address)->firstOrFail();
         $tag = $site->theme->tags()->where('type', 'category')->first();
         if ($tag->tag === 'website') {
         } elseif ($tag->tag === 'portfolio') {
@@ -88,9 +85,7 @@ class SiteController extends Controller
             'name' => 'required'
         ]);
         $site = Site::findOrFail(request()->id);
-        if ($site->user->id != auth()->id()) {
-            return back();
-        }
+        abort_if($site->user->id != auth()->id(), 500);
         $site->name = request('name');
         $site->save();
         return back();

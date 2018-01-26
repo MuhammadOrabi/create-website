@@ -67,7 +67,7 @@
             userAction(i) {
                 const vm = this;
                 let data = this.selected;
-                window.axios.put('/api/users/' + vm.address + '/edit/' + i, data, { headers: { 'Authorization': 'Bearer ' + vm.token } })
+                window.axios.put('/api/dashboard/users/' + vm.address + '/edit/' + i, data, { headers: { 'Authorization': 'Bearer ' + vm.token } })
                 .then(res => {
                     let context = res.data;
                     let msg = res.data === 'success' ? 'Success' : 'Failed, Try again later!';

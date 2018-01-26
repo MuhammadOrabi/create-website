@@ -16,10 +16,12 @@ class PageHelper
       */
     public static function which($page, $op, $data = null)
     {
-        if ($op === 'get') {
-            return static::get($page);
+        if ($op === 'get-auth') {
+            return static::getDashboard($page);
         } elseif ($op === 'update') {
             return static::update($page, $data);
+        } elseif ($op === 'get') {
+            return static::getSite($page);
         }
     }
 
@@ -28,9 +30,18 @@ class PageHelper
      * @param  App\Page $page           The page that the request belongs to
      * @return Array                    Data that the Operation needs
      */
-    public static function get($page)
+    public static function getDashboard($page)
     {
         return $page->load('sections.contents', 'sections.extras');
+    }
+
+    public static function getSite($page)
+    {
+        if ($page->slug === 'courses') {
+            return $page->load('sections.extras');
+        } elseif ($page->slug === 'articles') {
+            return $page->load('sections.contents', 'sections.extras');
+        }
     }
 
     /**

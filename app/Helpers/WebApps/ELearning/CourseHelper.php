@@ -14,6 +14,8 @@ class CourseHelper
             return static::update($section, $data);
         } elseif ($op === 'delete') {
             return static::destroy($section);
+        } elseif ($op === 'get-site') {
+            return static::showSite($section);
         }
     }
 
@@ -22,10 +24,18 @@ class CourseHelper
         return $section->load('contents.extras', 'extras');
     }
 
+    public static function showSite($section)
+    {
+        return $section->load('contents', 'extras', 'page.site');
+    }
+
     public static function store($page, $data)
     {
         $section = $page->sections()->create(['title' => $data['title']]);
         $section->extras()->create(['type' => 'paragraph', 'content' => $data['paragraph']]);
+        if ($data['img']) {
+            $section->extras()->create(['type' => 'img', 'content' => $data['img']]);
+        }
         foreach ($data['tags'] as $tag) {
             $section->extras()->create(['type' => 'tag', 'content' => $tag]);
         }
@@ -37,6 +47,10 @@ class CourseHelper
         $section->title = $data['title'];
         $section->save();
         $section->extras()->where('type', 'paragraph')->update(['content' => $data['paragraph']]);
+        $section->extras()->where('type', 'img')->delete();
+        if ($data['img']) {
+            $section->extras()->create(['type' => 'img', 'content' => $data['img']]);
+        }
         $section->extras()->where('type', 'tag')->delete();
         foreach ($data['tags'] as $tag) {
             $section->extras()->create(['type' => 'tag', 'content' => $tag]);

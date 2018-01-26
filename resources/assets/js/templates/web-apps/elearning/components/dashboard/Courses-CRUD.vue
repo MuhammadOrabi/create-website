@@ -4,9 +4,9 @@
             <span class="button is-link is-inverted" v-if="c" @click="createModal">
                 <b-icon pack="fa" icon="plus"></b-icon>
             </span>
-            <span class="button is-info is-inverted" v-if="r">
+            <a class="button is-info is-inverted" v-if="r" :href="`/s/${address}/course/${sectionid}`" target="_blank">
                 <b-icon pack="fa" icon="eye"></b-icon>
-            </span>
+            </a>
             <span class="button is-primary is-inverted" v-if="u" @click="updateModal">
                 <b-icon pack="fa" icon="pencil-square-o"></b-icon>
             </span>
@@ -18,20 +18,35 @@
             <div class="box">
                 <h1 v-if="c" class="title is-1 has-text-centered">Create Course</h1>                
                 <h1 v-if="u" class="title is-1 has-text-centered">Update Course</h1>                
-                <h1 class="subtitle is-1">Course Details:</h1>
                 <div class="columns">
                     <div class="column">
                         <b-field label="Title">
                             <b-input v-model.trim="data.title" placeholder="Title"></b-input>
                         </b-field>
-                    </div>
-                    <div class="column">
                         <b-field label="Add some tags">
                             <b-taginput v-model="data.tags" icon="label" placeholder="Add a tag"></b-taginput>
                         </b-field>
                     </div>
+                    <div class="column">
+                        <article class="media">
+                            <div class="media-left notification" v-if="data.img">
+                                <button class="delete" @click="data.img = null"></button>
+                                <figure class="image is-128x128">
+                                    <img :src="data.img" alt="Image">
+                                </figure>
+                            </div>
+                            <div class="media-content" v-else>
+                                <div class="content">
+                                    <button class="button is-small is-primary is-rounded" @click="isMediaModalActive = true">Add Show Case Image</button>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
                 </div>
-                <b-field label="Description">
+                <b-modal :active.sync="isMediaModalActive" >
+                    <media v-bind="mediaProps" :imgUrl.sync="data.img" :active.sync="isMediaModalActive"></media>
+                </b-modal>
+                <b-field label="Description" class="m-t-20">
                     <froala :config="paragraphConfig" v-model.trim="data.paragraph"></froala>
                 </b-field>
                 <button class="button is-primary" v-if="c" @click="create" :disabled="!valid">Create</button>
@@ -49,11 +64,18 @@
         data() {
             return {
                 isModalActive: false,
+                img: null,
                 data: {
                     title: '',
                     paragraph: '',
                     tags: [],
+                    img: null
                 },
+                mediaProps: {
+                    address: this.address,
+                    token: this.token
+                },
+                isMediaModalActive: false,
                 paragraphConfig: {
 					placeholderText: 'Paragraph!',
 					charCounterCount: true,
@@ -86,6 +108,7 @@
                     title: '',
                     paragraph: '',
                     tags: [],
+                    img: null
                 };
                 this.isModalActive = true;
             },
@@ -124,6 +147,8 @@
                     let section = res.data;
                     this.data.tags = _.pluck(_.where(section.extras, {type: 'tag'}), 'content');
                     this.data.paragraph = _.findWhere(section.extras, {type: 'paragraph'}).content;
+                    let img = _.findWhere(section.extras, {type: 'img'});
+                    this.data.img = img ? img.content : null;
                     this.data.title = section.title;
                     this.lessons = section.contents ? section.contents.length : 0;
                 })

@@ -1,14 +1,8 @@
-<template>
-    <div></div>
-</template>
-
 <script>
     export default {
-        name: 'Auth',
         props: ['slug', 'address'],
         data() {
             return {
-
             };
         },
         computed: {},
@@ -26,8 +20,8 @@
                 }
             }
         },
-        methods: {
-
+        render() {
+            return this.$slots.content[0];
         }
     }
 </script>

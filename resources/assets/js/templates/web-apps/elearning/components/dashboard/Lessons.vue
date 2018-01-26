@@ -1,6 +1,6 @@
 <template>
     <section>
-        <b-table :data="lessons" detailed detail-key="id" :mobile-cards="true" :loading="loading">
+        <b-table :data="lessons" :mobile-cards="true" :loading="loading">
             <template slot-scope="props">
                 <b-table-column field="title" label="Title">
                     {{ props.row.title }}
@@ -27,21 +27,6 @@
                         <b-icon pack="fa" icon="trash-o"></b-icon>
                     </span>
                 </b-table-column>
-            </template>
-
-            <template slot="detail" slot-scope="props">
-                <article class="media">
-                    <figure class="media-left">
-                        <p class="image is-64x64">
-                            <!-- <img src="static/img/placeholder-128x128.png"> -->
-                        </p>
-                    </figure>
-                    <div class="media-content">
-                        <div class="content">
-                            <p v-html="props.row.paragraph"></p>
-                        </div>
-                    </div>
-                </article>
             </template>
             
             <template slot="empty" v-if="!loading">
@@ -101,7 +86,7 @@
 							let title = content.title;
 							let video = _.findWhere(content.extras, {type: 'video'});
 							this.lessons.push(
-								{id: content.id, title: title, paragraph: content.content, video: video.content, created_at: content.created_at}
+								{id: content.id, title: title, video: video.content, created_at: content.created_at}
 							);
 						}
 					});

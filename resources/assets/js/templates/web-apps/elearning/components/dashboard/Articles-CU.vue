@@ -7,6 +7,9 @@
             <b-taginput v-model="tags" icon="label" placeholder="Add a tag"></b-taginput>
         </b-field>
 		<button class="button is-primary is-rounded" @click="isMediaModalActive = true">Add Show Case Image</button>
+        <b-modal :active.sync="isMediaModalActive" >
+            <media v-bind="mediaProps" :imgUrl.sync="img" :active.sync="isMediaModalActive"></media>
+        </b-modal>
 		<section class="p-t-20 columns is-multiline is-centered">
             <div class="column is-three-quarters" v-if="img">
                 <div class="notification">
@@ -17,9 +20,6 @@
                 </div>
             </div>
         </section>
-		<b-modal :active.sync="isMediaModalActive" >
-            <media v-bind="mediaProps" :imgUrl.sync="img" :active.sync="isMediaModalActive"></media>
-        </b-modal>
 		<b-tabs position="is-centered" class="block" v-model="editors">
 			<b-tab-item label="Using Text Editor">
 				<b-field label="Article Preview" class="p-l-25">

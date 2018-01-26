@@ -59,6 +59,12 @@ Route::prefix('users')->group(function () {
     Route::post('/site/login', 'UserController@login');
 });
 
+Route::prefix('pages')->group(function () {
+    Route::get('/{id}', 'PageController@show');
+});
+Route::prefix('sections')->group(function () {
+    Route::get('/{id}', 'SectionController@show');
+});
 // End
 
 

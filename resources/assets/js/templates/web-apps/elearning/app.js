@@ -13,11 +13,15 @@ Vue.use(VueFroala);
 
 Vue.store = store;
 // Site Components
+Vue.component('app', require('./components/site/auth/App.vue'));
 Vue.component('nav-bar', require('./components/site/nav/NavBar.vue'));
 Vue.component('side-nav', require('./components/site/nav/SideNav.vue'));
 Vue.component('site-register', require('./components/site/auth/Register.vue'));
 Vue.component('site-login', require('./components/site/auth/Login.vue'));
-Vue.component('auth', require('./components/site/auth/Auth.vue'));
+Vue.component('site-courses', require('./components/site/pages/Courses.vue'));
+Vue.component('site-course', require('./components/site/pages/Course.vue'));
+Vue.component('site-lesson', require('./components/site/pages/Lesson.vue'));
+Vue.component('site-articles', require('./components/site/pages/Articles.vue'));
 
 // Dashboard Components
 Vue.component('media', require('./components/dashboard/Media.vue'));
@@ -31,12 +35,15 @@ Vue.component('articles-cu', require('./components/dashboard/Articles-CU.vue'));
 Vue.component('home-page', require('./components/dashboard/homePage.vue'));
 
 
-
 const app = new Vue({
     el: '#app',
     store
 });
 
+
+
 window.Vue = Vue;
+
+
 
 require('../../../sidebar');

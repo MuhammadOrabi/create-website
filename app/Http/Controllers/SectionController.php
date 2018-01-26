@@ -44,9 +44,16 @@ class SectionController extends Controller
 
     public function show()
     {
-        $section = Section::where('id', request()->id)->with('contents', 'extras', 'page')->first();
-        $site = auth()->user()->sites()->where('address', $section->page->site->address)->with('pages')->firstOrFail();
-        return view($site->theme->location . '.dashboard.sections.show', compact('site', 'section'));
+        $section = Section::findOrFail(request()->id);
+        $site = $section->page->site;
+        $tag = $section->page->site->theme->tags()->where('type', 'category')->first();
+        if ($tag->tag === 'website') {
+        } elseif ($tag->tag === 'portfolio') {
+        } elseif ($tag->tag === 'web application') {
+            $data = WebAppsHelper::finder($section->page->site, $section->page, 'get-section-site', null, $section);
+            return response()->json($data);
+        } elseif ($tag->tag === 'blog') {
+        }
     }
 
 

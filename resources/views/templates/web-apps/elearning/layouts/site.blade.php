@@ -10,7 +10,6 @@
         <title>@yield('title') {{ $site->name }}</title>
         <link rel="stylesheet" href="/css/bulma/app.css">
         @yield('styles')
-
         <script>
 			window.Laravel = {!! json_encode([
 				'csrfToken' => csrf_token(),
@@ -20,11 +19,12 @@
     <body>
         <div id="app" style="display: none;" >
             @include($site->theme->location.'.site._includes.nav')
-            <div class="flex-container">
-                @yield('content')
-            </div>
+                <app slug="{{ $slug }}" address="{{ $site->address }}">
+                    <div slot="content">
+                        @yield('content')
+                    </div>
+                </app>
             @include($site->theme->location.'.site._includes.right-sidebar')
-            <auth slug="{{ $slug }}" address="{{ $site->address }}"></auth>
         </div>
         <script src="/js/templates/web-apps/elearning/app.js"></script>
         @include('notifications.toast')

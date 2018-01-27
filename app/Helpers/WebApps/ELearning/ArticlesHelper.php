@@ -14,6 +14,8 @@ class ArticlesHelper
             return static::update($section, $data);
         } elseif ($op === 'delete') {
             return static::destroy($section);
+        } elseif ($op === 'get-site') {
+            return static::show($section);
         }
     }
 

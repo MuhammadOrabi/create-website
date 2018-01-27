@@ -68,6 +68,8 @@ class ELearningHelper
             return PageHelper::which($page, 'get');
         } elseif ($op === 'get-section-site') {
             return SectionHelper::which($page, 'get-site', $data, $component);
+        } elseif ($op === 'get-content-site') {
+            return ContentHelper::which($page, 'get-site', $data, $component);
         }
     }
 }

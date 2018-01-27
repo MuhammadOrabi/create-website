@@ -14,6 +14,8 @@ class LessonHelper
             return static::update($component, $data);
         } elseif ($op === 'delete') {
             return static::destroy($component);
+        } elseif ($op === 'get-site') {
+            return static::show($component);
         }
     }
 
@@ -28,7 +30,7 @@ class LessonHelper
 
     public static function show($content)
     {
-        return $content->load('extras', 'contentable');
+        return $content->load('extras', 'contentable.contents');
     }
 
     public static function update($content, $data)

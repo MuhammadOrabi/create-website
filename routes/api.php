@@ -62,8 +62,13 @@ Route::prefix('users')->group(function () {
 Route::prefix('pages')->group(function () {
     Route::get('/{id}', 'PageController@show');
 });
+
 Route::prefix('sections')->group(function () {
     Route::get('/{id}', 'SectionController@show');
+});
+
+Route::prefix('contents')->middleware('auth:api')->group(function () {
+    Route::get('/{id}', 'ContentController@show');
 });
 // End
 

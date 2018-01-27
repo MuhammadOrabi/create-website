@@ -12,6 +12,22 @@ use App\Helpers\WebApps\WebAppsHelper;
  */
 class ContentController extends Controller
 {
+    public function show()
+    {
+        $content = Content::findOrFail(request()->id);
+        $site = $content->contentable->page->site;
+        abort_if($site->address != request()->user()->address, 404);
+        $tag = $site->theme->tags()->where('type', 'category')->first();
+        if ($tag->tag === 'website') {
+        } elseif ($tag->tag === 'portfolio') {
+        } elseif ($tag->tag === 'web application') {
+            $data = WebAppsHelper::finder($site, $content->contentable->page, 'get-content-site', null, $content);
+            return response()->json($data);
+        } elseif ($tag->tag === 'blog') {
+        }
+        return response('Something went wrong!', 500);
+    }
+
     public function store()
     {
         $section = Section::findOrFail(request()->id);

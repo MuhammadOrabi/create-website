@@ -22,6 +22,7 @@ Vue.component('site-courses', require('./components/site/pages/Courses.vue'));
 Vue.component('site-course', require('./components/site/pages/Course.vue'));
 Vue.component('site-lesson', require('./components/site/pages/Lesson.vue'));
 Vue.component('site-articles', require('./components/site/pages/Articles.vue'));
+Vue.component('site-article', require('./components/site/pages/Article.vue'));
 
 // Dashboard Components
 Vue.component('media', require('./components/dashboard/Media.vue'));

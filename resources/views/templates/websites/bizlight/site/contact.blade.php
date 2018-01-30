@@ -18,7 +18,7 @@
 							<h4 class="panel-title">Get In Touch</h4>
 						</div>
 						<div class="panel-body">
-							<form action="/contact/{{ $page->id }}" method="POST">
+							<form action="/sections/{{ $page->id }}" method="POST">
 								{{ csrf_field() }}
 								<div class="form-group">
 									<label>Name</label>

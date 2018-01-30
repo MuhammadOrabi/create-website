@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Page;
 use App\Section;
 use Illuminate\Http\Request;
-use App\Content;
 use App\Helpers\WebApps\WebAppsHelper;
 use App\Helpers\Websites\WebsitesHelper;
 
@@ -13,17 +12,38 @@ class SectionController extends Controller
 {
     public function store()
     {
-        $page = Page::findOrFail(request()->id);
-        $site = auth()->user()->sites()->findOrFail($page->site->id);
-        $tag = $page->site->theme->tags()->where('type', 'category')->first();
-        if ($tag->tag === 'website') {
-        } elseif ($tag->tag === 'portfolio') {
-        } elseif ($tag->tag === 'web application') {
-            $data = WebAppsHelper::finder($site, $page, 'createSection', request()->all());
-            return response()->json($data);
-        } elseif ($tag->tag === 'blog') {
+        if (request()->ajax()) {
+            $page = Page::findOrFail(request()->id);
+            $site = $page->site;
+            $tag = $page->site->theme->tags()->where('type', 'category')->first();
+            if ($tag->tag === 'website') {
+            } elseif ($tag->tag === 'portfolio') {
+            } elseif ($tag->tag === 'web application') {
+                if (auth()->id() === $site->user->id) {
+                    $data = WebAppsHelper::finder($site, $page, 'create-section-auth', request()->all());
+                } else {
+                    $data = WebAppsHelper::finder($site, $page, 'createSection', request()->all());
+                }
+                return response()->json($data);
+            } elseif ($tag->tag === 'blog') {
+            }
+        } else {
+            $page = Page::findOrFail(request()->id);
+            $site = $page->site;
+            $tag = $page->site->theme->tags()->where('type', 'category')->first();
+            if ($tag->tag === 'website') {
+                $this->validate(request(), [
+                    'name' => 'required',
+                    'email' => 'required|email',
+                    'message' => 'required',
+                ]);
+                $data = WebsitesHelper::finder($site, $page, 'createSection', request()->all());
+                return back();
+            } elseif ($tag->tag === 'portfolio') {
+            } elseif ($tag->tag === 'web application') {
+            } elseif ($tag->tag === 'blog') {
+            }
         }
-        abort(404);
     }
 
     public function edit()
@@ -85,34 +105,6 @@ class SectionController extends Controller
         }
     }
 
-    public function message()
-    {
-        $page = Page::findOrFail(request()->id);
-        $site = $page->site;
-        if ($page->slug == 'contact' && $site->theme->location == 'templates.websites.bizlight') {
-            $this->validate(request(), [
-                'name' => 'required',
-                'email' => 'required|email',
-                'message' => 'required',
-            ]);
-            $msg = $page->sections()->create(['title' => 'msg', 'order' => 0]);
-            $msg->contents()->create(['type' => 'name', 'content' => request('name')]);
-            $msg->contents()->create(['type' => 'email', 'content' => request('email')]);
-            $msg->contents()->create(['type' => 'message', 'content' => request('message')]);
-            return back();
-        } elseif ($page->slug == 'contact' && $site->theme->location == 'templates.web-apps.elearning') {
-            request()->validate([
-                'name' => 'required',
-                'email' => 'required|email',
-                'message' => 'required',
-            ]);
-            $msg = $page->sections()->create(['title' => 'msg', 'order' => 0]);
-            $msg->contents()->create(['type' => 'name', 'content' => request('name')]);
-            $msg->contents()->create(['type' => 'email', 'content' => request('email')]);
-            $msg->contents()->create(['type' => 'message', 'content' => request('message')]);
-            return response()->json(compact('msg'));
-        }
-    }
 
     public function destroy()
     {
@@ -130,13 +122,14 @@ class SectionController extends Controller
         } else {
             $section = Section::findOrFail(request()->id);
             $site = auth()->user()->sites()->findOrFail($section->page->site->id);
-            $section->contents()->each(function ($content) {
-                $content->extras()->delete();
-                $content->delete();
-            });
-            $section->extras()->delete();
-            $section->delete();
-            return back();
+            $tag = $section->page->site->theme->tags()->where('type', 'category')->first();
+            if ($tag->tag === 'website') {
+                WebsitesHelper::finder($section->page->site, $section->page, 'deleteSection', null, $section);
+                return back();
+            } elseif ($tag->tag === 'portfolio') {
+            } elseif ($tag->tag === 'web application') {
+            } elseif ($tag->tag === 'blog') {
+            }
         }
     }
 }

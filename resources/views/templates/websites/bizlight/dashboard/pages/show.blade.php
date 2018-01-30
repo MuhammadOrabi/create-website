@@ -38,7 +38,7 @@
 					      	<td>{{ $section->contents->where('type', 'email')->first()->content }}</td>
 					      	<td>{{ $section->contents->where('type', 'name')->first()->created_at->diffForHumans() }}</td>
 					      	<td>
-					      		<form action="/section/{{ $section->id }}" method="POST" >
+					      		<form action="/sections/{{ $section->id }}" method="POST" >
 									{{ method_field('DELETE') }}
 									{{ csrf_field() }}
 						      		<button type="button" class="btn btn-primary" 

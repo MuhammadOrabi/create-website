@@ -22,25 +22,28 @@
         </section>
 		<b-tabs position="is-centered" class="block" v-model="editors">
 			<b-tab-item label="Using Text Editor">
-				<b-field label="Article Preview" class="p-l-25">
-					<div v-html="editor"></div>
-		        </b-field>
-            	<b-field label="Article" class="p-l-25">
-		            <froala :config="paragraphConfig" v-model="editor" ></froala>
-		        </b-field>
+                <b-tabs type="is-boxed">
+                    <b-tab-item label="Article" icon="border-color">                    
+                        <froala :config="paragraphConfig" v-model="editor" ></froala>
+                        <small>*An Article Must Be More Than 50 Caracter!</small>
+                    </b-tab-item>
+                    <b-tab-item label="Preview" icon="eye">
+                        <div v-html="editor"></div>
+                    </b-tab-item>
+                </b-tabs>
             </b-tab-item>
             <b-tab-item label="Using Markdown">
-            	<b-field label="Article Preview" class="p-l-25">
-					<div v-html="paragraph"></div>
-		        </b-field>
-            	<b-field label="Article">
-            		<div class="editor">
-		            	<textarea class="markdown" autofocus v-model="markedown"></textarea>
-            		</div>
-		        </b-field>
+                <b-tabs type="is-boxed">
+                    <b-tab-item label="Article" icon="border-color">                    
+                        <textarea class="markdown" autofocus v-model="markedown"></textarea>
+                        <small>*An Article Must Be More Than 50 Caracter!</small>
+                    </b-tab-item>
+                    <b-tab-item label="Preview" icon="eye">
+                        <div v-html="paragraph"></div>
+                    </b-tab-item>
+                </b-tabs>
             </b-tab-item>
         </b-tabs>
-        <small>*An Article Must Be More Than 50 Caracter!</small>
         <div class="has-text-centered m-b-50">
         	<button class="button is-link is-rounded" @click="promptWhich" :disabled="!valid">Post</button>
         </div>

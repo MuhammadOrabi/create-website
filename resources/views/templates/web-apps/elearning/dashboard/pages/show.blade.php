@@ -14,5 +14,7 @@
         <courses id="{{ $page->id }}" address="{{ $site->address }}" token="{{ auth()->user()->getToken('courses-manage') }}"></courses>
     @elseif($page->slug === 'articles')
     	<articles id="{{ $page->id }}" address="{{ $site->address }}" token="{{ auth()->user()->getToken('articles-manage') }}"></articles>
+    @elseif($page->slug === 'contact')
+        <contact id="{{ $page->id }}" address="{{ $site->address }}" token="{{ auth()->user()->getToken('contact-manage') }}"></contact>
     @endif
 @stop

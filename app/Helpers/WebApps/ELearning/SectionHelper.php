@@ -10,6 +10,8 @@ class SectionHelper
             return CourseHelper::index($page, $op, $data, $component);
         } elseif ($page->slug === 'articles') {
             return ArticlesHelper::index($page, $op, $data, $component);
+        } elseif ($page->slug === 'contact') {
+            return ContactHelper::index($page, $op, $data, $component);
         }
     }
 }

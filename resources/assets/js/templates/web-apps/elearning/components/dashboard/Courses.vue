@@ -1,6 +1,9 @@
 <template>
     <section>
-        <b-table :data="courses" :mobile-cards="true">
+        <b-field>
+            <b-input placeholder="Filter by Title Or Tags Or Created at" type="search" icon-pack="fa" icon="search" v-model="key"></b-input>
+        </b-field>
+        <b-table :data="filtered" :mobile-cards="true">
             <template slot-scope="props">
                 <b-table-column field="title" label="Title">
                     {{ props.row.title }}
@@ -17,8 +20,8 @@
                     </a>
                 </b-table-column>
 
-                <b-table-column label="Created at">
-                    {{ moment(props.row.created_at).calendar() }}
+                <b-table-column field="created_at" label="Created at">
+                    {{ props.row.created_at }}
                 </b-table-column>
 
                 <b-table-column label="Actions">
@@ -47,38 +50,55 @@
 </template>
 
 <script>
-    import moment from "moment";
-    const _ = window._;
-    export default {
-        name: 'Courses',
-        props: ['id', 'address', 'token'],
-        data() {
-            return {
-                courses: [],
-            };
-        },
-        mounted() {
-            this.getData();
-        },
-        methods: {
-            moment,
-            getData() {
-                window.axios.get('/api/dashboard/pages/' + this.id, { headers: { 'Authorization': 'Bearer ' + this.token } })
-                .then((res) => {
-                    this.courses = [];
-                    res.data.sections.forEach((section) => {
-                        let tags = _.pluck(_.where(section.extras, {type: 'tag'}), 'content');
-                        let title = section.title;
-                        let lessons = section.contents ? section.contents.length : 0;
-                        this.courses.push(
-                            {id: section.id, title: title, tags: tags, lessons: lessons, created_at: section.created_at}
-                        );
-                    });
-                })
-                .catch(err => console.log(err));
+import moment from "moment";
+import * as JsSearch from 'js-search';
+const _ = window._;
+
+export default {
+    name: 'Courses',
+    props: ['id', 'address', 'token'],
+    data() {
+        return {
+            courses: [],
+            key: ''
+        };
+    },
+    computed: {
+        filtered() {
+            if (this.key) {
+                let search = new JsSearch.Search('id');
+                search.addIndex('title');
+                search.addIndex('tags');
+                search.addIndex('created_at');
+                search.addDocuments(this.courses);
+                return search.search(this.key);
+            } else {
+                return this.courses;
             }
         }
+    },
+    mounted() {
+        this.getData();
+    },
+    methods: {
+        moment,
+        getData() {
+            window.axios.get('/api/dashboard/pages/' + this.id, { headers: { 'Authorization': 'Bearer ' + this.token } })
+            .then((res) => {
+                this.courses = [];
+                res.data.sections.forEach((section) => {
+                    let tags = _.pluck(_.where(section.extras, {type: 'tag'}), 'content');
+                    let title = section.title;
+                    let lessons = section.contents ? section.contents.length : 0;
+                    this.courses.push(
+                        {id: section.id, title: title, tags: tags, lessons: lessons, created_at: moment(section.created_at).calendar()}
+                    );
+                });
+            })
+            .catch(err => console.log(err));
+        }
     }
+}
 </script>
 
 <style lang="css" scoped></style>

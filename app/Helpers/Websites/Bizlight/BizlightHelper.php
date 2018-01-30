@@ -58,6 +58,10 @@ class BizlightHelper
             return $site->dashboard($page, $data);
         } elseif ($op === 'getSection') {
             return SectionHelper::which($page, 'get', null, $component);
+        } elseif ($op === 'createSection') {
+            return SectionHelper::which($page, 'create', $data);
+        } elseif ($op === 'deleteSection') {
+            return SectionHelper::which($page, 'delete', $data, $component);
         }
     }
 }

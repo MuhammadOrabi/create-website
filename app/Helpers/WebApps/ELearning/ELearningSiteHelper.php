@@ -137,6 +137,7 @@ class ELearningSiteHelper
         $slugs = ['', 'about', 'articles', 'contact', 'courses', 'register'];
         $pages = collect($this->site->pages->whereIn('slug', $slugs)->all());
         $pages->where('slug', 'register')->first()->title = 'Users';
+        $pages->where('slug', 'contact')->first()->title = 'Messages';
         return $pages;
     }
 
@@ -144,6 +145,8 @@ class ELearningSiteHelper
     {
         if ($type === 'nav') {
             return $this->site->load('extras');
+        } elseif ($type === 'site-info') {
+            return $this->site->load('user', 'extras');
         }
     }
 }

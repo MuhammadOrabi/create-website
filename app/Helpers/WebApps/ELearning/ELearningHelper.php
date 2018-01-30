@@ -38,7 +38,7 @@ class ELearningHelper
         } elseif ($op === 'api-info') {
             $eLearning = new ELearningSiteHelper($site->id);
             return $eLearning->apiInfo($data);
-        } elseif ($op === 'createSection') {
+        } elseif ($op === 'create-section-auth') {
             return SectionHelper::which($page, 'create', $data);
         } elseif ($op === 'getSection') {
             return SectionHelper::which($page, 'get', $data, $component);
@@ -70,6 +70,8 @@ class ELearningHelper
             return SectionHelper::which($page, 'get-site', $data, $component);
         } elseif ($op === 'get-content-site') {
             return ContentHelper::which($page, 'get-site', $data, $component);
+        } elseif ($op === 'createSection') {
+            return SectionHelper::which($page, 'create', $data);
         }
     }
 }

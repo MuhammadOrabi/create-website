@@ -1,7 +1,7 @@
 <template>
     <section>
         <b-field>
-            <b-input placeholder="Search..." type="search" icon-pack="fa" icon="search" v-model="key"></b-input>
+            <b-input placeholder="Filter by Title Or Tags Or Created at" type="search" icon-pack="fa" icon="search" v-model="key"></b-input>
         </b-field>
         <div class="box m-t-10" v-for="course in filtered" :key="course.id">
             <article class="media">

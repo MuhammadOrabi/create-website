@@ -26,8 +26,8 @@ Route::prefix('dashboard')->middleware('auth:api')->group(function () {
     });
 
     Route::prefix('sections')->group(function () {
-        Route::get('{id}', 'SectionController@edit');
         Route::post('{id}', 'SectionController@store');
+        Route::get('{id}', 'SectionController@edit');
         Route::put('{id}', 'SectionController@update');
         Route::delete('{id}', 'SectionController@destroy');
     });
@@ -65,6 +65,7 @@ Route::prefix('pages')->group(function () {
 
 Route::prefix('sections')->group(function () {
     Route::get('/{id}', 'SectionController@show');
+    Route::post('/{id}', 'SectionController@store');
 });
 
 Route::prefix('contents')->middleware('auth:api')->group(function () {

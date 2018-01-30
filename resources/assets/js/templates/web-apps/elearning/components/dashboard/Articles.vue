@@ -1,6 +1,9 @@
 <template>
     <section>
-        <b-table :data="articles" :mobile-cards="true" :loading="loading">
+        <b-field>
+            <b-input placeholder="Filter by Title or Tags Or Editor Type Or Created at" type="search" icon-pack="fa" icon="search" v-model="key"></b-input>
+        </b-field>
+        <b-table :data="filtered" :mobile-cards="true" :loading="loading">
             <template slot-scope="props">
                 <b-table-column field="title" label="Title">
                     {{ props.row.title }}
@@ -10,12 +13,12 @@
                     {{ props.row.tags.toLocaleString() }}
                 </b-table-column>
 
-                <b-table-column field="type" label="Using" class="is-capitalized">
+                <b-table-column field="type" label="Editor Type" class="is-capitalized">
                     {{ props.row.type }}
                 </b-table-column>
 
-                <b-table-column label="Created at">
-                    {{ moment(props.row.created_at).calendar() }}
+                <b-table-column field="created_at" label="Created at">
+                    {{ props.row.created_at }}
                 </b-table-column>
 
                 <b-table-column label="Actions">
@@ -56,60 +59,78 @@
 </template>
 
 <script>
-    const _ = window._;
-    import moment from 'moment';
-    export default {
-        name: 'Articles',
-        props: ['id', 'address', 'token'],
-        data() {
-            return {
-                articles: [],
-				loading: true
-            };
-        },
-        mounted() {
-            this.getData();
-        },
-        methods: {
-        	moment,
-            getData() {
-                window.axios.get('/api/dashboard/pages/' + this.id, { headers: { 'Authorization': 'Bearer ' + this.token } })
-                .then(res => {
-	            	this.articles = [];
-					this.loading = false;
-                	res.data.sections.forEach((section) => {
-						this.articles.push({
-							id: section.id,
-							title: section.title,
-							type: section.type,
-							tags: _.pluck(_.where(section.extras, {type: 'tag'}), 'content'),
-							created_at: section.created_at
-						});						
-					});
-                })
-                .catch(err => console.log(err));
-            },
-            deleteDialog(id) {
-                this.$dialog.confirm({
-                    title: 'Deleting Article',
-                    message: 'Are you sure you want to <b>delete</b> this Article?<br> This action cannot be undone.',
-                    confirmText: 'Delete Article',
-                    type: 'is-danger',
-                    hasIcon: true,
-                    onConfirm: () => this.destroy(id)
-                });
-            },
-            destroy(id) {
-            	const vm = this;
-                window.axios.delete('/api/dashboard/sections/' + id, { headers: { 'Authorization': 'Bearer ' + vm.token } })
-                .then(() => {
-                    this.$toast.open('Article deleted!');
-                    this.getData();   
-                })
-                .catch(err => console.log(err));
+const _ = window._;
+import moment from 'moment';
+import * as JsSearch from 'js-search';
+
+export default {
+    name: 'Articles',
+    props: ['id', 'address', 'token'],
+    data() {
+        return {
+            articles: [],
+			loading: true,
+            key: ''
+        };
+    },
+    computed: {
+        filtered() {
+            if (this.key) {
+                let search = new JsSearch.Search('id');
+                search.addIndex('title');
+                search.addIndex('tags');
+                search.addIndex('type');
+                search.addIndex('created_at');
+                search.addDocuments(this.articles);
+                return search.search(this.key);
+            } else {
+                return this.articles;
             }
         }
+    },
+    mounted() {
+        this.getData();
+    },
+    methods: {
+    	moment,
+        getData() {
+            window.axios.get('/api/dashboard/pages/' + this.id, { headers: { 'Authorization': 'Bearer ' + this.token } })
+            .then(res => {
+            	this.articles = [];
+				this.loading = false;
+            	res.data.sections.forEach((section) => {
+					this.articles.push({
+						id: section.id,
+						title: section.title,
+						type: section.type,
+						tags: _.pluck(_.where(section.extras, {type: 'tag'}), 'content'),
+						created_at: this.moment(section.created_at).calendar()
+					});						
+				});
+            })
+            .catch(err => console.log(err));
+        },
+        deleteDialog(id) {
+            this.$dialog.confirm({
+                title: 'Deleting Article',
+                message: 'Are you sure you want to <b>delete</b> this Article?<br> This action cannot be undone.',
+                confirmText: 'Delete Article',
+                type: 'is-danger',
+                hasIcon: true,
+                onConfirm: () => this.destroy(id)
+            });
+        },
+        destroy(id) {
+        	const vm = this;
+            window.axios.delete('/api/dashboard/sections/' + id, { headers: { 'Authorization': 'Bearer ' + vm.token } })
+            .then(() => {
+                this.$toast.open('Article deleted!');
+                this.getData();   
+            })
+            .catch(err => console.log(err));
+        }
     }
+}
 </script>
 
 <style lang="css" scoped></style>

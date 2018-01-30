@@ -36,11 +36,12 @@ Route::middleware('auth')->group(function () {
     // Bizlight Template NOT UPDATED
     Route::put('/const/{id}', 'ConstantController@update')->name('const.update');
     Route::put('/site/{id}', 'SiteController@update')->name('site.update');
-    Route::delete('/section/{id}', 'SectionController@destroy')->name('section.delete');
     // END
+    Route::delete('/sections/{id}', 'SectionController@destroy');
 });
 
 Route::get('/s/{address}/{slug?}/{id?}', 'SiteController@show')->name('site');
 
-
-Route::post('/contact/{id}', 'SectionController@message');
+Route::prefix('sections')->group(function () {
+    Route::post('{id}', 'SectionController@store');
+});

@@ -1,5 +1,5 @@
 @extends($site->theme->location.'.layouts.site')
 
 @section('content')
-    <h1 class="title">About</h1>
+    <site-about address="{{ $site->address }}"></site-about>
 @stop

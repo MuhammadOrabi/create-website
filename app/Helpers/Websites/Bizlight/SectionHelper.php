@@ -16,7 +16,7 @@ class SectionHelper
      * @param  App\Section $section     The page Section that the request belongs to
      * @return Array                    Data that the Operation needs
      */
-    public static function which($page, $op, $data, $section)
+    public static function which($page, $op, $data, $section = null)
     {
         if ($page->slug === 'about') {
             return AboutHelper::index($page, $op, $data, $section);
@@ -24,6 +24,8 @@ class SectionHelper
             return ServicesHelper::index($page, $op, $data, $section);
         } elseif ($page->homePage) {
             return HomePageHelper::index($page, $op, $data, $section);
+        } elseif ($page->slug === 'contact') {
+            return ContactHelper::index($page, $op, $data, $section);
         }
     }
 }

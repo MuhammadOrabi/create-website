@@ -1,14 +1,27 @@
 @extends($site->theme->location.'.layouts.site')
 
 @section('content')
-    <div class="container">
-        <div class="columns">
-            <div class="column is-half">
-                <h1 class="is-5 title">Leatest Activites</h1>
-            </div>
-            <div class="column is-half">
-                <h1 class="is-5 title">Leatest News</h1>
+    <section class="hero is-medium is-light is-bold">
+        <div class="hero-body">
+            <div class="container">
+                <article class="media">
+                    <figure class="media-left">
+                        <p class="image is-128x128">
+                            <img src="/img/logo.png">
+                        </p>
+                    </figure>
+                    <div class="media-content">
+                        <h1 class="title">Muhammad Orabi</h1>
+                        <h1 class="subtitle">Title</h1>
+                    </div>
+                    <div class="media-right">
+                        <button class="button is-primary">
+                            <b-icon icon="border-color"></b-icon>
+                            <span>Edit</span>
+                        </button>
+                    </div>
+                </article>
             </div>
         </div>
-    </div>
+    </section>
 @stop

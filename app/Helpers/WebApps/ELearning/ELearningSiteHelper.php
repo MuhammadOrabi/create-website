@@ -23,8 +23,9 @@ class ELearningSiteHelper
             404
         );
         if ($slug === 'index') {
+            $page = $this->site->pages()->where('homePage', true)->first();
             $location = $this->site->theme->location . '.site.' . $slug;
-            $data = ['site' => $this->site, 'slug' => $slug];
+            $data = ['site' => $this->site, 'slug' => $slug, 'page' => $page];
             return compact('location', 'data');
         } elseif ($slug === 'login' || $slug === 'register') {
             $location = $this->site->theme->location . '.site.auth.' . $slug;
@@ -40,6 +41,8 @@ class ELearningSiteHelper
 
     public function dashboard($page, $data = null, $component = null)
     {
+        $pages = ['media', 'settings', 'analytics', 'navigation'];
+        abort_if(! in_array($page, $pages), 404);
         $pages = $this->sidebar();
         $location = $this->site->theme->location . '.dashboard.' . $page;
         $data = ['site' => $this->site, 'pages' => $pages];

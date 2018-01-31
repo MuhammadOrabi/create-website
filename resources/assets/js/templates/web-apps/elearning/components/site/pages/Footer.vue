@@ -1,9 +1,9 @@
 <template>
-    <section>
-        <section class="hero is-medium is-dark is-bold">
-            <div class="hero-body">
-                <div class="container">
-                     <article class="media">
+    <footer class="footer">
+        <div class="container">
+            <div class="content has-text-centered columns">
+                <div class="column">
+                    <article class="media">
                         <figure class="media-left" v-if="img">
                             <p class="image is-128x128">
                                 <img :src="img">
@@ -24,13 +24,13 @@
                     </article>
                 </div>
             </div>
-        </section>
-    </section>
+        </div>
+    </footer>
 </template>
 
 <script>
 export default {
-    name: 'About',
+    name: 'Footer',
     props: ['address'],
     data () {
         return {

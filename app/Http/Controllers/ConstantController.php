@@ -7,37 +7,37 @@ use Illuminate\Http\Request;
 
 class ConstantController extends Controller
 {
-    public function update() {
-        $this->validate(request(), [
-	        'twitter' => 'nullable|active_url',
-	        'facebook' => 'nullable|active_url',
-	        'google' => 'nullable|active_url',
-	        'linkedin' => 'nullable|active_url'
-    	]);
-    	$nav = Constant::findOrFail(request()->id);
-    	if ($nav->site->user->id != auth()->id()) {
-    		return back();
-    	}
-    	if (request('twitter')) {
-	    	$tw = $nav->contents()->where('type', 'twitterLink')->first();
-	    	$tw->content = request('twitter');
-	    	$tw->save();
-    	}
-    	if (request('facebook')) {
-	    	$fb = $nav->contents()->where('type', 'facebookLink')->first();
-	    	$fb->content = request('facebook');
-	    	$fb->save();
-    	}
-    	if (request('google')) {
-	    	$gp = $nav->contents()->where('type', 'googleLink')->first();
-	    	$gp->content = request('google');
-	    	$gp->save();
-    	}
-    	if (request('linkedin')) {
-	    	$li = $nav->contents()->where('type', 'linkedinLink')->first();
-	    	$li->content = request('linkedin');
-	    	$li->save();
-    	}
-    	return back();
+    public function update()
+    {
+        if (request()->ajax()) {
+            $constant = Constant::findOrFail(request()->id);
+            $site = auth()->user()->sites()->where('address', $constant->site->address)->firstOrFail();
+            $tag = $site->theme->tags()->where('type', 'category')->first();
+            if ($tag->tag === 'website') {
+                $data = WebsitesHelper::finder($site, null, 'constant-update', request()->all(), $constant);
+                return response()->json($data);
+            } elseif ($tag->tag === 'portfolio') {
+            } elseif ($tag->tag === 'web application') {
+            } elseif ($tag->tag === 'blog') {
+            }
+        } else {
+        }
+    }
+
+    public function show()
+    {
+        if (request()->ajax()) {
+            $constant = Constant::findOrFail(request()->id);
+            $site = auth()->user()->sites()->where('address', $constant->site->address)->firstOrFail();
+            $tag = $site->theme->tags()->where('type', 'category')->first();
+            if ($tag->tag === 'website') {
+                $data = WebsitesHelper::finder($site, null, 'constant-get', null, $constant);
+                return response()->json($data);
+            } elseif ($tag->tag === 'portfolio') {
+            } elseif ($tag->tag === 'web application') {
+            } elseif ($tag->tag === 'blog') {
+            }
+        } else {
+        }
     }
 }

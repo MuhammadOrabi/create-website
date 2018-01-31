@@ -16,6 +16,11 @@
 		<p class="menu-label">Content</p>
 		<ul class="menu-list">
 			<li>
+				<a href="/dashboard/navigation/{{ $site->address }}" class="{{ Nav::hasSegment('navigation',2) }}">
+					<span class="icon"><i class="fa fa-fw m-r-10 fa-info-circle"></i></span>Navigation
+				</a>
+			</li>
+			<li>
 				<a class="has-submenu {{ Nav::hasSegment('pages', 2) }}" href="#">
 					<span class="icon"><i class="fa fa-fw m-r-10 fa-list"></i></span>Pages
 				</a>

@@ -33,8 +33,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/{type}/{action}/{id}/{address}', 'PageController@edit');
         Route::get('/{type}/{address}', 'PageController@index')->name('page.index');
     });
+    
     // Bizlight Template NOT UPDATED
-    Route::put('/const/{id}', 'ConstantController@update')->name('const.update');
     Route::put('/site/{id}', 'SiteController@update')->name('site.update');
     // END
     Route::delete('/sections/{id}', 'SectionController@destroy');

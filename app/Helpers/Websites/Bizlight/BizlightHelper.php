@@ -62,6 +62,10 @@ class BizlightHelper
             return SectionHelper::which($page, 'create', $data);
         } elseif ($op === 'deleteSection') {
             return SectionHelper::which($page, 'delete', $data, $component);
+        } elseif ($op === 'constant-update') {
+            return ConstantHelper::which('update', $data, $component);
+        } elseif ($op === 'constant-get') {
+            return ConstantHelper::which('get', $data, $component);
         }
     }
 }

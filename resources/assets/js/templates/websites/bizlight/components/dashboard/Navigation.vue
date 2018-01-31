@@ -72,7 +72,7 @@
 <script>
     export default {
         name: 'Navigation',
-        props: ['address', 'token'],
+        props: ['address', 'token', 'id'],
         data() {
             return {
 				imgsrc: 'https://dummyimage.com/200x200/000/ffffff.png&text=Click+Here!',
@@ -94,17 +94,19 @@
                 window.$('#imgModalNavigation').modal('toggle');
             },
             getData() {
-
+                 window.axios.get('/api/dashboard/constants/' + this.id, { headers: { 'Authorization': 'Bearer ' + this.token } })
+                .then(res => {
+                    console.log(res.data);
+                }).catch(err => console.log(err));
             },
             save() {
-                let data = [{constant: 'top-nav', address: this.address, logo: this.imgsrc}];
-                data[0].facebook = this.facebook ? 'https://facebook.com/' + this.facebook : null;
-                data[0].twitter = this.twitter ? 'https://twitter.com/' + this.twitter : null;
-                data[0].google = this.google ? 'https://plus.google.com/' + this.google : null;
-                data[0].linkedin = this.linkedin ? 'https://www.linkedin.com/in/' + this.linkedin : null;
-                window.axios.put('/api/dashboard/contents/' + this.address, data, { headers: { 'Authorization': 'Bearer ' + this.token } })
+                let data = {logo: this.imgsrc};
+                data.facebook = this.facebook ? 'https://facebook.com/' + this.facebook : null;
+                data.twitter = this.twitter ? 'https://twitter.com/' + this.twitter : null;
+                data.google = this.google ? 'https://plus.google.com/' + this.google : null;
+                data.linkedin = this.linkedin ? 'https://www.linkedin.com/in/' + this.linkedin : null;
+                window.axios.put('/api/dashboard/constants/' + this.id, data, { headers: { 'Authorization': 'Bearer ' + this.token } })
 				.then(res => {
-					this.msg = res.data;
 					this.getData();
 				}).catch(err => console.log(err));
             }

@@ -69,6 +69,8 @@ class BizlightSiteHelper
             $data = collect([$page]);
             return compact('location', 'data');
         } elseif (is_string($page)) {
+            $pages = ['navigation', 'media', 'settings', 'analytics'];
+            abort_if(! in_array($page, $pages), 404);
             $data = ['site' => $this->site];
             $location = $this->site->theme->location . '.dashboard.' . $page;
             return compact('location', 'data');

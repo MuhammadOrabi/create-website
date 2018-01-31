@@ -48,6 +48,11 @@ Route::prefix('dashboard')->middleware('auth:api')->group(function () {
         Route::get('/{address}', 'UserController@index');
         Route::put('/{address}/edit/{option}', 'UserController@updateByAdmin');
     });
+
+    Route::prefix('constants')->group(function () {
+        Route::get('{id}', 'ConstantController@show');
+        Route::put('{id}', 'ConstantController@update');
+    });
 });
 // Site
 Route::prefix('sites')->group(function () {

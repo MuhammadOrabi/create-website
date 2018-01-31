@@ -31,6 +31,7 @@ for (var i = 0; i < accordions.length; i++) {
     }
 
     accordions[i].onclick = function () {
+        this.classList.toggle('m-t-5')
         this.classList.toggle('is-active')
 
         const submenu = this.nextElementSibling

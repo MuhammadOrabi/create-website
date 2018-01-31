@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <section class="flex-container">
         <b-field>
             <b-input placeholder="Search..." type="search" icon-pack="fa" icon="search" v-model="key"></b-input>
         </b-field>

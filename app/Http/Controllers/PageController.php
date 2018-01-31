@@ -13,8 +13,6 @@ class PageController extends Controller
     public function index()
     {
         $site = auth()->user()->sites()->where('address', request()->address)->firstOrFail();
-        $pages = ['navigation', 'media', 'settings', 'analytics'];
-        abort_if(! in_array(request()->type, $pages), 404);
         $tag = $site->theme->tags()->where('type', 'category')->first();
         if ($tag->tag === 'website') {
             $data = WebsitesHelper::finder($site, request()->type, 'dashboard', null);
@@ -68,7 +66,6 @@ class PageController extends Controller
             } else {
                 $op = 'get-page';
             }
-            
             if ($tag->tag === 'website') {
             } elseif ($tag->tag === 'portfolio') {
             } elseif ($tag->tag === 'web application') {

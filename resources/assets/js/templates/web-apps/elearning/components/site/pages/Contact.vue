@@ -1,34 +1,50 @@
 <template>
-    <section class="container has-text-centered">
-        <h1 class="title has-text-primary">Have a question?</h1>
-        <h1 class="subtitle has-text-info">Write your question or concern after the beep, and we'll reply soon enough.</h1>
-        <b-field horizontal label="Info">
-            <b-input name="name" placeholder="John Doe" v-model.trim="data.name" expanded></b-input>
-            <b-input name="email" type="email" placeholder="john@example.com" v-model.trim="data.email" expanded></b-input>
-        </b-field>
+    <section class="flex-container columns">
+        <div class="column is-7 is-offset-2">
+            <div class="has-text-centered m-b-30">
+                <h1 class="title has-text-primary">Have a question?</h1>
+                <h1 class="subtitle has-text-info">Write your question or concern after the beep, and we'll reply soon enough.</h1>
+            </div>
+            <div class="columns">
+                <div class="column">
+                    <b-field  label="Name">
+                        <b-input name="name" placeholder="John Doe" v-model.trim="data.name" expanded required></b-input>
+                    </b-field>
+                </div>
+                <div class="column">
+                    <b-field label="Email">
+                        <b-input name="email" type="email" placeholder="john@example.com" v-model.trim="data.email" expanded required></b-input>
+                    </b-field>
+                </div>
+            </div>
+            <div class="columns">
+                <div class="column">
+                    <b-field  label="Subject">
+                        <b-input name="subject" v-model.trim="data.subject" expanded required></b-input>
+                    </b-field>
+                </div>
+                <div class="column">
+                    <b-field  label="Topic">
+                        <b-select placeholder="Select a topic" v-model.trim="data.topic" required>
+                            <option value="Courses">Courses</option>
+                            <option value="Articles">Articles</option>
+                            <option value="Other">Other</option>
+                        </b-select>
+                    </b-field>
+                </div>
+            </div>
 
-        <b-field horizontal label="Subject">
-            <b-input name="subject" v-model.trim="data.subject" expanded></b-input>
-        </b-field>
 
-        <b-field horizontal label="Topic">
-            <b-select placeholder="Select a topic" v-model.trim="data.topic">
-                <option value="Courses">Courses</option>
-                <option value="Articles">Articles</option>
-                <option value="Other">Other</option>
-            </b-select>
-        </b-field>
+            <b-field  label="Message">
+                <b-input type="textarea" v-model.trim="data.message" required></b-input>
+            </b-field>
 
-        <b-field horizontal label="Message">
-            <b-input type="textarea" v-model.trim="data.message"></b-input>
-        </b-field>
-
-        <b-field horizontal><!-- Label left empty for spacing -->
-            <p class="control">
-                <button class="button is-primary" @click="send" :disabled="!valid">Send message</button>
-            </p>
-        </b-field>
-
+            <b-field ><!-- Label left empty for spacing -->
+                <p class="control">
+                    <button class="button is-primary" @click="send" :disabled="!valid">Send message</button>
+                </p>
+            </b-field>
+        </div>
     </section>
 </template>
 

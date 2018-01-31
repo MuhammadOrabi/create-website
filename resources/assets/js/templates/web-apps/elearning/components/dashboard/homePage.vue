@@ -1,6 +1,6 @@
 <template>
 	<section>
-		<b-field label="What do you want to have on your home page?">
+		<b-field label="Home Page Should Contains?">
 			<div class="block">
 	            <b-checkbox v-model="checkboxGroup" native-value="showcase">Show Case Image</b-checkbox>
 	            <b-checkbox v-model="checkboxGroup" native-value="articles">Leatest Articles</b-checkbox>

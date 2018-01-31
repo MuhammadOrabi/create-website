@@ -19,12 +19,13 @@
     <body>
         <div id="app" style="display: none;" >
             @include($site->theme->location.'.site._includes.nav')
-                <app slug="{{ $slug }}" address="{{ $site->address }}">
-                    <div slot="content">
-                        @yield('content')
-                    </div>
-                </app>
-            @include($site->theme->location.'.site._includes.right-sidebar')
+            <app slug="{{ $slug }}" address="{{ $site->address }}">
+                <div slot="content" class="m-b-100">
+                    @yield('content')
+                </div>
+            </app>
+            <site-footer address="{{ $site->address }}"></site-footer>
+            @include($site->theme->location.'.site._includes.right-sidebar')    
         </div>
         <script src="/js/templates/web-apps/elearning/app.js"></script>
         @include('notifications.toast')

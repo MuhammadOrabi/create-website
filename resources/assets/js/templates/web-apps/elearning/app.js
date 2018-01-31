@@ -24,7 +24,8 @@ Vue.component('site-lesson', require('./components/site/pages/Lesson.vue'));
 Vue.component('site-articles', require('./components/site/pages/Articles.vue'));
 Vue.component('site-article', require('./components/site/pages/Article.vue'));
 Vue.component('site-contact', require('./components/site/pages/Contact.vue'));
-Vue.component('site-about', require('./components/site/pages/About.vue'));
+Vue.component('site-home', require('./components/site/pages/Home.vue'));
+Vue.component('site-footer', require('./components/site/pages/Footer.vue'));
 
 // Dashboard Components
 Vue.component('media', require('./components/dashboard/Media.vue'));
@@ -36,7 +37,8 @@ Vue.component('lessons-cu', require('./components/dashboard/Lessons-CU.vue'));
 Vue.component('articles', require('./components/dashboard/Articles.vue'));
 Vue.component('articles-cu', require('./components/dashboard/Articles-CU.vue'));
 Vue.component('home-page', require('./components/dashboard/homePage.vue'));
-Vue.component('Contact', require('./components/dashboard/Contact.vue'));
+Vue.component('contact', require('./components/dashboard/Contact.vue'));
+Vue.component('navigation', require('./components/dashboard/Navigation.vue'));
 
 
 const app = new Vue({

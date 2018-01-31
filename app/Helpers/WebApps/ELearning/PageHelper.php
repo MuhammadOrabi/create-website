@@ -32,15 +32,30 @@ class PageHelper
      */
     public static function getDashboard($page)
     {
-        return $page->load('sections.contents', 'sections.extras');
+        return $page->load(['sections' => function ($query) {
+            $query->orderBy('created_at', 'desc');
+        }, 'sections.extras', 'sections.contents']);
     }
 
     public static function getSite($page)
     {
         if ($page->slug === 'courses') {
-            return $page->load('sections.extras');
+            return $page->load(['sections' => function ($query) {
+                $query->orderBy('created_at', 'desc');
+            }, 'sections.extras']);
         } elseif ($page->slug === 'articles') {
-            return $page->load('sections.contents', 'sections.extras');
+            return $page->load(['sections' => function ($query) {
+                $query->orderBy('created_at', 'desc');
+            }, 'sections.extras', 'sections.contents']);
+        } elseif ($page->homePage) {
+            $site = $page->site;
+            $courses = $site->pages()->where('slug', 'courses')->with(['sections' => function ($query) {
+                $query->orderBy('created_at', 'desc');
+            }, 'sections.extras'])->first();
+            $articles = $site->pages()->where('slug', 'articles')->with(['sections' => function ($query) {
+                $query->orderBy('created_at', 'desc');
+            }, 'sections.extras', 'sections.contents'])->first();
+            return ['page' => $page->load('sections.contents'), 'courses' => $courses, 'articles' => $articles];
         }
     }
 

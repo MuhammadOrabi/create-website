@@ -1,6 +1,6 @@
 <template>
-    <div class="columns">
-		<div class="column is-one-third is-offset-one-third">
+    <div class="flex-container columns">
+		<div class="column is-6 is-offset-3">
 			<div class="card">
 				<div class="card-content">
 					<h1 class="title">Register</h1>

@@ -17,7 +17,6 @@ class ELearningHelper
         $profile = $site->addPage(['title' => 'Profile', 'homePage' => false, 'slug' => 'profile']);
         $signup = $site->addPage(['title' => 'Register', 'homePage' => false, 'slug' => 'register']);
         $signin = $site->addPage(['title' => 'Login', 'homePage' => false, 'slug' => 'login']);
-        $about = $site->addPage(['title' => 'About', 'homePage' => false, 'slug' => 'about']);
         $contact = $site->addPage(['title' => 'Contact', 'homePage' => false, 'slug' => 'contact']);
         $articles = $site->addPage(['title' => 'Articles', 'homePage' => false, 'slug' => 'articles']);
         $article = $site->addPage(['title' => 'Article', 'homePage' => false, 'slug' => 'article']);

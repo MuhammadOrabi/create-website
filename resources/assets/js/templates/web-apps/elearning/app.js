@@ -38,7 +38,8 @@ Vue.component('articles', require('./components/dashboard/Articles.vue'));
 Vue.component('articles-cu', require('./components/dashboard/Articles-CU.vue'));
 Vue.component('home-page', require('./components/dashboard/homePage.vue'));
 Vue.component('contact', require('./components/dashboard/Contact.vue'));
-Vue.component('navigation', require('./components/dashboard/Navigation.vue'));
+Vue.component('footer-settings', require('./components/dashboard/Footer.vue'));
+Vue.component('settings', require('./components/dashboard/Settings.vue'));
 
 
 const app = new Vue({

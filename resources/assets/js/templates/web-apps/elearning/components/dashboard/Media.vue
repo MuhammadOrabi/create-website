@@ -123,9 +123,7 @@
                         this.uploading = false;
                         this.loading = false;
                         this.$toast.open({
-                            duration: 5000,
                             message: 'Uploaded Successfully',
-                            position: 'is-top',
                             type: 'is-success'
                         });
                         this.getImgs();

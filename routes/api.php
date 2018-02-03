@@ -17,12 +17,18 @@ Route::prefix('dashboard')->middleware('auth:api')->group(function () {
     Route::prefix('sites')->group(function () {
         Route::post('/', 'SiteController@store');
         Route::get('exists/{address}', 'SiteController@exists');
+        Route::put('/{id}', 'SiteController@update');
     });
 
     
     Route::prefix('pages')->group(function () {
         Route::get('/{id}', 'PageController@show');
         Route::put('/{id}', 'PageController@update');
+    });
+
+
+    Route::prefix('extras')->group(function () {
+        // Route::post('/{id}', 'ExtraController@store');
     });
 
     Route::prefix('sections')->group(function () {
@@ -50,7 +56,6 @@ Route::prefix('dashboard')->middleware('auth:api')->group(function () {
     });
 
     Route::prefix('constants')->group(function () {
-        Route::get('{id}', 'ConstantController@show');
         Route::put('{id}', 'ConstantController@update');
     });
 });
@@ -75,6 +80,10 @@ Route::prefix('sections')->group(function () {
 
 Route::prefix('contents')->middleware('auth:api')->group(function () {
     Route::get('/{id}', 'ContentController@show');
+});
+
+Route::prefix('constants')->group(function () {
+    Route::get('{id}', 'ConstantController@show');
 });
 // End
 

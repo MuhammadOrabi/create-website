@@ -1,7 +1,7 @@
 @extends($site->theme->location . '.dashboard.layout')
 
 @php
-    $id = $site->constants()->where('type', 'top-nav')->first();
+    $id = $site->constants()->where('type', 'top-nav')->first()->id;
 @endphp
 @section('content')
     <div class="container">

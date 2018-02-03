@@ -12,36 +12,20 @@
             </div>
             <br>
             <div class="row">
-                <div class="col">
-                    <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon3">https://facebook.com/</span>
-                        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="UserName"
-                             v-model.trim="facebook">
-                    </div>
+                <div class="col input-group mb-3">
+                    <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="Facebook" v-model.trim="facebook">
                 </div>
-                <div class="col">
-                    <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon3">https://twitter.com/</span>
-                        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="UserName"
-                             v-model.trim="twitter">
-                    </div>
+                <div class="col input-group mb-3">
+                    <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="Twitter" v-model.trim="twitter">
                 </div>
             </div>
             <br>
             <div class="row">
-                <div class="col">
-                    <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon3">https://plus.google.com/</span>
-                        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="UserName"
-                             v-model.trim="google">
-                    </div>
+                <div class="col input-group mb-3">
+                    <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="Google Plus" v-model.trim="google">
                 </div>
-                <div class="col">
-                    <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon3">https://www.linkedin.com/in/</span>
-                        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="UserName"
-                             v-model.trim="linkedin">
-                    </div>
+                <div class="col input-group mb-3">
+                    <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="Linked In" v-model.trim="linkedin">
                 </div>
             </div>
             <br>
@@ -75,7 +59,7 @@
         props: ['address', 'token', 'id'],
         data() {
             return {
-				imgsrc: 'https://dummyimage.com/200x200/000/ffffff.png&text=Click+Here!',
+				imgsrc: '',
                 twitter: '',
                 facebook: '',
                 google: '',
@@ -88,7 +72,9 @@
                 return this;
             }
         },
-        mounted() {},
+        mounted() {
+            this.getData();
+        },
         methods: {
             toggleModal() {
                 window.$('#imgModalNavigation').modal('toggle');
@@ -97,17 +83,26 @@
                  window.axios.get('/api/dashboard/constants/' + this.id, { headers: { 'Authorization': 'Bearer ' + this.token } })
                 .then(res => {
                     console.log(res.data);
+                    let contents = res.data.contents;
+                    let logo = _.findWhere(contents, {type: 'logo'}).content;
+                    this.imgsrc = logo ? logo : 'https://dummyimage.com/200x200/000/ffffff.png&text=Click+Here!';
+                    this.facebook = _.findWhere(contents, {type: 'link', title: 'facebook-square'}).content;
+                    this.twitter = _.findWhere(contents, {type: 'link', title: 'twitter'}).content;
+                    this.google = _.findWhere(contents, {type: 'link', title: 'google-plus-g'}).content;
+                    this.linkedin = _.findWhere(contents, {type: 'link', title: 'linkedin-in'}).content;
+
                 }).catch(err => console.log(err));
             },
             save() {
                 let data = {logo: this.imgsrc};
-                data.facebook = this.facebook ? 'https://facebook.com/' + this.facebook : null;
-                data.twitter = this.twitter ? 'https://twitter.com/' + this.twitter : null;
-                data.google = this.google ? 'https://plus.google.com/' + this.google : null;
-                data.linkedin = this.linkedin ? 'https://www.linkedin.com/in/' + this.linkedin : null;
+                data.facebook = this.facebook ? this.facebook : null;
+                data.twitter = this.twitter ? this.twitter : null;
+                data.google = this.google ? this.google : null;
+                data.linkedin = this.linkedin ? this.linkedin : null;
                 window.axios.put('/api/dashboard/constants/' + this.id, data, { headers: { 'Authorization': 'Bearer ' + this.token } })
 				.then(res => {
 					this.getData();
+                    this.msg = 'success';
 				}).catch(err => console.log(err));
             }
         }

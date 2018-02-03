@@ -21,6 +21,7 @@ class CreateContentsTable extends Migration
             $table->integer('contentable_id');
             $table->string('contentable_type');
             $table->integer('order')->default(0);
+            $table->boolean('active')->default(1);
             $table->timestamps();
         });
     }

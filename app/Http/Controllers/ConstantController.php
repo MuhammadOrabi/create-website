@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Constant;
 use Illuminate\Http\Request;
+use App\Helpers\WebApps\WebAppsHelper;
+use App\Helpers\Websites\WebsitesHelper;
 
 class ConstantController extends Controller
 {
@@ -18,6 +20,8 @@ class ConstantController extends Controller
                 return response()->json($data);
             } elseif ($tag->tag === 'portfolio') {
             } elseif ($tag->tag === 'web application') {
+                $data = WebAppsHelper::finder($site, null, 'constant-update', request()->all(), $constant);
+                return response()->json($data);
             } elseif ($tag->tag === 'blog') {
             }
         } else {
@@ -28,13 +32,15 @@ class ConstantController extends Controller
     {
         if (request()->ajax()) {
             $constant = Constant::findOrFail(request()->id);
-            $site = auth()->user()->sites()->where('address', $constant->site->address)->firstOrFail();
+            $site = $constant->site;
             $tag = $site->theme->tags()->where('type', 'category')->first();
             if ($tag->tag === 'website') {
                 $data = WebsitesHelper::finder($site, null, 'constant-get', null, $constant);
                 return response()->json($data);
             } elseif ($tag->tag === 'portfolio') {
             } elseif ($tag->tag === 'web application') {
+                $data = WebAppsHelper::finder($site, null, 'constant-get', null, $constant);
+                return response()->json($data);
             } elseif ($tag->tag === 'blog') {
             }
         } else {

@@ -24,7 +24,9 @@
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				@foreach($nav['links'] as $link)
-					<li><a href="{{ $link->content }}" target="_blank"><i class="fa fa-{{$link->title}}"></i></a></li>
+					@if($link->content)
+						<li><a href="{{ $link->content }}" target="_blank"><i class="fa fa-{{$link->title}}"></i></a></li>
+					@endif
 				@endforeach
 			</ul>
 		</div><!--/.nav-collapse -->

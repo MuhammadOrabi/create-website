@@ -14,6 +14,7 @@ class ELearningSiteHelper
     public function __construct($id)
     {
         $this->site = Site::findOrFail($id);
+        $this->site->load('constants');
     }
 
     public function site($slug, $id)
@@ -41,7 +42,7 @@ class ELearningSiteHelper
 
     public function dashboard($page, $data = null, $component = null)
     {
-        $pages = ['media', 'settings', 'analytics', 'navigation'];
+        $pages = ['media', 'settings', 'analytics', 'footer'];
         abort_if(! in_array($page, $pages), 404);
         $pages = $this->sidebar();
         $location = $this->site->theme->location . '.dashboard.' . $page;
@@ -151,5 +152,16 @@ class ELearningSiteHelper
         } elseif ($type === 'site-info') {
             return $this->site->load('user', 'extras');
         }
+    }
+
+    public function update($data)
+    {
+        if ($data['name']) {
+            $this->site->update(['name' => $data['name']]);
+        }
+        if ($data['logo']) {
+            $this->site->extras()->updateOrCreate(['type' => 'logo'], ['content' => $data['logo']]);
+        }
+        return $this->site;
     }
 }

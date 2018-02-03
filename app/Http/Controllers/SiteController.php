@@ -81,13 +81,30 @@ class SiteController extends Controller
 
     public function update()
     {
-        $this->validate(request(), [
-            'name' => 'required'
-        ]);
-        $site = Site::findOrFail(request()->id);
-        abort_if($site->user->id != auth()->id(), 500);
-        $site->name = request('name');
-        $site->save();
-        return back();
+        if (request()->ajax()) {
+            $site = auth()->user()->sites()->findOrFail(request()->id);
+            $tag = $site->theme->tags()->where('type', 'category')->first();
+            if ($tag->tag === 'website') {
+            } elseif ($tag->tag === 'portfolio') {
+            } elseif ($tag->tag === 'web application') {
+                $data = WebAppsHelper::finder($site, null, 'site-update', request()->all());
+                return response()->json($data);
+            } elseif ($tag->tag === 'blog') {
+            }
+        } else {
+            $site = auth()->user()->sites()->findOrFail(request()->id);
+            $tag = $site->theme->tags()->where('type', 'category')->first();
+            if ($tag->tag === 'website') {
+                $this->validate(request(), [
+                    'name' => 'required'
+                ]);
+                $site->name = request('name');
+                $site->save();
+                return back();
+            } elseif ($tag->tag === 'portfolio') {
+            } elseif ($tag->tag === 'web application') {
+            } elseif ($tag->tag === 'blog') {
+            }
+        }
     }
 }

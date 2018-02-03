@@ -15,21 +15,11 @@ class ConstantHelper
 
     public static function update($data, $constant)
     {
-        if ($data['twitter']) {
-            $constant->contants()->updateOrCreate(['type' => 'twitterLink'], ['content' => $data['twitter']]);
-        }
-        if ($data['twitter']) {
-            $constant->contants()->updateOrCreate(['type' => 'twitterLink'], ['content' => $data['twitter']]);
-        }
-        if ($data['facebook']) {
-            $constant->contants()->updateOrCreate(['type' => 'facebookLink'], ['content' => $data['facebook']]);
-        }
-        if ($data['google']) {
-            $constant->contants()->updateOrCreate(['type' => 'googleLink'], ['content' => $data['google']]);
-        }
-        if ($data['linkedin']) {
-            $constant->contants()->updateOrCreate(['type' => 'linkedinLink'], ['content' => $data['linkedin']]);
-        }
+        $constant->contents()->updateOrCreate(['type' => 'link', 'title' => 'twitter'], ['content' => $data['twitter']]);
+        $constant->contents()->updateOrCreate(['type' => 'link', 'title' => 'facebook-square'], ['content' => $data['facebook']]);
+        $constant->contents()->updateOrCreate(['type' => 'link', 'title' => 'google-plus-g'], ['content' => $data['google']]);
+        $constant->contents()->updateOrCreate(['type' => 'link', 'title' => 'linkedin-in'], ['content' => $data['linkedin']]);
+        $constant->contents()->updateOrCreate(['type' => 'logo'], ['content' => $data['logo']]);
     }
 
     public static function get($constant)

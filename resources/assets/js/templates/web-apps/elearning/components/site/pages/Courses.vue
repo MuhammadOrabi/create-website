@@ -31,7 +31,14 @@
                     </nav>
                 </div>
             </article>
-        </div>        
+        </div>
+        <div v-if="!courses.length">
+            <section class="section">
+                <div class="content has-text-grey has-text-centered">
+                    <p>There are no courses!</p>
+                </div>
+            </section>
+        </div>   
     </section>
 </template>
 

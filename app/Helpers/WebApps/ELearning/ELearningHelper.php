@@ -24,6 +24,8 @@ class ELearningHelper
         $course = $site->addPage(['title' => 'Course', 'homePage' => false, 'slug' => 'course']);
         $lesson = $site->addPage(['title' => 'Lesson', 'homePage' => false, 'slug' => 'lesson']);
         $forum = $site->addPage(['title' => 'forum', 'homePage' => false, 'slug' => 'forum']);
+        
+        $footer = $site->constants()->create(['type' => 'footer']);
     }
 
     public static function doThis($site, $page, $op, $data, $component)
@@ -71,6 +73,13 @@ class ELearningHelper
             return ContentHelper::which($page, 'get-site', $data, $component);
         } elseif ($op === 'createSection') {
             return SectionHelper::which($page, 'create', $data);
+        } elseif ($op === 'constant-update') {
+            return ConstantHelper::which('update', $data, $component);
+        } elseif ($op === 'constant-get') {
+            return ConstantHelper::which('get', $data, $component);
+        } elseif ($op === 'site-update') {
+            $eLearning = new ELearningSiteHelper($site->id);
+            return $eLearning->update($data);
         }
     }
 }

@@ -24,7 +24,7 @@
                     @yield('content')
                 </div>
             </app>
-            <site-footer address="{{ $site->address }}"></site-footer>
+            <site-footer address="{{ $site->address }}" id="{{ $site->constants->where('type', 'footer')->first()->id }}"></site-footer>
             @include($site->theme->location.'.site._includes.right-sidebar')    
         </div>
         <script src="/js/templates/web-apps/elearning/app.js"></script>

@@ -1,11 +1,12 @@
 {
     "/js/templates/web-apps/elearning/app.js": "/js/templates/web-apps/elearning/app.js",
     "/js/templates/websites/bizlight/app.js": "/js/templates/websites/bizlight/app.js",
+    "/js/templates/portfolios/template1/dashboard/app.js": "/js/templates/portfolios/template1/dashboard/app.js",
     "/js/bulma/app.js": "/js/bulma/app.js",
     "/js/home-page/app.js": "/js/home-page/app.js",
     "/css/home-page/app.css": "/css/home-page/app.css",
     "/css/bulma/app.css": "/css/bulma/app.css",
     "/css/templates/websites/bizlight/app.css": "/css/templates/websites/bizlight/app.css",
-    "/css/templates/portfolios/theme1/app.css": "/css/templates/portfolios/theme1/app.css",
-    "/js/templates/portfolios/theme1/app.js": "/js/templates/portfolios/theme1/app.js"
+    "/css/templates/portfolios/template1/app.css": "/css/templates/portfolios/template1/app.css",
+    "/js/templates/portfolios/template1/site/app.js": "/js/templates/portfolios/template1/site/app.js"
 }

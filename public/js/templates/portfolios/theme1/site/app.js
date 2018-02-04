@@ -60,23 +60,16 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 557);
+/******/ 	return __webpack_require__(__webpack_require__.s = 558);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 557:
+/***/ 558:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(558);
+(function webpackMissingModule() { throw new Error("Cannot find module \"/home/muhammad/Projects/Laravel/create-website/resources/assets/js/templates/portfolios/theme1/site/app.js\""); }());
 
-
-/***/ }),
-
-/***/ 558:
-/***/ (function(module, exports) {
-
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/home/muhammad/Projects/Laravel/create-website/resources/assets/js/templates/portfolios/theme1/app.js'");
 
 /***/ })
 

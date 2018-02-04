@@ -12,13 +12,11 @@ class BizlightHelper
 {
     /**
      * Scaffold the template for the site
-     * @param  Integer  $idSite id
+     * @param  App\Site  $site
      * @return App\Site
      */
-    public static function scaffold($id)
+    public static function scaffold($site)
     {
-        $site = Site::findOrFail($id);
-
         $home = $site->addPage(['title' => 'Home Page', 'homePage' => true, 'slug' => '']);
         $showCase = $home->sections()->create(['title' => 'showCase', 'order' => 1]);
         $section_b = $home->sections()->create(['title' => 'section_b', 'order' => 2]);
@@ -48,7 +46,9 @@ class BizlightHelper
      */
     public static function doThis($site, $page, $op, $data, $component)
     {
-        if ($op === 'updateSection') {
+        if ($op === 'scaffold') {
+            return static::scaffold($site);
+        } elseif ($op === 'updateSection') {
             return SectionHelper::which($page, 'update', $data, $component);
         } elseif ($op === 'site') {
             $site = new BizlightSiteHelper($site->id);

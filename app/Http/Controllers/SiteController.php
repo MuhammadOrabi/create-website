@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Site;
 use Validator;
 use Illuminate\Http\Request;
-use App\Helpers\Websites\WebsitesHelper;
 use App\Helpers\WebApps\WebAppsHelper;
+use App\Helpers\Websites\WebsitesHelper;
+use App\Helpers\Portfolios\PortfoliosHelper;
 
 class SiteController extends Controller
 {
@@ -59,11 +60,14 @@ class SiteController extends Controller
             $data = WebsitesHelper::finder($site, $slug, 'site', null);
             return view($data['location'], $data['data']);
         } elseif ($tag->tag === 'portfolio') {
+            $data = PortfoliosHelper::finder($site, $slug, 'site', request()->id);
+            return view($data['location'], $data['data']);
         } elseif ($tag->tag === 'web application') {
             $data = WebAppsHelper::finder($site, $slug, 'site', request()->id);
             return view($data['location'], $data['data']);
         } elseif ($tag->tag === 'blog') {
         }
+        abort(500);
     }
 
     public function info()

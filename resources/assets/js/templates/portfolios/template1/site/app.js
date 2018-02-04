@@ -1,6 +1,6 @@
 require('jquery');
 require('materialize-css');
-require('../../../bootstrap');
+require('../../../../bootstrap');
 
 
 $(document).ready(function(){

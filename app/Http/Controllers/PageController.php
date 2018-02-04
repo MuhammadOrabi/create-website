@@ -7,6 +7,7 @@ use App\Site;
 use Illuminate\Http\Request;
 use App\Helpers\WebApps\WebAppsHelper;
 use App\Helpers\Websites\WebsitesHelper;
+use App\Helpers\Portfolios\PortfoliosHelper;
 
 class PageController extends Controller
 {
@@ -18,6 +19,9 @@ class PageController extends Controller
             $data = WebsitesHelper::finder($site, request()->type, 'dashboard', null);
             return view($data['location'], $data['data']);
         } elseif ($tag->tag === 'portfolio') {
+            $data = PortfoliosHelper::finder($site, request()->type, 'dashboard', null);
+            abort_if(!view()->exists($data['location']), 404);
+            return view($data['location'], $data['data']);
         } elseif ($tag->tag === 'web application') {
             $data = WebAppsHelper::finder($site, request()->type, 'dashboard', null);
             return view($data['location'], $data['data']);
@@ -31,6 +35,10 @@ class PageController extends Controller
         $tag = $site->theme->tags()->where('type', 'category')->first();
         if ($tag->tag === 'website') {
         } elseif ($tag->tag === 'portfolio') {
+            $info = ['type' => request()->type, 'action' => request()->action];
+            $data = PortfoliosHelper::finder($site, null, 'dashboard-load-action', $info, request()->id);
+            abort_if(!view()->exists($data['location']), 404);
+            return view($data['location'], $data['data']);
         } elseif ($tag->tag === 'web application') {
             $info = ['type' => request()->type, 'action' => request()->action];
             $data = WebAppsHelper::finder($site, null, 'dashboard-load-action', $info, request()->id);
@@ -83,11 +91,12 @@ class PageController extends Controller
                 return view($data['location'], compact('page', 'site'));
             } elseif ($tag->tag === 'portfolio') {
             } elseif ($tag->tag === 'web application') {
-                $data = WebAppsHelper::finder($site, null, 'dashboard-load-section', request()->type, request()->id);
+                $data = WebAppsHelper::finder($site, null, 'dashboard-load-page', request()->type, request()->id);
                 abort_if(!view()->exists($data['location']), 404);
                 return view($data['location'], $data['data']);
             } elseif ($tag->tag === 'blog') {
             }
         }
+        abort(500);
     }
 }

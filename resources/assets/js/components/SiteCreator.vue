@@ -131,7 +131,7 @@ export default {
 			window.axios.post('/api/dashboard/sites', site ,{ headers: { 'Authorization': 'Bearer ' + vm.token } })
 			.then((res) => {
 				if (res.data.page) {
-					window.location = '/dashboard/pages/' + res.data.page.id + '/' + this.address;
+					window.location = '/dashboard/settings/' + this.address;
 				}
 			})
 			.catch((err) => console.log(err));

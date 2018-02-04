@@ -2,12 +2,12 @@
 
 namespace App;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
-use App\Helpers\WebApps\ELearning\ELearningHelper;
-use App\Helpers\Websites\Bizlight\BizlightHelper;
-use App\Portfolios\Portfolio1\Portfolio1Helper;
+use App\Helpers\WebApps\WebAppsHelper;
+use App\Helpers\Websites\WebsitesHelper;
+use Illuminate\Notifications\Notifiable;
+use App\Helpers\Portfolios\PortfoliosHelper;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
@@ -62,14 +62,14 @@ class User extends Authenticatable
     {
         $name = camel_case($address);
         $site = $this->sites()->create(compact('address', 'theme_id', 'name'));
-        if ($site->theme->name == 'bizlight') {
-            BizlightHelper::scaffold($site->id);
-        } elseif ($site->theme->name == 'elearning') {
-            ELearningHelper::scaffold($site->id);
-        } elseif ($site->theme->name == 'elearning2') {
-            ELearningHelper::scaffold($site->id);
-        } elseif ($site->theme->name == 'theme1') {
-            Portfolio1Helper::scaffold($site->id);
+        $tag = $site->theme->tags()->where('type', 'category')->first();
+        if ($tag->tag === 'website') {
+            return WebsitesHelper::finder($site, null, 'scaffold');
+        } elseif ($tag->tag === 'portfolio') {
+            return PortfoliosHelper::finder($site, null, 'scaffold');
+        } elseif ($tag->tag === 'web application') {
+            return WebAppsHelper::finder($site, null, 'scaffold');
+        } elseif ($tag->tag === 'blog') {
         }
 
         return $site;

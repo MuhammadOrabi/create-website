@@ -6,9 +6,8 @@ use App\Site;
 
 class ELearningHelper
 {
-    public static function scaffold($id)
+    public static function scaffold($site)
     {
-        $site = Site::findOrFail($id);
         $home = $site->addPage(['title' => 'Home Page', 'homePage' => true, 'slug' => '']);
         $home->sections()->create(['title' => 'showcase']);
         $home->sections()->create(['title' => 'articles']);
@@ -24,13 +23,15 @@ class ELearningHelper
         $course = $site->addPage(['title' => 'Course', 'homePage' => false, 'slug' => 'course']);
         $lesson = $site->addPage(['title' => 'Lesson', 'homePage' => false, 'slug' => 'lesson']);
         $forum = $site->addPage(['title' => 'forum', 'homePage' => false, 'slug' => 'forum']);
-        
         $footer = $site->constants()->create(['type' => 'footer']);
+        return $site;
     }
 
     public static function doThis($site, $page, $op, $data, $component)
     {
-        if ($op === 'site') {
+        if ($op === 'scaffold') {
+            return static::scaffold($site);
+        } elseif ($op === 'site') {
             $eLearning = new ELearningSiteHelper($site->id);
             return $eLearning->site($page, $data);
         } elseif ($op === 'dashboard') {
@@ -47,9 +48,9 @@ class ELearningHelper
             return SectionHelper::which($page, 'update', $data, $component);
         } elseif ($op === 'deleteSection') {
             return SectionHelper::which($page, 'delete', $data, $component);
-        } elseif ($op === 'dashboard-load-section') {
+        } elseif ($op === 'dashboard-load-page') {
             $eLearning = new ELearningSiteHelper($site->id);
-            return $eLearning->loadSection($data, $component);
+            return $eLearning->loadPage($data, $component);
         } elseif ($op === 'dashboard-load-action') {
             $eLearning = new ELearningSiteHelper($site->id);
             return $eLearning->loadAction($data, $component);

@@ -22,5 +22,6 @@ mix.js('resources/assets/js/home-page/app.js', 'public/js/home-page')
     .js('resources/assets/js/templates/websites/bizlight/app.js', 'public/js/templates/websites/bizlight')
     .sass('resources/assets/sass/templates/websites/bizlight/app.scss', 'public/css/templates/websites/bizlight')
    
-    .js('resources/assets/js/templates/portfolios/theme1/app.js', 'public/js/templates/portfolios/theme1')
-    .sass('resources/assets/sass/templates/portfolios/theme1/app.scss', 'public/css/templates/portfolios/theme1');
+    .js('resources/assets/js/templates/portfolios/template1/site/app.js', 'public/js/templates/portfolios/template1/site')
+    .js('resources/assets/js/templates/portfolios/template1/dashboard/app.js', 'public/js/templates/portfolios/template1/dashboard')
+    .sass('resources/assets/sass/templates/portfolios/template1/app.scss', 'public/css/templates/portfolios/template1');

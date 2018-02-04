@@ -50,14 +50,12 @@ class ELearningSiteHelper
         return compact('location', 'data');
     }
 
-    public function loadSection($data, $component)
+    public function loadPage($data, $component)
     {
         $pages = $this->sidebar();
         if ($data === 'pages') {
             $page = $pages->where('id', $component)->first();
-            if (!$page) {
-                abort(404);
-            }
+            abort_if(!$page, 500);
             $page->load('sections.contents');
             $section = null;
         } elseif ($data === 'lessons') {

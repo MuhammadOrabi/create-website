@@ -34,31 +34,28 @@ class ThemeController extends Controller
         $bizlight->imgs()->create(['url' => '/img/websites/Bizlight/6.png']);
         $bizlight->imgs()->create(['url' => '/img/websites/Bizlight/7.png']);
 
-        // $elearning = $tag_webApp->themes()->create(
-        //     ['name' => 'elearning2', 'location' => 'templates.web-apps.e-learning', 'type' => 'eLearning']
-        // );
-        // $elearning->imgs()->create(['url' => '/img/web-apps/elearning/1.png']);
-        // $elearning->imgs()->create(['url' => '/img/web-apps/elearning/2.png']);
-        // $elearning->imgs()->create(['url' => '/img/web-apps/elearning/3.png']);
-        // $elearning->imgs()->create(['url' => '/img/web-apps/elearning/4.png']);
-        // $elearning->imgs()->create(['url' => '/img/web-apps/elearning/5.png']);
-        // $elearning->imgs()->create(['url' => '/img/web-apps/elearning/6.png']);
-
+        
         $elearning = $tag_webApp->themes()->create(
             ['name' => 'elearning', 'location' => 'templates.web-apps.elearning', 'type' => 'eLearning']
         );
         $elearning->imgs()->create(['url' => '/img/web-apps/elearning/1.png']);
+        $elearning->imgs()->create(['url' => '/img/web-apps/elearning/1.png']);
+        $elearning->imgs()->create(['url' => '/img/web-apps/elearning/2.png']);
+        $elearning->imgs()->create(['url' => '/img/web-apps/elearning/3.png']);
+        $elearning->imgs()->create(['url' => '/img/web-apps/elearning/4.png']);
+        $elearning->imgs()->create(['url' => '/img/web-apps/elearning/5.png']);
+        $elearning->imgs()->create(['url' => '/img/web-apps/elearning/6.png']);
 
         $portfolio_theme1 = $tag_portfolio->themes()->create(
-            ['name' => 'theme1', 'location' => 'templates.portfolios.theme1', 'type' => 'portfolio']
+            ['name' => 'template1', 'location' => 'templates.portfolios.template1', 'type' => 'portfolio']
         );
-        $portfolio_theme1->imgs()->create(['url' => '/img/portfolios/theme1/1.png']);
-        $portfolio_theme1->imgs()->create(['url' => '/img/portfolios/theme1/2.png']);
-        $portfolio_theme1->imgs()->create(['url' => '/img/portfolios/theme1/3.png']);
-        $portfolio_theme1->imgs()->create(['url' => '/img/portfolios/theme1/4.png']);
-        $portfolio_theme1->imgs()->create(['url' => '/img/portfolios/theme1/5.png']);
-        $portfolio_theme1->imgs()->create(['url' => '/img/portfolios/theme1/6.png']);
-        $portfolio_theme1->imgs()->create(['url' => '/img/portfolios/theme1/7.png']);
+        $portfolio_theme1->imgs()->create(['url' => '/img/portfolios/template1/1.png']);
+        $portfolio_theme1->imgs()->create(['url' => '/img/portfolios/template1/2.png']);
+        $portfolio_theme1->imgs()->create(['url' => '/img/portfolios/template1/3.png']);
+        $portfolio_theme1->imgs()->create(['url' => '/img/portfolios/template1/4.png']);
+        $portfolio_theme1->imgs()->create(['url' => '/img/portfolios/template1/5.png']);
+        $portfolio_theme1->imgs()->create(['url' => '/img/portfolios/template1/6.png']);
+        $portfolio_theme1->imgs()->create(['url' => '/img/portfolios/template1/7.png']);
         return redirect('/');
     }
 }

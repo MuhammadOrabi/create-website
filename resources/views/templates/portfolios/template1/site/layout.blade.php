@@ -10,7 +10,7 @@
 	  	</title>
 
 	  	<!-- CSS  -->
-		<link rel="stylesheet" type="text/css" href="/css/templates/portfolios/theme1/app.css">
+		<link rel="stylesheet" type="text/css" href="/css/templates/portfolios/template1/app.css">
 
 		@yield('styles')
 		<script>
@@ -25,7 +25,7 @@
 			@yield('content')
 		</div>
 		<!--  Scripts-->
-		<script type="text/javascript" src="/js/templates/portfolios/theme1/app.js"></script>
+		<script type="text/javascript" src="/js/templates/portfolios/template1/site/app.js"></script>
 		@yield('scripts')
 	</body>
 </html>

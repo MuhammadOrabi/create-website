@@ -21,7 +21,7 @@
         <div id="app">
             @include('home-page._includes.nav.bulma-nav')
             @include($site->theme->location.'.dashboard._includes.left-sidebar')
-            <div class="managment-area">
+            <div class="managment-area m-b-100">
                 <div class="flex-container">
                     @yield('content')
                 </div>

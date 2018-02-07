@@ -89,7 +89,7 @@
                     this.facebook = _.findWhere(contents, {type: 'link', title: 'facebook-square'}).content;
                     this.twitter = _.findWhere(contents, {type: 'link', title: 'twitter'}).content;
                     this.google = _.findWhere(contents, {type: 'link', title: 'google-plus-g'}).content;
-                    this.linkedin = _.findWhere(contents, {type: 'link', title: 'linkedin-in'}).content;
+                    this.linkedin = _.findWhere(contents, {type: 'link', title: 'linkedin'}).content;
 
                 }).catch(err => console.log(err));
             },

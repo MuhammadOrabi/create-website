@@ -30,6 +30,10 @@ class Template1Helper
         } elseif ($op === 'dashboard-load-action') {
             $template1 = new Template1SiteHelper($site);
             return $template1->loadAction($data, $component);
+        } elseif ($op === 'getSection') {
+            return SectionHelper::which('get', $data, $component);
+        } elseif ($op === 'updateSection') {
+            return SectionHelper::which('update', $data, $component);
         }
     }
 }

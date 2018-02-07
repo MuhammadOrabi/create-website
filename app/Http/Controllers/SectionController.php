@@ -7,6 +7,7 @@ use App\Section;
 use Illuminate\Http\Request;
 use App\Helpers\WebApps\WebAppsHelper;
 use App\Helpers\Websites\WebsitesHelper;
+use App\Helpers\Portfolios\PortfoliosHelper;
 
 class SectionController extends Controller
 {
@@ -55,6 +56,8 @@ class SectionController extends Controller
             $data = WebsitesHelper::finder($section->page->site, $section->page, 'getSection', null, $section);
             return response()->json($data);
         } elseif ($tag->tag === 'portfolio') {
+            $data = PortfoliosHelper::finder($section->page->site, $section->page, 'getSection', null, $section);
+            return response()->json($data);
         } elseif ($tag->tag === 'web application') {
             $data = WebAppsHelper::finder($section->page->site, $section->page, 'getSection', null, $section);
             return response()->json($data);
@@ -92,6 +95,8 @@ class SectionController extends Controller
             );
             return response()->json($data);
         } elseif ($tag->tag === 'portfolio') {
+            $data = PortfoliosHelper::finder($site, $section->page, 'updateSection', request()->all(), $section);
+            return response()->json($data);
         } elseif ($tag->tag === 'web application') {
             $data = WebAppsHelper::finder(
                 $site,

@@ -3,5 +3,5 @@
     Media
 @stop
 @section('content')
-    
+    <media token="{{ auth()->user()->getToken('Media') }}" address="{{ $site->address }}"></media>    
 @stop

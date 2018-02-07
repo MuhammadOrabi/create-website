@@ -121,7 +121,6 @@
         		let data = {title: vm.data.title, paragraph: vm.data.paragraph, video: videoLink};
                 window.axios.post('/api/dashboard/contents/' + vm.sectionid, data, { headers: { 'Authorization': 'Bearer ' + vm.token } })
                 .then((res) => {
-                	console.log(res.data);
                    	this.$toast.open({
                         duration: 5000,
                         message: 'Created Successfully',

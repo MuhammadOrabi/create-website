@@ -40,6 +40,7 @@ Vue.component('home-page', require('./components/dashboard/homePage.vue'));
 Vue.component('contact', require('./components/dashboard/Contact.vue'));
 Vue.component('footer-settings', require('./components/dashboard/Footer.vue'));
 Vue.component('settings', require('./components/dashboard/Settings.vue'));
+Vue.component('profile', require('./components/dashboard/Profile.vue'));
 
 
 const app = new Vue({

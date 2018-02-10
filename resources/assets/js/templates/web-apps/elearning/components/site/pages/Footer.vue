@@ -55,6 +55,7 @@ export default {
             window.axios.get('/api/constants/' + this.id)
             .then(res => {
                 this.site = res.data.site;
+                if (res.data.site.extras.length === 0) {return;}
                 let logo = _.findWhere(res.data.site.extras, {type: 'logo'});
                 this.logo = logo ? logo.content : null;
                  let paragraph = _.findWhere(res.data.contents, {type: 'paragraph'});

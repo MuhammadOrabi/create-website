@@ -21,7 +21,7 @@
                    {{ props.row.topic }}
                 </b-table-column>
 
-                <b-table-column field="created_at" label="Created at">
+                <b-table-column field="created_at" label="Received at">
                     {{ props.row.created_at }}
                 </b-table-column>
 

@@ -26,6 +26,10 @@
                     {{ props.row.to_year }}
                 </b-table-column>
 
+                <b-table-column label="Actions">
+                    <education-cud u d :address="address" :token="token" @getData="getData" :sectionid="id" :id="props.row.id + ''"></education-cud>
+                </b-table-column>
+
             </template>
             <template slot="empty">
                 <section class="section">
@@ -42,19 +46,41 @@
 </template>
 
 <script>
+    import moment from 'moment';
     export default {
         name: 'Education',
         props: ['address', 'id', 'token'],
         data() {
             return {
-                data: [
-                    // { school: '', degree: '', field_of_study: '', grade: '', from_year: '', to_year: '' },
-                ]
+                data: []
             }
+        },
+        mounted() {
+            this.getData();
         },
         methods: {
             getData() {
-
+                window.axios.get('/api/dashboard/sections/' + this.id, { headers: { 'Authorization': 'Bearer ' + this.token } })
+                .then(res => {
+                    this.data = [];
+                    let contents = res.data.contents;
+                    _.each(contents, content => {
+                        let from_year = _.findWhere(content.extras, {type: 'from_year'});
+                        let to_year = _.findWhere(content.extras, {type: 'to_year'});
+                        let degree = _.findWhere(content.extras, {type: 'degree'});
+                        let grade = _.findWhere(content.extras, {type: 'grade'});
+                        this.data.push({ 
+                            id: content.id,
+                            school: content.title, 
+                            field_of_study: content.content,
+                            degree: degree ? degree.content : null,
+                            grade: grade ? grade.content : null, 
+                            from_year: moment(from_year.content).calendar(),
+                            to_year: to_year ? moment(to_year.content).calendar() : 'Current',
+                        });
+                    });
+                })
+                .catch(err => console.log(err));
             }
         }
     }

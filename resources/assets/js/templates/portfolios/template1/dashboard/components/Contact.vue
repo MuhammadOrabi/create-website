@@ -17,11 +17,7 @@
                    {{ props.row.email }}
                 </b-table-column>
 
-                <b-table-column field="topic" label="Topic">
-                   {{ props.row.topic }}
-                </b-table-column>
-
-                <b-table-column field="created_at" label="Created at">
+                <b-table-column field="created_at" label="Received at">
                     {{ props.row.created_at }}
                 </b-table-column>
 
@@ -83,18 +79,16 @@ export default {
         moment,
         getData() {
             const vm = this;
-            window.axios.get('/api/dashboard/pages/' + vm.id, { headers: { 'Authorization': 'Bearer ' + vm.token } })
+            window.axios.get('/api/dashboard/sections/' + vm.id, { headers: { 'Authorization': 'Bearer ' + vm.token } })
             .then(res => {
+                console.log(res.data);
                 this.messages = [];
                 this.loading = false;
-                res.data.sections.forEach(section => {
-                    let subject = section.title;
-                    let message = _.findWhere(section.contents, {type: 'message'});
-                    let name = _.findWhere(section.extras, {type: 'name'});
-                    let email = _.findWhere(section.extras, {type: 'email'});
+                res.data.contents.forEach(content => {
+                    let info = _.findWhere(content.extras, {type: 'info'});
                     this.messages.push({
-                        id: section.id, subject: subject, name: name.content, email: email.content,
-                        message: message.content, topic: message.title, created_at: moment(section.created_at).calendar()
+                        id: content.id, subject: content.title, message: content.content, created_at: moment(content.created_at).calendar(), 
+                        name: info.title, email: info.content
                      });
                 });
             })
@@ -120,7 +114,7 @@ export default {
         },
         destroy(id) {
             const vm = this;
-            window.axios.delete('/api/dashboard/sections/' + id, { headers: { 'Authorization': 'Bearer ' + vm.token } })
+            window.axios.delete('/api/dashboard/contents/' + id, { headers: { 'Authorization': 'Bearer ' + vm.token } })
             .then(() => {
                 this.$toast.open('Message deleted!');
                 this.getData();   

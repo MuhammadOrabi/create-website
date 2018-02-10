@@ -34,6 +34,18 @@ class Template1Helper
             return SectionHelper::which('get', $data, $component);
         } elseif ($op === 'updateSection') {
             return SectionHelper::which('update', $data, $component);
+        } elseif ($op === 'get-content') {
+            return ContentHelper::which('get', $component);
+        } elseif ($op === 'delete-content') {
+            return ContentHelper::which('delete', $component);
+        } elseif ($op === 'create-section-site') {
+            return SectionHelper::which('create-site', $data, $component, $page);
+        } elseif ($op === 'api-info') {
+            $template1 = new Template1SiteHelper($site);
+            return $template1->apiInfo($data);
+        } elseif ($op === 'site-update') {
+            $template1 = new Template1SiteHelper($site);
+            return $template1->update($data);
         }
     }
 }

@@ -10,18 +10,25 @@ let mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
+// Main Website
+mix.js('resources/assets/js/home-page/app.js', 'public/js/home-page');
+mix.sass('resources/assets/sass/home-page/app.scss', 'public/css/home-page');
 
-mix.js('resources/assets/js/home-page/app.js', 'public/js/home-page')
-    .sass('resources/assets/sass/home-page/app.scss', 'public/css/home-page')
+// Bulma
+mix.js('resources/assets/js/bulma/app.js', 'public/js/bulma');
+mix.sass('resources/assets/sass/bulma/app.scss', 'public/css/bulma');
 
-    .js('resources/assets/js/bulma/app.js', 'public/js/bulma')
-    .sass('resources/assets/sass/bulma/app.scss', 'public/css/bulma')
+// Web Apps
+// ELearning Template
+mix.js('resources/assets/js/templates/web-apps/elearning/app.js', 'public/js/templates/web-apps/elearning');
 
-    .js('resources/assets/js/templates/web-apps/elearning/app.js', 'public/js/templates/web-apps/elearning')
+// Websites
+// Bizlight Template
+mix.js('resources/assets/js/templates/websites/bizlight/app.js', 'public/js/templates/websites/bizlight');
+mix.sass('resources/assets/sass/templates/websites/bizlight/app.scss', 'public/css/templates/websites/bizlight');
 
-    .js('resources/assets/js/templates/websites/bizlight/app.js', 'public/js/templates/websites/bizlight')
-    .sass('resources/assets/sass/templates/websites/bizlight/app.scss', 'public/css/templates/websites/bizlight')
-   
-    .js('resources/assets/js/templates/portfolios/template1/site/app.js', 'public/js/templates/portfolios/template1/site')
-    .js('resources/assets/js/templates/portfolios/template1/dashboard/app.js', 'public/js/templates/portfolios/template1/dashboard')
-    .sass('resources/assets/sass/templates/portfolios/template1/app.scss', 'public/css/templates/portfolios/template1');
+// Portfolios
+// Template 1
+mix.js('resources/assets/js/templates/portfolios/template1/site/app.js', 'public/js/templates/portfolios/template1/site');
+mix.js('resources/assets/js/templates/portfolios/template1/dashboard/app.js', 'public/js/templates/portfolios/template1/dashboard');
+mix.sass('resources/assets/sass/templates/portfolios/template1/app.scss', 'public/css/templates/portfolios/template1');

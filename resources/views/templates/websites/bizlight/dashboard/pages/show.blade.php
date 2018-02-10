@@ -26,7 +26,7 @@
 			      <th scope="col">#</th>
 			      <th scope="col">Name</th>
 			      <th scope="col">E-mail</th>
-			      <th scope="col">Date</th>
+			      <th scope="col">Received at</th>
 			      <th scope="col"></th>
 			    </tr>
 				</thead>

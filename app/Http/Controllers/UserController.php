@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\ActivateEmail;
-use App\User;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use App\Site;
+use App\User;
+use App\Mail\ActivateEmail;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use App\Helpers\WebApps\WebAppsHelper;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -105,6 +104,16 @@ class UserController extends Controller
      */
     public function show()
     {
+        $site = Site::where('address', request()->address)->firstOrFail();
+        $user = User::find(request()->id);
+        abort_if($site->address != $user->address, 500);
+        $tag = $site->theme->tags()->where('type', 'category')->first();
+        if ($tag->tag === 'website') {
+        } elseif ($tag->tag === 'portfolio') {
+        } elseif ($tag->tag === 'web application') {
+            return WebAppsHelper::finder($site, null, 'user-info', null, $user);
+        } elseif ($tag->tag === 'blog') {
+        }
     }
 
     /**
@@ -155,52 +164,15 @@ class UserController extends Controller
 
     public function update()
     {
-        $user = request()->user();
-        $site = Site::where('address', $user->address)->first();
-        if ($site->theme->location === 'templates.web-apps.elearning') {
-            $user->name = request('name');
-            $user->title = request('title');
-            if (request('password')) {
-                $user->password = Hash::make(request('password'));
-                $user->setRememberToken(Str::random(60));
-            }
-            $user->save();
-            $avatar = $user->extras()->where('type', 'avatar')->first();
-            if (!$avatar) {
-                $avatar = $user->extras()->create(['type' => 'avatar', 'content' => request('avatar')]);
-            } else {
-                $avatar->content = request('avatar');
-                $avatar->save();
-            }
-
-            $twitter = $user->extras()->where('type', 'twitter')->first();
-            if (!$twitter) {
-                $user->extras()->create(['type' => 'twitter', 'content' => request('twitter')]);
-            } else {
-                $twitter->content = request('twitter');
-                $twitter->save();
-            }
-
-            $facebook = $user->extras()->where('type', 'facebook')->first();
-            if (!$facebook) {
-                $user->extras()->create(['type' => 'facebook', 'content' => request('facebook')]);
-            } else {
-                $facebook->content = request('facebook');
-                $facebook->save();
-            }
-
-            $github = $user->extras()->where('type', 'github')->first();
-            if (!$github) {
-                $user->extras()->create(['type' => 'github', 'content' => request('github')]);
-            } else {
-                $github->content = request('github');
-                $github->save();
-            }
-
-            return response()->json('success', 200);
+        $user = User::findOrFail(request()->id);
+        $site = Site::where('address', $user->address)->firstOrFail();
+        $tag = $site->theme->tags()->where('type', 'category')->first();
+        if ($tag->tag === 'website') {
+        } elseif ($tag->tag === 'portfolio') {
+        } elseif ($tag->tag === 'web application') {
+            return WebAppsHelper::finder($site, null, 'user-update', request()->all(), $user);
+        } elseif ($tag->tag === 'blog') {
         }
-
-        return response(500);
     }
 
     /**

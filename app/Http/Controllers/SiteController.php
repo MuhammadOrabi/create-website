@@ -76,6 +76,8 @@ class SiteController extends Controller
         $tag = $site->theme->tags()->where('type', 'category')->first();
         if ($tag->tag === 'website') {
         } elseif ($tag->tag === 'portfolio') {
+            $data = PortfoliosHelper::finder($site, null, 'api-info', request()->type);
+            return response()->json($data);
         } elseif ($tag->tag === 'web application') {
             $data = WebAppsHelper::finder($site, null, 'api-info', request()->type);
             return response()->json($data);
@@ -90,6 +92,8 @@ class SiteController extends Controller
             $tag = $site->theme->tags()->where('type', 'category')->first();
             if ($tag->tag === 'website') {
             } elseif ($tag->tag === 'portfolio') {
+                $data = PortfoliosHelper::finder($site, null, 'site-update', request()->all());
+                return response()->json($data);
             } elseif ($tag->tag === 'web application') {
                 $data = WebAppsHelper::finder($site, null, 'site-update', request()->all());
                 return response()->json($data);

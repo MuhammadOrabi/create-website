@@ -81,6 +81,12 @@ class ELearningHelper
         } elseif ($op === 'site-update') {
             $eLearning = new ELearningSiteHelper($site->id);
             return $eLearning->update($data);
+        } elseif ($op === 'user-info') {
+            $eLearning = new ELearningSiteHelper($site->id);
+            return $eLearning->userInfo($component);
+        } elseif ($op === 'user-update') {
+            $eLearning = new ELearningSiteHelper($site->id);
+            return $eLearning->userUpdate($data, $component);
         }
     }
 }

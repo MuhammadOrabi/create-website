@@ -3,7 +3,7 @@
         <b-field label="Add some Skills">
             <b-taginput v-model="skills" icon="label" placeholder="Add a Skill" @add="add" @remove="remove"></b-taginput>
         </b-field>
-        <b-field group-multiline>
+        <b-field grouped group-multiline>
             <b-field v-for="(skill, i) in skills" :key="i">
                 <p class="control">
                     <span class="button is-static">{{ skill }}</span>

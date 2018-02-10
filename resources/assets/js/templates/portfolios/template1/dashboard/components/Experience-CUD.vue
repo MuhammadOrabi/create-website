@@ -27,14 +27,16 @@
 
                 <b-field grouped>
                     <b-field label="From">
-                        <b-datepicker v-model="data.from_year" placeholder="Click to select..." icon="calendar-today"></b-datepicker>
+                        <b-datepicker v-model="data.from_year" icon="calendar-today"></b-datepicker>
                     </b-field>
                     <b-field label="To">
-                        <b-datepicker v-model="data.to_year" placeholder="Click to select..." icon="calendar-today"></b-datepicker>
+                        <b-datepicker v-model="data.to_year" icon="calendar-today" :min-date="data.from_year" :disabled="data.current"></b-datepicker>
                     </b-field>
-                </b-field>  
-                <button class="button is-primary" v-if="c" @click="create" :disabled="!valid">Add</button>
-                <button class="button is-primary" v-if="u" @click="update" :disabled="!valid">Update</button>
+                </b-field>
+                <b-field label="Still Work there?">
+                    <b-checkbox v-model="data.current" size="is-small">Current</b-checkbox>
+                </b-field>
+                <button class="button is-primary" @click="save" :disabled="!valid">save</button>
             </div>
         </b-modal>
     </section>
@@ -48,48 +50,42 @@ export default {
     data () {
         return {
             isModalActive: false,
-            data: { title: '', company: '', from_year: '', to_year: '' },
+            data: { title: '', company: '', from_year: null, to_year: null, current: false },
         }
     },
     computed: {
         valid() {
-            return this.data.title.length !== 0 && this.data.company.length !== 0 && this.data.from_year.length !== 0 && this.data.to_year.length !== 0;
-        }
-    },
-    mounted() {
-        if (this.u) {
-            this.getData();
+            return (this.data.title.length !== 0 && this.data.company.length !== 0 && this.data.from_year)  && (this.data.to_year || this.data.current);
         }
     },
     methods: {
         createModal() {
-            this.data = { title: '', company: '', from_year: '', to_year: '' };
+            this.data = { title: '', company: '', from_year: null, to_year: null, current: false };
             this.isModalActive = true;
         },
         updateModal() {
+            this.getData();
             this.isModalActive = true;  
         },
         deleteDialog() {
             this.$dialog.confirm({
-                title: 'Deleting Education',
-                message: 'Are you sure you want to <b>delete</b> this Education?<br> This action cannot be undone.',
-                confirmText: 'Delete Education',
+                title: 'Deleting Experience',
+                message: 'Are you sure you want to <b>delete</b> this Experience?<br> This action cannot be undone.',
+                confirmText: 'Delete Experience',
                 type: 'is-danger',
                 hasIcon: true,
                 onConfirm: () => this.destroy()
             });
         },
-        create() {
-            window.axios.post('/api/dashboard/contents/' + this.sectionid, this.data, { headers: { 'Authorization': 'Bearer ' + this.token } })
+        save() {
+            window.axios.put('/api/dashboard/sections/' + this.sectionid, this.data, { headers: { 'Authorization': 'Bearer ' + this.token } })
             .then(() => {
-               this.isModalActive = false;
+               this.$emit('getData');
                this.$toast.open({
-                    duration: 5000,
-                    message: 'Created Successfully',
-                    position: 'is-top',
+                    message: 'Saved Successfully',
                     type: 'is-success'
                 });
-                this.$emit('getData');
+               this.isModalActive = false;
             })
             .catch(err => console.log(err));
         },
@@ -97,22 +93,14 @@ export default {
             const vm = this;
             window.axios.get('/api/dashboard/contents/' + vm.id, { headers: { 'Authorization': 'Bearer ' + vm.token } })
             .then(res => {
-               console.log(res.data);
-            })
-            .catch(err => console.log(err));
-        },
-        update() {
-            const vm = this;
-            window.axios.put('/api/dashboard/conte  nts/' + vm.id, vm.data, { headers: { 'Authorization': 'Bearer ' + vm.token } })
-            .then(() => {
-                this.isModalActive = false;
-                this.$toast.open({
-                    duration: 5000,
-                    message: 'Updated Successfully',
-                    position: 'is-top',
-                    type: 'is-success'
-                });
-                this.$emit('getData');      
+                let content = res.data;
+                let from_year = _.findWhere(content.extras, {type: 'from_year'});
+                let to_year = _.findWhere(content.extras, {type: 'to_year'});
+                this.data.title = content.title;
+                this.data.company = content.content;
+                this.data.from_year = new Date(from_year.content);
+                this.data.to_year = to_year ?  new Date(to_year.content) : null;
+                this.data.current = to_year ? false : true;
             })
             .catch(err => console.log(err));
         },
@@ -120,8 +108,8 @@ export default {
             const vm = this;
             window.axios.delete('/api/dashboard/contents/' + vm.id, { headers: { 'Authorization': 'Bearer ' + vm.token } })
             .then(() => {
-                this.$toast.open('Course deleted!');
                 this.$emit('getData');                   
+                this.$toast.open('Experience deleted!');
             })
             .catch(err => console.log(err));
         }

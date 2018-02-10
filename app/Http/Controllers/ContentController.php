@@ -6,10 +6,8 @@ use App\Content;
 use App\Section;
 use Illuminate\Http\Request;
 use App\Helpers\WebApps\WebAppsHelper;
+use App\Helpers\Portfolios\PortfoliosHelper;
 
-/**
- * Fully Updated
- */
 class ContentController extends Controller
 {
     public function show()
@@ -25,7 +23,7 @@ class ContentController extends Controller
             return response()->json($data);
         } elseif ($tag->tag === 'blog') {
         }
-        return response('Something went wrong!', 500);
+        return abort(500);
     }
 
     public function store()
@@ -40,7 +38,7 @@ class ContentController extends Controller
             return response()->json($data);
         } elseif ($tag->tag === 'blog') {
         }
-        return response('Something went wrong!', 500);
+        return abort(500);
     }
 
     public function update()
@@ -61,7 +59,7 @@ class ContentController extends Controller
             return response()->json($data);
         } elseif ($tag->tag === 'blog') {
         }
-        return response('Something went wrong!', 500);
+        return abort(500);
     }
 
     public function edit()
@@ -71,6 +69,8 @@ class ContentController extends Controller
         $tag = $content->contentable->page->site->theme->tags()->where('type', 'category')->first();
         if ($tag->tag === 'website') {
         } elseif ($tag->tag === 'portfolio') {
+            $data = PortfoliosHelper::finder($site, $content->contentable->page, 'get-content', null, $content);
+            return response()->json($data);
         } elseif ($tag->tag === 'web application') {
             $data = WebAppsHelper::finder($site, $content->contentable->page, 'getContent', null, $content);
             return response()->json($data);
@@ -85,6 +85,8 @@ class ContentController extends Controller
         $tag = $site->theme->tags()->where('type', 'category')->first();
         if ($tag->tag === 'website') {
         } elseif ($tag->tag === 'portfolio') {
+            $data = PortfoliosHelper::finder($site, $content->contentable->page, 'delete-content', null, $content);
+            return response()->json($data);
         } elseif ($tag->tag === 'web application') {
             $data = WebAppsHelper::finder($site, $content->contentable->page, 'deleteContent', null, $content);
             return response()->json($data);

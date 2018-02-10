@@ -162,4 +162,20 @@ class ELearningSiteHelper
         }
         return $this->site;
     }
+
+    public function userInfo($user)
+    {
+        return $user->load('extras');
+    }
+
+    public function userUpdate($data, $user)
+    {
+        $user->title = $data['title'];
+        $user->name = $data['name'];
+        $user->save();
+        if ($data['img']) {
+            $user->extras()->updateOrCreate(['type' => 'avatar'], ['content' => $data['img']]);
+        }
+        return $user;
+    }
 }

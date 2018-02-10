@@ -45,7 +45,7 @@
         </b-field>
         <b-field><!-- Label left empty for spacing -->
             <p class="control">
-                <button class="button is-primary">Save</button>
+                <button class="button is-primary" @click="save">Save</button>
             </p>
         </b-field>
     </section>
@@ -74,6 +74,42 @@ export default {
                 }
             },
             isMediaModalActive: false
+        }
+    },
+    mounted() {
+        this.getData();
+    },
+    methods: {
+        getData() {
+            window.axios.get('/api/dashboard/sections/' + this.id, { headers: { 'Authorization': 'Bearer ' + this.token } })
+            .then(res => {
+                let img = _.findWhere(res.data.contents, {type: 'img'});
+                this.data.img = img ? img.content : null;
+                let title = _.findWhere(res.data.contents, {type: 'title'});
+                this.data.title = title ? title.content : null;
+                let subtitle = _.findWhere(res.data.contents, {type: 'subtitle'});
+                this.data.subtitle = subtitle ? subtitle.content : null;
+                let github = _.findWhere(res.data.contents, {type: 'github'});
+                this.data.links.github = github ? github.content : null;
+                let twitter = _.findWhere(res.data.contents, {type: 'twitter'});
+                this.data.links.twitter = twitter ? twitter.content : null;
+                let facebook = _.findWhere(res.data.contents, {type: 'facebook'});
+                this.data.links.facebook = facebook ? facebook.content : null;
+                let linkedin = _.findWhere(res.data.contents, {type: 'linkedin'});
+                this.data.links.linkedin = linkedin ? linkedin.content : null;
+            })
+            .catch(err => console.log(err));
+        },
+        save() {
+            window.axios.put('/api/dashboard/sections/' + this.id, this.data, { headers: { 'Authorization': 'Bearer ' + this.token } })
+            .then(res => {
+                this.$toast.open({
+                    message: 'Saved Successfully',
+                    type: 'is-success'
+                });
+                this.getData();
+            })
+            .catch(err => console.log(err));
         }
     }
 }

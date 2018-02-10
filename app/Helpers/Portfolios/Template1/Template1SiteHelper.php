@@ -12,7 +12,7 @@ class Template1SiteHelper
     public function site($slug, $id)
     {
         abort_if($slug != 'index' || $id, 404);
-        $page = $this->site->pages()->where('homePage', true)->first();
+        $page = $this->site->pages()->where('homePage', true)->with('sections.contents.extras')->first();
         $location = $this->site->theme->location . '.site.index';
         $data = ['site' => $this->site, 'slug' => $slug, 'page' => $page];
         return compact('location', 'data');
@@ -45,5 +45,20 @@ class Template1SiteHelper
         $location = $this->site->theme->location . '.dashboard.sections.update';
         $data = ['page' => $page, 'site' => $this->site, 'section' => $section];
         return compact('location', 'data');
+    }
+
+    public function apiInfo($type)
+    {
+        if ($type === 'site-info') {
+            return $this->site->load('extras');
+        }
+    }
+
+    public function update($data)
+    {
+        if ($data['name']) {
+            $this->site->update(['name' => $data['name']]);
+        }
+        return $this->site;
     }
 }

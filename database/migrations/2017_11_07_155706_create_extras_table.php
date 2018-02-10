@@ -16,8 +16,8 @@ class CreateExtrasTable extends Migration
         Schema::create('extras', function (Blueprint $table) {
             $table->increments('id');
             $table->string('type');
-            $table->longText('content');
             $table->string('title')->nullable();
+            $table->longText('content');
             $table->integer('extraable_id');
             $table->string('extraable_type');
             $table->timestamps();

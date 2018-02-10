@@ -41,6 +41,14 @@ class SectionController extends Controller
                 $data = WebsitesHelper::finder($site, $page, 'createSection', request()->all());
                 return back();
             } elseif ($tag->tag === 'portfolio') {
+                $this->validate(request(), [
+                    'name' => 'required',
+                    'subject' => 'required',
+                    'email' => 'required|email',
+                    'message' => 'required',
+                ]);
+                $data = PortfoliosHelper::finder($site, $page, 'create-section-site', request()->all());
+                return back();
             } elseif ($tag->tag === 'web application') {
             } elseif ($tag->tag === 'blog') {
             }

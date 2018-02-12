@@ -1,22 +1,23 @@
 <template>
     <section>
+        <section-status :token="token" :id="id" @getData="getData" :active="active"></section-status>
         <b-field label="Add some Skills">
-            <b-taginput v-model="skills" icon="label" placeholder="Add a Skill" @add="add" @remove="remove"></b-taginput>
+            <b-taginput v-model="skills" icon="label" placeholder="Add a Skill" @add="add" @remove="remove" :disabled="!active"></b-taginput>
         </b-field>
         <b-field grouped group-multiline>
             <b-field v-for="(skill, i) in skills" :key="i">
                 <p class="control">
                     <span class="button is-static">{{ skill }}</span>
                 </p>
-                <b-input type="number" min="0" max="100" placeholder="Percentage" v-model="data.skills[i].value" expanded></b-input>
+                <b-input type="number" min="0" max="100" placeholder="Percentage" v-model="data.skills[i].value" expanded :disabled="!active"></b-input>
                 <p class="control">
                     <span class="button is-static">%</span>
                 </p>
             </b-field>
         </b-field>
         <b-field><!-- Label left empty for spacing -->
-            <p class="control">
-                <button class="button is-primary" @click="save">Save</button>
+            <p class="control m-t-50">
+                <button class="button is-primary" @click="save" :disabled="!active">Save</button>
             </p>
         </b-field>
     </section>
@@ -32,7 +33,8 @@ export default {
             skills: [],
             data: {
                 skills: []
-            }
+            },
+            active: 1
         }
     },
     mounted() {
@@ -51,6 +53,7 @@ export default {
         getData() {
             window.axios.get('/api/dashboard/sections/' + this.id, { headers: { 'Authorization': 'Bearer ' + this.token } })
             .then(res => {
+                this.active = res.data.active;
                 this.skills = [];
                 this.data.skills = [];
                 let skills = res.data.contents;

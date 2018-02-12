@@ -1,15 +1,15 @@
 <template>
     <section>
         <div class="buttons has-addons is-centered">
-            <span class="button is-link is-inverted" v-if="c" @click="createModal">
+            <button class="button is-link is-inverted" v-if="c" @click="createModal" :disabled="!active">
                 <b-icon pack="fa" icon="plus"></b-icon>
-            </span>
-            <span class="button is-primary is-inverted" v-if="u" @click="updateModal">
+            </button>
+            <button class="button is-primary is-inverted" v-if="u" @click="updateModal" :disabled="!active">
                 <b-icon pack="fa" icon="pencil-square-o"></b-icon>
-            </span>
-            <span class="button is-danger is-inverted" v-if="d" @click="deleteDialog">
+            </button>
+            <button class="button is-danger is-inverted" v-if="d" @click="deleteDialog" :disabled="!active">
                 <b-icon pack="fa" icon="trash-o"></b-icon>
-            </span>
+            </button>
         </div>
         <b-modal :active.sync="isModalActive">
             <div class="box">
@@ -57,7 +57,7 @@
 import moment from 'moment';
 export default {
     name: 'Education-CUD',
-    props: {token: String, address: String, id: String, sectionid: String, c: Boolean, u: Boolean, d: Boolean, r: Boolean},
+    props: {token: String, address: String, id: String, sectionid: String, c: Boolean, u: Boolean, d: Boolean, r: Boolean, active: Boolean},
     data () {
         return {
             isModalActive: false,

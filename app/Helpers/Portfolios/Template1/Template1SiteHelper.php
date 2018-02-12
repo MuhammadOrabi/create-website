@@ -12,9 +12,13 @@ class Template1SiteHelper
     public function site($slug, $id)
     {
         abort_if($slug != 'index' || $id, 404);
-        $page = $this->site->pages()->where('homePage', true)->with('sections.contents.extras')->first();
+        $page = $this->site->pages()->where('homePage', true)->first();
+        $page->load(['sections' => function ($query) {
+            $query->orderBy('order', 'asc');
+        }, 'sections.extras', 'sections.contents']);
+        $sections =  $page->sections->whereNotIn('title', ['Left Show Case'])->whereIn('active', [1]);
         $location = $this->site->theme->location . '.site.index';
-        $data = ['site' => $this->site, 'slug' => $slug, 'page' => $page];
+        $data = ['site' => $this->site, 'slug' => $slug, 'page' => $page, 'sections' => $sections];
         return compact('location', 'data');
     }
 
@@ -23,7 +27,10 @@ class Template1SiteHelper
         $pages = ['media', 'settings', 'analytics'];
         abort_if(! in_array($type, $pages), 404);
         $location = $this->site->theme->location . '.dashboard.' . $type;
-        $page = $this->site->pages()->where('homePage', true)->with('sections.contents')->first();
+        $page = $this->site->pages()->where('homePage', true)->first();
+        $page->load(['sections' => function ($query) {
+            $query->orderBy('order', 'asc');
+        }, 'sections.contents']);
         $data = ['site' => $this->site, 'page' => $page];
         return compact('location', 'data');
     }

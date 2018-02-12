@@ -1,5 +1,6 @@
 <template>
     <section>
+        <section-status :token="token" :id="id" @getData="getData" :active="active"></section-status>
         <b-field>
             <b-input placeholder="Filter by Subject Or Email Or Topic Or Created at" type="search" icon-pack="fa" icon="search" v-model="key"></b-input>
         </b-field>    
@@ -54,7 +55,8 @@ export default {
         return {
             messages: [],
             loading: true,
-            key: ''
+            key: '',
+            active: 1
         };
     },
     computed: {
@@ -81,7 +83,7 @@ export default {
             const vm = this;
             window.axios.get('/api/dashboard/sections/' + vm.id, { headers: { 'Authorization': 'Bearer ' + vm.token } })
             .then(res => {
-                console.log(res.data);
+                this.active = res.data.active;
                 this.messages = [];
                 this.loading = false;
                 res.data.contents.forEach(content => {

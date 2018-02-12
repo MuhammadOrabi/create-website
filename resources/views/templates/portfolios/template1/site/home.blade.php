@@ -5,7 +5,7 @@
     $paragraph = $section->contents->where('type', 'paragraph')->first();
 @endphp
 <!--Section 1-->
-@if($title)
+@if($section->active && $title)
     <div class="row sec section scrollspy" id="home">
         <div class="col l6 m6 s12 sec1_p_div">
             <h3>{{ $title->content }}</h3>

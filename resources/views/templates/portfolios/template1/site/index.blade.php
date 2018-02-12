@@ -4,12 +4,20 @@
 	{{ $site->name }}
 @stop
 
+@php
+    $leftShowCase = $page->sections->where('title', 'Left Show Case')->first();
+@endphp
+
 @section('content')
 	<div class="row">
     	@include($site->theme->location . '.site.leftShowCase')
 
 	    <!--Side-right section-->
-	    <div class="col s12  l9">     	  
+        @if($leftShowCase->active && $leftShowCase->contents->isNotEmpty())
+    	    <div class="col s12  l9">
+        @else
+            <div class="col s12">
+        @endif
 			@include($site->theme->location . '.site.nav')
 			
 			@include($site->theme->location . '.site.home')

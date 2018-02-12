@@ -7,13 +7,13 @@ class Template1Helper
     public static function scaffold($site)
     {
         $home = $site->addPage(['title' => 'Home Page', 'homePage' => true, 'slug' => '']);
-        $home->sections()->create(['title' => 'Home']);
-        $home->sections()->create(['title' => 'About']);
-        $home->sections()->create(['title' => 'Skill']);
-        $home->sections()->create(['title' => 'Education']);
-        $home->sections()->create(['title' => 'Experience']);
-        $home->sections()->create(['title' => 'Contact']);
-        $home->sections()->create(['title' => 'Left Show Case']);
+        $home->sections()->create(['title' => 'Left Show Case', 'order' => 0]);
+        $home->sections()->create(['title' => 'Home', 'order' => 1]);
+        $home->sections()->create(['title' => 'About', 'order' => 2]);
+        $home->sections()->create(['title' => 'Skill', 'order' => 3]);
+        $home->sections()->create(['title' => 'Education', 'order' => 4]);
+        $home->sections()->create(['title' => 'Experience', 'order' => 5]);
+        $home->sections()->create(['title' => 'Contact', 'order' => 6]);
         return $site;
     }
 

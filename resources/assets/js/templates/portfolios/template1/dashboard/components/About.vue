@@ -1,53 +1,54 @@
 <template>
     <section>
+        <section-status :token="token" :id="id" @getData="getData" :active="active"></section-status>
         <b-field label="About Paragraph">
-            <b-input v-model.trim="data.about" type="textarea"></b-input>
+            <b-input v-model.trim="data.about" type="textarea" :disabled="!active"></b-input>
         </b-field>
         <hr>
         <h1 class="subtitle">Personal Details</h1>
         <b-field grouped>
             <b-field label="Full Name" expanded>
-                <b-input v-model.trim="data.name" placeholder="Jone Doe" expanded></b-input>
+                <b-input v-model.trim="data.name" placeholder="Jone Doe" expanded :disabled="!active"></b-input>
             </b-field>
             <b-field label="Father's Name" expanded>
-                <b-input v-model.trim="data.father" placeholder="Jone Doe"></b-input>
+                <b-input v-model.trim="data.father" placeholder="Jone Doe" :disabled="!active"></b-input>
             </b-field>
         </b-field>
 
         <b-field grouped>
             <b-field label="Address" expanded>
-                <b-input v-model.trim="data.address" placeholder="123 6th St. Melbourne, FL 32904. INDIA" expanded></b-input>
+                <b-input v-model.trim="data.address" placeholder="123 6th St. Melbourne, FL 32904. INDIA" expanded :disabled="!active"></b-input>
             </b-field>
             <b-field label="Zip Code" expanded>
-                <b-input v-model.trim="data.zip" placeholder="12345"></b-input>
+                <b-input v-model.trim="data.zip" placeholder="12345" :disabled="!active"></b-input>
             </b-field>
         </b-field>
 
         <b-field grouped>
             <b-field label="Phone Number 1" expanded>
-                <b-input v-model.trim="data.number1" placeholder="+0 123456789" expanded></b-input>
+                <b-input v-model.trim="data.number1" placeholder="+0 123456789" expanded :disabled="!active"></b-input>
             </b-field>
             <b-field label="Phone Number 2" expanded>
-                <b-input v-model.trim="data.number2" placeholder="+0 123456789"></b-input>
+                <b-input v-model.trim="data.number2" placeholder="+0 123456789" :disabled="!active"></b-input>
             </b-field>
         </b-field>
 
         <b-field grouped>
             <b-field label="Email" expanded>
-                <b-input v-model.trim="data.email" placeholder="email@app.com" expanded></b-input>
+                <b-input v-model.trim="data.email" placeholder="email@app.com" expanded :disabled="!active"></b-input>
             </b-field>
             <b-field label="Website" expanded>
-                <b-input v-model.trim="data.website" placeholder="https://app.io"></b-input>
+                <b-input v-model.trim="data.website" placeholder="https://app.io" :disabled="!active"></b-input>
             </b-field>
         </b-field>
         <hr>
         <b-field label="Hire me Paragraph">
-            <b-input v-model.trim="data.hireme" type="textarea"></b-input>
+            <b-input v-model.trim="data.hireme" type="textarea" :disabled="!active"></b-input>
         </b-field>
 
         <b-field><!-- Label left empty for spacing -->
             <p class="control">
-                <button class="button is-primary" @click="save" >Save</button>
+                <button class="button is-primary" @click="save" :disabled="!active">Save</button>
             </p>
         </b-field>
 
@@ -61,6 +62,7 @@ export default {
     props: ['token', 'id', 'address'],
     data () {
         return {
+            active: 1,
             data: {
                 about: '',
                 name: '',
@@ -71,7 +73,7 @@ export default {
                 number2: '',
                 email: '',
                 website: '',
-                hireme: ''
+                hireme: '',
             }
         }
     },
@@ -82,6 +84,7 @@ export default {
         getData() {
             window.axios.get('/api/dashboard/sections/' + this.id, { headers: { 'Authorization': 'Bearer ' + this.token } })
             .then(res => {
+                this.active = res.data.active;
                 let about = _.findWhere(res.data.contents, {type: 'about'});
                 let name = _.findWhere(res.data.contents, {type: 'name'});
                 let father = _.findWhere(res.data.contents, {type: 'father'});

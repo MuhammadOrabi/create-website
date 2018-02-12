@@ -1,8 +1,9 @@
 <template>
     <section>
+        <section-status :token="token" :id="id" @getData="getData" :active="active"></section-status>
         <div class="column">
             <b-field label="Image">
-                <button class="button is-info is-inverted" @click="isMediaModalActive = true">
+                <button class="button is-info is-inverted" @click="isMediaModalActive = true" :disabled="!active">
                     <span>Media</span>
                     <b-icon pack="fa" icon="picture-o"></b-icon>
                 </button>
@@ -10,7 +11,7 @@
             <section class="p-t-20 columns is-multiline is-centered">
                 <div class="column is-half" v-if="data.img">
                     <div class="notification">
-                        <button class="delete" @click="data.img = null"></button>
+                        <button class="delete" @click="data.img = null" :disabled="!active"></button>
                         <figure class="image is-128x128">
                             <img :src="data.img">
                         </figure>
@@ -22,10 +23,10 @@
             </b-modal>
         </div>
         <b-field label="Title">
-            <b-input v-model.trim="data.title" expanded></b-input>
+            <b-input v-model.trim="data.title" expanded :disabled="!active"></b-input>
         </b-field>
          <b-field label="Short Description">
-            <b-input type="textarea" v-model.trim="data.paragraph"></b-input>
+            <b-input type="textarea" v-model.trim="data.paragraph" :disabled="!active"></b-input>
         </b-field>
         <b-field><!-- Label left empty for spacing -->
             <p class="control">
@@ -51,21 +52,23 @@ export default {
                 title: null,
                 paragraph: null
             },
+            active: 1,
             isMediaModalActive: false
         }
     },
     computed: {
         valid() {
-            return this.data.img && this.data.title && this.data.paragraph;
+            return this.data.img && this.data.title && this.data.paragraph && this.active;
         }
     },
-    mounted() {
+    beforeMount() {
         this.getData();
     },
     methods: {
         getData() {
             window.axios.get('/api/dashboard/sections/' + this.id, { headers: { 'Authorization': 'Bearer ' + this.token } })
             .then(res => {
+                this.active = res.data.active;
                 let img = _.findWhere(res.data.contents, {type: 'img'});
                 this.data.img = img ? img.content : null;
                 let title = _.findWhere(res.data.contents, {type: 'title'});

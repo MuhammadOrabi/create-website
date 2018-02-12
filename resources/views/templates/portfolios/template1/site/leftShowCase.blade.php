@@ -11,21 +11,21 @@
 
     <!--Side-left section-->
 <div class="col l3 hide-on-small hide-on-med-and-down">
-    @if($section->contents->isNotEmpty())
+    @if($section->contents->isNotEmpty() && $section->active)
         <!-- ========== ========== fixed - left side body start ========== ========== -->
         <div class="fixed-left-side-body">
             <div class="profile">
-                @if($img->content)
+                @if($img)
                     <div class="profile-image center-align">
-                        <img src="{{ $img->content }}" alt="Image">
+                        <img src="{{ $img->content }}" alt="Image" width="324px" height="335">
                     </div>
                 @endif
                 <!-- /.profile-image -->
                 <div class="profile-name center-align">
-                    @if($title->content)
+                    @if($title)
                         <h1 class="user-name">{{ $title->content }}</h1>
                     @endif
-                    @if($subtitle->content)
+                    @if($subtitle)
                         <p class="name_p">
                             <span class="photoshop-color">{{ $subtitle->content }}</span>
                         </p>
@@ -33,16 +33,16 @@
                 </div>
                 <!-- /.profile-name -->
                 <ul class="social-btn">
-                    @if($facebook->content)
+                    @if($facebook)
                         <li><a href="{{ $facebook->content }}" target="_blank" ><i class="fa fa-facebook fa-2x " aria-hidden="true"></i></a></li>
                     @endif
-                    @if($twitter->content)
+                    @if($twitter)
                         <li><a href="{{ $twitter->content }}" target="_blank" ><i class="fa fa-twitter fa-2x " aria-hidden="true"></i></a></li>
                     @endif
-                    @if($github->content)
+                    @if($github)
                         <li><a href="{{ $github->content }}" target="_blank" ><i class="fa fa-github fa-2x " aria-hidden="true"></i></a></li>
                     @endif
-                    @if($linkedin->content)
+                    @if($linkedin)
                         <li><a href="{{ $linkedin->content }}" target="_blank" ><i class="fa fa-linkedin fa-2x " aria-hidden="true"></i></a></li>
                     @endif
                 </ul>

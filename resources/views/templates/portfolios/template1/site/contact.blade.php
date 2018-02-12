@@ -1,3 +1,4 @@
+@if($sections->where('title', 'Contact')->first())
 <!-- section 6-->
     <div class="row sec sec4 section scrollspy" id="contact" >
         <h3 class="white-text"><i class="fa fa-envelope-o" aria-hidden="true"></i> Contact me</h3>
@@ -32,3 +33,4 @@
         </form> 
     </div>
     <!-- end section 6-->
+@endif

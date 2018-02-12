@@ -1,5 +1,6 @@
 <template>
     <section>
+        <section-status :token="token" :id="id" @getData="getData" :active="active"></section-status>
         <b-table :data="data">
             <template slot-scope="props">
                 <b-table-column label="School">
@@ -27,7 +28,7 @@
                 </b-table-column>
 
                 <b-table-column label="Actions">
-                    <education-cud u d :address="address" :token="token" @getData="getData" :sectionid="id" :id="props.row.id + ''"></education-cud>
+                    <education-cud u d :address="address" :token="token" @getData="getData" :sectionid="id" :id="props.row.id + ''" :active="active"></education-cud>
                 </b-table-column>
 
             </template>
@@ -39,7 +40,7 @@
                 </section>
             </template>
             <template slot="footer">
-                <education-cud c :address="address" :token="token" @getData="getData" :sectionid="id"></education-cud>
+                <education-cud c :address="address" :token="token" @getData="getData" :sectionid="id" :active="active"></education-cud>
             </template>
         </b-table>
     </section>
@@ -52,7 +53,8 @@
         props: ['address', 'id', 'token'],
         data() {
             return {
-                data: []
+                data: [],
+                active: 1
             }
         },
         mounted() {
@@ -62,6 +64,7 @@
             getData() {
                 window.axios.get('/api/dashboard/sections/' + this.id, { headers: { 'Authorization': 'Bearer ' + this.token } })
                 .then(res => {
+                    this.active = res.data.active;
                     this.data = [];
                     let contents = res.data.contents;
                     _.each(contents, content => {

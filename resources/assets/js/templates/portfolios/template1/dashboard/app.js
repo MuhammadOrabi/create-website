@@ -16,6 +16,7 @@ Vue.component('experience-cud', require('./components/Experience-CUD.vue'));
 Vue.component('contact', require('./components/Contact.vue'));
 Vue.component('left-show-case', require('./components/LeftShowCase.vue'));
 Vue.component('settings', require('./components/Settings.vue'));
+Vue.component('section-status', require('./components/SectionStatus.vue'));
 
 const app = new Vue({
     el: '#app',

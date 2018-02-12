@@ -2,7 +2,7 @@
     $section = $page->sections->where('title', 'Experience')->first();
 @endphp
 
-@if($section->contents->isNotEmpty())
+@if($section->contents->isNotEmpty()  && $section->active)
     <!-- section 5 -->
     <div class="row sec sec4 section scrollspy" id="experience">
         <h2><i class="fa fa-pencil" aria-hidden="true"></i> Work Experience</h2>

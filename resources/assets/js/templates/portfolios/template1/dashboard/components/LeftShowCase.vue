@@ -1,8 +1,9 @@
 <template>
     <section>
+        <section-status :token="token" :id="id" @getData="getData" :active="active"></section-status>
         <div class="column">
             <b-field label="Image">
-                <button class="button is-info is-inverted" @click="isMediaModalActive = true">
+                <button class="button is-info is-inverted" @click="isMediaModalActive = true" :disabled="!active">
                     <span>Media</span>
                     <b-icon pack="fa" icon="picture-o"></b-icon>
                 </button>
@@ -10,7 +11,7 @@
             <section class="p-t-20 columns is-multiline is-centered">
                 <div class="column is-half" v-if="data.img">
                     <div class="notification">
-                        <button class="delete" @click="data.img = null"></button>
+                        <button class="delete" @click="data.img = null" :disabled="!active"></button>
                         <figure class="image is-128x128">
                             <img :src="data.img">
                         </figure>
@@ -23,29 +24,29 @@
         </div>
         <b-field grouped>
             <b-field label="Title" expanded>
-                <b-input v-model="data.title" placeholder="Title" expanded></b-input>
+                <b-input v-model="data.title" placeholder="Title" expanded :disabled="!active"></b-input>
             </b-field>
             <b-field label="Subtitle" expanded>
-                <b-input v-model="data.subtitle" placeholder="Subtitle"></b-input>
+                <b-input v-model="data.subtitle" placeholder="Subtitle" :disabled="!active"></b-input>
             </b-field>
         </b-field>
         <b-field grouped>
             <b-field label="Github" expanded>
-                <b-input placeholder="Github" v-model.trim="data.links.github" ></b-input>
+                <b-input placeholder="Github" v-model.trim="data.links.github"  :disabled="!active"></b-input>
             </b-field>
             <b-field label="Linked In" expanded>
-                <b-input placeholder="Linked In" v-model.trim="data.links.linkedin" ></b-input>
+                <b-input placeholder="Linked In" v-model.trim="data.links.linkedin"  :disabled="!active"></b-input>
             </b-field>
             <b-field label="Facebook" expanded>
-                <b-input placeholder="Facebook" v-model.trim="data.links.facebook" ></b-input>
+                <b-input placeholder="Facebook" v-model.trim="data.links.facebook"  :disabled="!active"></b-input>
             </b-field>
             <b-field label="Twitter" expanded>
-                <b-input placeholder="Twitter" v-model.trim="data.links.twitter" ></b-input>
+                <b-input placeholder="Twitter" v-model.trim="data.links.twitter"  :disabled="!active"></b-input>
             </b-field>
         </b-field>
         <b-field><!-- Label left empty for spacing -->
             <p class="control">
-                <button class="button is-primary" @click="save">Save</button>
+                <button class="button is-primary" @click="save" :disabled="!active">Save</button>
             </p>
         </b-field>
     </section>
@@ -73,7 +74,8 @@ export default {
                     linkedin: null
                 }
             },
-            isMediaModalActive: false
+            isMediaModalActive: false,
+            active: 1
         }
     },
     mounted() {
@@ -83,6 +85,7 @@ export default {
         getData() {
             window.axios.get('/api/dashboard/sections/' + this.id, { headers: { 'Authorization': 'Bearer ' + this.token } })
             .then(res => {
+                this.active = res.data.active;
                 let img = _.findWhere(res.data.contents, {type: 'img'});
                 this.data.img = img ? img.content : null;
                 let title = _.findWhere(res.data.contents, {type: 'title'});

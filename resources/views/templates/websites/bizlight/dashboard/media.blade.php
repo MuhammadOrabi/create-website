@@ -1,9 +1,9 @@
 @extends($site->theme->location . '.dashboard.layout')
-
+@section('title')
+    Media
+@stop
 @section('content')
-    <div class="container">
-    	<h1>Media</h1>
-		<hr>
-		<media address="{{ $site->address }}" token="{{ auth()->user()->getToken('Media') }}"></media>
-	</div>
+    <section>
+        <media address="{{ $site->address }}" token="{{ auth()->user()->getToken('media') }}"></media>
+    </section>
 @stop

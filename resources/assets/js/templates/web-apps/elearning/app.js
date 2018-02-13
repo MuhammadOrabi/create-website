@@ -2,7 +2,6 @@ require('../../../bootstrap');
 require('../../../firebase');
 require('../../../vue-froala-wysiwyg');
 
-
 const Vue = require('vue');
 import VueFroala from 'vue-froala-wysiwyg';
 import store from './store';

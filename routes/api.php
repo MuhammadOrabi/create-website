@@ -28,11 +28,6 @@ Route::middleware('auth:api')->group(function () {
             Route::put('/{id}', 'PageController@update');
         });
 
-
-        Route::prefix('extras')->group(function () {
-            // Route::post('/{id}', 'ExtraController@store');
-        });
-
         Route::prefix('sections')->group(function () {
             Route::post('{id}', 'SectionController@store');
             Route::get('{id}', 'SectionController@edit');

@@ -12,7 +12,9 @@
         <b-modal :active.sync="isMediaModalActive" >
             <media v-bind="mediaProps" :imgUrl.sync="img" :active.sync="isMediaModalActive"></media>
         </b-modal>
-        <button class="button is-warning is-rounded" @click="isMediaModalActive = true">Add Show Case Image</button>    
+        <b-field label="Show Case Image">
+            <button class="button is-warning is-rounded" @click="isMediaModalActive = true">Media</button>
+        </b-field>
         <section class="p-t-20 columns is-multiline is-centered">
             <div class="column is-three-quarters" v-if="img">
                 <div class="notification">

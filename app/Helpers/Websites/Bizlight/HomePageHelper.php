@@ -33,13 +33,13 @@ class HomePageHelper
      */
     public static function which($section, $data)
     {
-        if ($section->title === 'showCase') {
+        if ($section->title === 'show-case') {
             return static::showCase($section, $data);
-        } elseif ($section->title === 'section_b') {
+        } elseif ($section->title === 'accordion') {
             return static::sectionB($section, $data);
-        } elseif ($section->title === 'section_a') {
+        } elseif ($section->title === 'horizontal-list') {
             return static::sectionA($section, $data);
-        } elseif ($section->title === 'section_c') {
+        } elseif ($section->title === 'paragraph-image') {
             return static::sectionC($section, $data);
         }
     }
@@ -53,8 +53,11 @@ class HomePageHelper
     public static function showCase($section, $data)
     {
         $section->contents()->delete();
-        $section->contents()->create(['type' => 'heading', 'content' => $data['heading']]);
-        $section->contents()->create(['type' => 'paragraph', 'content' => $data['paragraph']]);
+        foreach ($data as $key => $value) {
+            if ($value) {
+                $section->contents()->create(['type' => $key, 'content' => $value]);
+            }
+        }
         return $section;
     }
 

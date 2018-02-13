@@ -29,7 +29,7 @@
 							<a href="/home" class="navbar-item">
 								<span class="icon"><i class="fa fa-fw m-r-10 fa-dashboard"></i></span> Sites
 							</a>
-							<a href="/create/site" class="navbar-item">
+							<a href="/site/create" class="navbar-item">
 								<span class="icon"><i class="fa fa-fw m-r-10 fa-plus"></i></span> Create New Site
 							</a>
 							<hr class="seperator">

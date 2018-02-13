@@ -1,17 +1,7 @@
 @extends($site->theme->location . '.site.layout')
 
 @section('content')
-	@if($showCase->contents->isNotEmpty())
-		<div class="showcase">
-			<div class="container">
-				<h1>{!! $showCase->contents->where('type', 'heading')->first()->content !!}</h1>
-				<p class="lead">
-					{!! $showCase->contents->where('type', 'paragraph')->first()->content !!}
-				</p>
-				<a href="/s/{{$site->address}}/about" class="btn btn-primary">Read More</a>
-			</div>
-		</div>
-	@endif
+	@include($site->theme->location . '.site._includes.showcase')
 	@if($section_b->contents->isNotEmpty())
 	    <div class="section-b">
 	    	<div class="container">

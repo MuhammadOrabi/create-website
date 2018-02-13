@@ -21,7 +21,7 @@
 	                    <b-tabs position="is-centered" class="block" animated>
 	                        <b-tab-item label="Upload">
 	                            <div class="p-b-20 p-t-15 has-text-centered" v-if="imgFile">
-	                                <button class="button is-success" @click="uploadImage">Upload</button>
+	                                <button class="button is-success" @click="uploadImage" :disabled="uploading">Upload</button>
 	                            </div>
 	                            <div class="columns p-t-15">
 	                                <section class="column" v-if="imgFile">
@@ -29,7 +29,7 @@
 	                                        <img :src="imgFile" alt="Placeholder image">
 	                                    </figure>
 	                                </section>
-	                                <section class="column">
+	                                <section class="column" v-if="!uploading">
 	                                    <b-field>
 	                                        <b-upload v-model="dropFiles" @input="onPickFile" drag-drop>
 	                                            <section class="section">
@@ -48,6 +48,9 @@
 	                                        </span>
 	                                    </div>
 	                                </section>
+                                    <section class="column" v-else>
+                                        <progress class="progress is-primary" :value="progress" max="100">{{progress}}%</progress>
+                                    </section>
 	                            </div>
 	                        </b-tab-item>
 	                        <b-tab-item label="Search">

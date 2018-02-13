@@ -18,10 +18,10 @@ class BizlightHelper
     public static function scaffold($site)
     {
         $home = $site->addPage(['title' => 'Home Page', 'homePage' => true, 'slug' => '']);
-        $showCase = $home->sections()->create(['title' => 'showCase', 'order' => 1]);
-        $section_b = $home->sections()->create(['title' => 'section_b', 'order' => 2]);
-        $section_a = $home->sections()->create(['title' => 'section_a', 'order' => 3]);
-        $section_c = $home->sections()->create(['title' => 'section_c', 'order' => 4]);
+        $showCase = $home->sections()->create(['title' => 'show-case', 'order' => 1]);
+        $section_b = $home->sections()->create(['title' => 'accordion', 'order' => 2]);
+        $section_a = $home->sections()->create(['title' => 'horizontal-list', 'order' => 3]);
+        $section_c = $home->sections()->create(['title' => 'paragraph-image', 'order' => 4]);
 
         $about = $site->addPage(['title' => 'About', 'homePage' => false, 'slug' => 'about']);
         $aboutSection = $about->sections()->create(['title' => 'aboutSection', 'order' => 1]);
@@ -66,6 +66,8 @@ class BizlightHelper
             return ConstantHelper::which('update', $data, $component);
         } elseif ($op === 'constant-get') {
             return ConstantHelper::which('get', $data, $component);
+        } elseif ($op === 'get-page-auth') {
+            return PageHelper::which('get', $page);
         }
     }
 }

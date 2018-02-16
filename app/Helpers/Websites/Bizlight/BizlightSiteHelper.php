@@ -99,11 +99,11 @@ class BizlightSiteHelper
         $site = $this->site;
         $nav = $this->nav();
         $page = $site->pages()->where('homePage', true)->first();
-        $showCase = $page->sections()->where('title', 'showCase')->with('contents')->first();
-        $section_b = $page->sections()->where('title', 'section_b')->with('contents')->first();
-        $section_a = $page->sections()->where('title', 'section_a')->with('contents')->first();
-        $section_c = $page->sections()->where('title', 'section_c')->with('contents')->first();
-        return compact('site', 'nav', 'showCase', 'section_b', 'section_a', 'section_c');
+        $showCase = $page->sections()->where('title', 'show-case')->with('contents')->first();
+        $accordion = $page->sections()->where('title', 'accordion')->with('contents')->first();
+        $horizontalList = $page->sections()->where('title', 'horizontal-list')->with('contents')->first();
+        $paragraphImage = $page->sections()->where('title', 'paragraph-image')->with('contents')->first();
+        return compact('site', 'nav', 'showCase', 'accordion', 'horizontalList', 'paragraphImage');
     }
 
     /**

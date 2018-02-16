@@ -2,14 +2,14 @@
 
 @section('content')
 	@include($site->theme->location . '.site._includes.showcase')
-	@if($section_b->contents->isNotEmpty())
+	@if($accordion->contents->isNotEmpty())
 	    <div class="section-b">
 	    	<div class="container">
 	    		<div class="row">
 	    			<div class="col-md-6">
 	    				<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 	    					<br><br><br><br>
-							@foreach($section_b->contents->groupBy('order') as $content)
+							@foreach($accordion->contents->groupBy('order') as $content)
 								@if($content[0]->type != 'img' && $content[0]->content != null)
 									<div class="panel panel-default">
 									    <div class="panel-heading" role="tab" id="heading-{{$content[0]->id}}">
@@ -33,17 +33,17 @@
 						</div>
 	    			</div>
 	    			<div class="col-md-6">
-	    				<img src="{{ $section_b->contents->where('type', 'img')->first()->content }}" alt="img" width="250" height="350">
+	    				<img src="{{ $accordion->contents->where('type', 'img')->first()->content }}" alt="img" width="250" height="350">
 	    			</div>
 	    		</div>
 	    	</div>
 	    </div>
   	@endif
-	@if($section_a->contents->isNotEmpty())
+	@if($horizontalList->contents->isNotEmpty())
 	    <div class="section-a">
 			<div class="container">
 				<div class="row">
-						@foreach($section_a->contents->groupBy('order') as $content)
+						@foreach($horizontalList->contents->groupBy('order') as $content)
 							<div class="col-md-{{ 12/$loop->count }}">
 								<div class="row m-5">
 									<img src="{{ $content[0]->content }}" class="img-circle" alt="img" width="150" height="150">
@@ -57,8 +57,8 @@
 		</div>
 	@endif
 	@php 
-		$par = $section_c->contents->where('type', 'paragraph')->first();
-		$img = $section_c->contents->where('type', 'img')->first();
+		$par = $paragraphImage->contents->where('type', 'paragraph')->first();
+		$img = $paragraphImage->contents->where('type', 'img')->first();
 	@endphp
 	<div class="section-c">
 		<div class="container">

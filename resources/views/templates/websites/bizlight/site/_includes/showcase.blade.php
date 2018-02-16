@@ -1,4 +1,3 @@
-
 @if($showCase->contents->isNotEmpty())
     @php
         $image = $showCase->contents->where('type', 'img')->first();

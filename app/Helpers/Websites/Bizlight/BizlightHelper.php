@@ -18,10 +18,10 @@ class BizlightHelper
     public static function scaffold($site)
     {
         $home = $site->addPage(['title' => 'Home Page', 'homePage' => true, 'slug' => '']);
-        $showCase = $home->sections()->create(['title' => 'show-case', 'order' => 1]);
-        $section_b = $home->sections()->create(['title' => 'accordion', 'order' => 2]);
-        $section_a = $home->sections()->create(['title' => 'horizontal-list', 'order' => 3]);
-        $section_c = $home->sections()->create(['title' => 'paragraph-image', 'order' => 4]);
+        $home->sections()->create(['title' => 'show-case', 'order' => 1]);
+        $home->sections()->create(['title' => 'accordion', 'order' => 2]);
+        $home->sections()->create(['title' => 'horizontal-list', 'order' => 3]);
+        $home->sections()->create(['title' => 'paragraph-image', 'order' => 4]);
 
         $about = $site->addPage(['title' => 'About', 'homePage' => false, 'slug' => 'about']);
         $aboutSection = $about->sections()->create(['title' => 'aboutSection', 'order' => 1]);

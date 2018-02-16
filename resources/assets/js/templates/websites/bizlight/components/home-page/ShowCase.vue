@@ -71,7 +71,6 @@ export default {
         getData() {
             window.axios.get(`/api/dashboard/sections/${this.id}`, { headers: { 'Authorization': `Bearer ${this.token}` } })
             .then(res => {
-                console.log(res.data);
                 let img = _.findWhere(res.data, {type: 'img'});
                 this.data.img = img ? img.content : null;
                 let heading = _.findWhere(res.data, {type: 'heading'});

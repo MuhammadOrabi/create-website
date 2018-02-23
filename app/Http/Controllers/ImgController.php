@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Tag;
 use App\User;
+use Illuminate\Http\Request;
 
 class ImgController extends Controller
 {
@@ -11,9 +12,9 @@ class ImgController extends Controller
     {
         $site = auth()->user()->sites()->where('address', request()->address)->first();
         if ($site) {
-            $imgs = $site->imgs->toArray();
+            $imgs = $site->imgs()->with('tags')->get()->toArray();
         } else {
-            $user = User::where('id', request()->user()->id)->with('imgs')->first();
+            $user = User::where('id', request()->user()->id)->with('imgs.tags')->first();
             $imgs = $user->imgs;
         }
         return response()->json($imgs);
@@ -27,6 +28,16 @@ class ImgController extends Controller
         } else {
             $img = request()->user()->imgs()->create(['url' => request('img')]);
         }
-        return response()->json(['msg' => 'success', 'url' => $img->url]);
+        foreach (request('labels') as $label) {
+            $tag = Tag::firstOrCreate(['tag' => $label]);
+            $img->tags()->attach($tag->id);
+        }
+        return response()->json(['msg' => 'success', 'labels' => $img->tags]);
+    }
+
+    public function show()
+    {
+        $tag = Tag::where('tag', request('tag'))->with('imgs')->get();
+        return response()->json($tag);
     }
 }

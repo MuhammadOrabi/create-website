@@ -12,3 +12,6 @@ const config = {
     messagingSenderId: "789717465995"
 };
 window.firebase.initializeApp(config);
+
+
+

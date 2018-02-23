@@ -89,6 +89,9 @@ Route::prefix('contents')->middleware('auth:api')->group(function () {
 Route::prefix('constants')->group(function () {
     Route::get('{id}', 'ConstantController@show');
 });
+
+Route::get('imgs/{tag}', 'ImgController@show');
+
 // End
 
 

@@ -11,7 +11,7 @@
             <img :src="img">
         </figure>
         <br>
-        <div class="content m-t-50 m-b-100" v-if="paragraph" v-html="paragraph"></div>
+        <div class="content m-t-50 m-b-100 p-l-15 p-r-15" v-if="paragraph" v-html="paragraph"></div>
     </div>
 </template>
 

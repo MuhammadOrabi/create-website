@@ -6,7 +6,7 @@
         </b-field>
         <div class="columns">
             <div class="column">
-            	<b-field>
+            	<b-field horizontal label="Add a video">
 			        <b-upload v-model="data.video" @input="onPickFile">
 			            <a class="button is-primary">
 			                <b-icon icon="upload"></b-icon>

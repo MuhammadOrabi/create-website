@@ -13,6 +13,7 @@ class Template1SiteHelper
     {
         abort_if($slug != 'index' || $id, 404);
         $page = $this->site->pages()->where('homePage', true)->first();
+        $page->logs()->create(['type' => 'page-log', 'action' => 'load']);
         $page->load(['sections' => function ($query) {
             $query->orderBy('order', 'asc');
         }, 'sections.extras', 'sections.contents']);
@@ -58,7 +59,26 @@ class Template1SiteHelper
     {
         if ($type === 'site-info') {
             return $this->site->load('extras');
+        } elseif ($type === 'page-analytics') {
+            return $this->pageAnalytics();
         }
+    }
+
+    public function pageAnalytics()
+    {
+        $page = $this->site->pages()->where('homePage', true)->first();
+        $years = $page->logs->groupBy(
+            function ($item, $key) {
+                return \Carbon\Carbon::parse($item['created_at'])->year;
+            }
+        )->toArray();
+        $months = $page->logs->groupBy(
+            function ($item, $key) {
+                $month = \Carbon\Carbon::parse($item['created_at'])->month;
+                return date("F", mktime(0, 0, 0, $month, 1));
+            }
+        )->toArray();
+        return ['months' => $months, 'years' => $years];
     }
 
     public function update($data)

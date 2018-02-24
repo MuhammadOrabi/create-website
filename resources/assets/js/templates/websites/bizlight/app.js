@@ -1,5 +1,4 @@
 require('../../../bootstrap');
-require('../../../firebase');
 
 import Vue from 'vue';
 import Buefy from 'buefy';

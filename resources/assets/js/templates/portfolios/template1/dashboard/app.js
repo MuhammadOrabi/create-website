@@ -1,9 +1,14 @@
 require('../../../../bootstrap');
-require('../../../../firebase');
+// chartjs package
+require('chart.js');
+// vue-charts package
+require('hchs-vue-charts');
 
 const Vue = require('vue');
 import Buefy from 'buefy';
 Vue.use(Buefy);
+
+Vue.use(VueCharts);
 
 Vue.component('media', require('./components/Media.vue'));
 Vue.component('home', require('./components/Home.vue'));
@@ -17,6 +22,8 @@ Vue.component('contact', require('./components/Contact.vue'));
 Vue.component('left-show-case', require('./components/LeftShowCase.vue'));
 Vue.component('settings', require('./components/Settings.vue'));
 Vue.component('section-status', require('./components/SectionStatus.vue'));
+
+Vue.component('analytics-page', require('./components/AnalyticsPage.vue'));
 
 const app = new Vue({
     el: '#app',

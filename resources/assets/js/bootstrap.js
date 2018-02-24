@@ -47,3 +47,8 @@ window._ = require('underscore');
 
 // Clarifai For Image Classification 
 require('./clarifai');
+
+// Firebase 
+require('./firebase');
+
+

@@ -1,5 +1,4 @@
 require('../../../bootstrap');
-require('../../../firebase');
 require('../../../vue-froala-wysiwyg');
 
 const Vue = require('vue');

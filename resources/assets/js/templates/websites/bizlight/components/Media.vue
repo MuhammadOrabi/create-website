@@ -1,5 +1,8 @@
 <template>
-    <section class="card">
+    <section class="card m-t-50">
+        <b-message title="Success"  type="is-success" has-icon :active.sync="isMessageActive" closable>
+            <p v-text="`You can use this image again in another website using these labels ${this.labels.toLocaleString()}`"></p>
+        </b-message>
         <b-modal :active.sync="isImgModalActive">
             <p class="image is-4by3">
                 <img :src="selectedImg">
@@ -21,10 +24,10 @@
                         <div class="columns">
                             <section class="column">
                                 <div class="columns"> 
-                                    <div class="column" v-if="imgFile">
+                                    <div class="column is-one-fifth" v-if="imgFile">
                                         <button class="button is-success" @click="uploadImage" :disabled="uploading">Upload</button>
                                     </div>
-                                    <b-field v-if="!uploading" class="column">
+                                    <b-field v-if="!uploading" class="column is-one-third">
                                         <b-upload v-model="files" @input="onPickFile">
                                             <a class="button is-primary">
                                                 <b-icon icon="upload"></b-icon>
@@ -37,22 +40,26 @@
                                             </span>
                                         </div>
                                     </b-field>
-                                    <progress class="progress is-primary" :value="progress" max="100" v-else>{{progress}}%</progress>
+                                    <section class="column is-one-third" v-else>
+                                        <progress class="progress is-primary" :value="progress" max="100">{{progress}}%</progress>
+                                    </section>
+                                    <section v-if="imgFile" class="column is-3by2">    
+                                        <figure class="image">
+                                            <img :src="imgFile" alt="Placeholder image">
+                                        </figure>
+                                    </section>
                                 </div>
-                                <figure class="column image is-148x148"  v-if="imgFile">
-                                    <img :src="imgFile" alt="Placeholder image">
-                                </figure>
-                            </section>
-                            <section class="p-t-15 column">
-                                <b-field>
-                                    <b-input placeholder="Search..." type="search" icon="magnify" v-model.trim="tag">
-                                    </b-input>
-                                    <p class="control">
-                                        <button class="button is-primary" @click="search">Search</button>
-                                    </p>
-                                </b-field>
                             </section>
                         </div>
+                    </section>
+                    <section class="p-t-15">
+                        <b-field>
+                            <b-input placeholder="Search..." type="search" icon="magnify" v-model.trim="tag" expanded>
+                            </b-input>
+                            <p class="control">
+                                <button class="button is-primary" @click="search">Search</button>
+                            </p>
+                        </b-field>
                     </section>
                     <section class="p-t-20 columns is-multiline">
                         <div class="column is-one-quarter" v-for="(img, i) in searchImgs" :key="i">
@@ -81,7 +88,9 @@
                 selectedImg: null,
                 isImgModalActive: false,
                 tag: '',
-                searchImgs: []
+                searchImgs: [],
+                labels: [],
+                isMessageActive: false
             };
         },
         mounted() {
@@ -123,7 +132,7 @@
                 window.clarifai.models.predict(window.Clarifai.GENERAL_MODEL, img).then(
                     res => {
                         let labels = _.pluck(res.outputs[0].data.concepts, 'name');
-                        console.log(labels);
+                        this.labels = labels;
                         let data = {img: img, address: this.address, labels: labels};
                         this.upload(data);
                     },
@@ -134,7 +143,6 @@
                 const vm = this;
                 window.axios.post('/api/dashboard/imgs', data, { headers: { 'Authorization': 'Bearer ' + vm.token } })
                 .then(res => {
-                    console.log(res.data);
                     if (res.data.msg === 'success') {
                         this.uploading = false;
                         this.loading = false;
@@ -142,13 +150,16 @@
                             message: 'Uploaded Successfully',
                             type: 'is-success'
                         });
+                        this.isMessageActive = true;
+                        this.imgFile = null;
+                        this.files = [];
                         this.getImgs();
                     }
                 })
                 .catch(err => console.log(err));
             },
             search() {
-                window.axios.get('/api/imgs/'+ this.tag)
+                window.axios.get('/api/imgs/'+ this.tag.toLowerCase())
                 .then(res => {
                     if (!res.data[0]) return;
                     console.log(res.data[0].imgs);

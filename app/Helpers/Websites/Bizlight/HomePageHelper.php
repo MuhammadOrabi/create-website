@@ -19,7 +19,7 @@ class HomePageHelper
     public static function index($page, $op, $data, $section)
     {
         if ($op === 'get') {
-            return $section->contents->toArray();
+            return $section->load('contents');
         } elseif ($op === 'update') {
             return static::which($section, $data);
         }
@@ -52,13 +52,18 @@ class HomePageHelper
      */
     public static function showCase($section, $data)
     {
-        $section->contents()->delete();
-        foreach ($data as $key => $value) {
-            if ($value) {
-                $section->contents()->create(['type' => $key, 'content' => $value]);
+        if (isset($data['status'])) {
+            $section->update(['active' => $data['status']]);
+            return $section;
+        } else {
+            $section->contents()->delete();
+            foreach ($data as $key => $value) {
+                if ($value) {
+                    $section->contents()->create(['type' => $key, 'content' => $value]);
+                }
             }
+            return $section;
         }
-        return $section;
     }
 
     /**

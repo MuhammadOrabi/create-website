@@ -5,7 +5,7 @@
         $paragraph = $showCase->contents->where('type', 'paragraph')->first();
     @endphp
     @if($image)
-        <div class="showcase" style="background: url( {{ $image->content }} ) no-repeat 0 -100px;">
+        <div class="showcase" style="background: url( {{ $image->content }} ) no-repeat 0 ;background-position: center; background-size: cover;">
     @else
         <div class="showcase" style="background: #d6d6d6">
     @endif

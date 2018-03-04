@@ -46,10 +46,10 @@
 						@foreach($horizontalList->contents->groupBy('order') as $content)
 							<div class="col-md-{{ 12/$loop->count }}">
 								<div class="row m-5">
-									<img src="{{ $content[0]->content }}" class="img-circle" alt="img" width="150" height="150">
+									<img src="{{ $content[2]->content }}" class="img-circle" alt="img" width="150" height="150">
 								</div>
-								<h3>{!! $content[1]->content !!}</h3>
-								<p>{!! $content[2]->content !!}</p>
+								<h3>{!! $content[0]->content !!}</h3>
+								<p>{!! $content[1]->content !!}</p>
 							</div>
 						@endforeach
 				</div>

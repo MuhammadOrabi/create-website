@@ -36,7 +36,7 @@ class HomePageHelper
         if ($section->title === 'show-case') {
             return static::showCase($section, $data);
         } elseif ($section->title === 'accordion') {
-            return static::sectionB($section, $data);
+            return static::accordion($section, $data);
         } elseif ($section->title === 'horizontal-list') {
             return static::sectionA($section, $data);
         } elseif ($section->title === 'paragraph-image') {
@@ -72,16 +72,21 @@ class HomePageHelper
      * @param  Array $data              Request Data
      * @return Array                    Data that the Operation needs
      */
-    public static function sectionB($section, $data)
+    public static function accordion($section, $data)
     {
-        $section->contents()->delete();
-        $section->contents()->create(['type' => 'img', 'content' => $data['img']]);
-        foreach ($data['data'] as $key => $item) {
-            $section->contents()->create(
-                ['type' => 'heading', 'order' => ($key + 1), 'content' => $item['heading']]
+        if (isset($data['status'])) {
+            $section->update(['active' => $data['status']]);
+            return $section;
+        } elseif (isset($data['img'])) {
+            $section->contents()->updateOrCreate(['type' => 'img'], ['content' => $data['img']]);
+        } elseif ($data['heading'] && $data['paragraph'] && $data['order']) {
+            $section->contents()->updateOrCreate(
+                ['type' => 'heading', 'order' => $data['order']],
+                ['content' => $data['heading']]
             );
-            $section->contents()->create(
-                ['type' => 'paragraph', 'order' => ($key + 1), 'content' => $item['paragraph']]
+            $section->contents()->updateOrCreate(
+                ['type' => 'paragraph', 'order' => $data['order']],
+                ['content' => $data['paragraph']]
             );
         }
         return $section;

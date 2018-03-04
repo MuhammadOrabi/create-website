@@ -68,6 +68,8 @@ class BizlightHelper
             return ConstantHelper::which('get', $data, $component);
         } elseif ($op === 'get-page-auth') {
             return PageHelper::which('get', $page);
+        } elseif ($op === 'delete-content') {
+            return ContentHelper::whcih($component, $op, $data);
         }
     }
 }

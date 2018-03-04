@@ -7,6 +7,7 @@ use App\Section;
 use Illuminate\Http\Request;
 use App\Helpers\WebApps\WebAppsHelper;
 use App\Helpers\Portfolios\PortfoliosHelper;
+use App\Helpers\Websites\WebsitesHelper;
 
 class ContentController extends Controller
 {
@@ -84,6 +85,8 @@ class ContentController extends Controller
         $site = auth()->user()->sites()->findOrFail($content->contentable->page->site->id);
         $tag = $site->theme->tags()->where('type', 'category')->first();
         if ($tag->tag === 'website') {
+            $data = WebsitesHelper::finder($site, $content->contentable->page, 'delete-content', null, $content);
+            return response()->json($data);
         } elseif ($tag->tag === 'portfolio') {
             $data = PortfoliosHelper::finder($site, $content->contentable->page, 'delete-content', null, $content);
             return response()->json($data);

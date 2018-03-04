@@ -2,7 +2,7 @@
     <section>
         <b-tabs position="is-centered" class="block">
             <b-tab-item label="Show Case" v-if="showcase">
-                <section-status :id="showcase" :token="token" />  
+                <section-status :id="showcase" :token="token" />
                 <show-case :token="token" :id="showcase" :address="address"></show-case>
             </b-tab-item>
             <b-tab-item label="Accordion and an image" v-if="accordion">

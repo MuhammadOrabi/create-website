@@ -25,12 +25,13 @@
             <b-field label="Accordion">
                 <b-table :data="items" :mobile-cards="true">
                     <template slot-scope="props">
-                        <b-table-column field="title" label="Title" centered>
-                            {{ props.row.title }}
+                        <b-table-column field="heading" label="Title">
+                            {{ props.row.heading }}
                         </b-table-column>
 
                         <b-table-column label="Actions" centered>
-                            <accordion-form :token="token" :id="id" :heading="props.row.title" :paragraph="props.row.paragraph" update="update"></accordion-form>
+                            <accordion-form :token="token" :id="id" :content="props.row.id" :heading="props.row.heading"
+                             :paragraph="props.row.paragraph" :order="props.row.order" update="update" @getData="getData" ></accordion-form>
                         </b-table-column>
                     </template>
                     
@@ -48,7 +49,7 @@
                         </section>
                     </template>
                     <template slot="footer" >
-                        <accordion-form :token="token" :id="id"></accordion-form>
+                        <accordion-form :token="token" :id="id" @getData="getData" :order="items.length"></accordion-form>
                     </template>
                 </b-table>
             </b-field>
@@ -65,7 +66,7 @@ export default {
     props: ['token', 'id', 'address'],
     data () {
         return {
-            items: [{title: 'Title', paragraph: 'Paragraph'}],
+            items: [],
             isFormModalActive: false,
             isMediaModalActive: false,
             img: null,
@@ -75,8 +76,41 @@ export default {
             }
         }
     },
+    mounted() {
+        this.getData();
+    },
+    watch: {
+        img(newVal, oldVal) {
+            if (newVal !== oldVal) {
+                this.saveImage();
+            }            
+        }
+    },
     methods: {
-        
+        getData() {
+            const loadingComponent = this.$loading.open()
+            window.axios.get(`/api/dashboard/sections/${this.id}`, { headers: { 'Authorization': `Bearer ${this.token}` } })
+            .then(async res => {
+                let img = _.findWhere(res.data.contents, {type: 'img'});
+                this.img = img ? img.content : null;
+                let accordionData = _.groupBy(res.data.contents, (content) => content.order);
+                this.items = [];
+                await _.mapObject(accordionData, (item, key) => {
+                    if (key > 0) {
+                        let heading = _.findWhere(item, {type: 'heading'});                        
+                        let paragraph = _.findWhere(item, {type: 'paragraph'});
+                        this.items.push({heading: heading.content, paragraph: paragraph.content, order: heading.order, id: heading.id });
+                    }
+                });
+                await loadingComponent.close();
+            })
+            .catch(err => console.log(err));
+        },
+        saveImage() {
+            window.axios.put('/api/dashboard/sections/' + this.id, {img: this.img}, { headers: { 'Authorization': 'Bearer ' + this.token } })
+            .then(res => {})
+            .catch(err => console.log(err));
+        }
     }
 }
 </script>

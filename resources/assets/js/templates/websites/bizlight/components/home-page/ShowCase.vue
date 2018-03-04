@@ -71,11 +71,11 @@ export default {
         getData() {
             window.axios.get(`/api/dashboard/sections/${this.id}`, { headers: { 'Authorization': `Bearer ${this.token}` } })
             .then(res => {
-                let img = _.findWhere(res.data, {type: 'img'});
+                let img = _.findWhere(res.data.contents, {type: 'img'});
                 this.data.img = img ? img.content : null;
-                let heading = _.findWhere(res.data, {type: 'heading'});
+                let heading = _.findWhere(res.data.contents, {type: 'heading'});
                 this.data.heading = heading ? heading.content : null;
-                let paragraph = _.findWhere(res.data, {type: 'paragraph'});
+                let paragraph = _.findWhere(res.data.contents, {type: 'paragraph'});
                 this.data.paragraph = paragraph ? paragraph.content : null;
             })
             .catch(err => console.log(err))
@@ -88,7 +88,6 @@ export default {
                     type: 'is-success'
                 });
                 this.getData();
-                console.log(res.data);
             }).catch(err => console.log(err));
         }
     }

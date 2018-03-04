@@ -38,9 +38,9 @@ class HomePageHelper
         } elseif ($section->title === 'accordion') {
             return static::accordion($section, $data);
         } elseif ($section->title === 'horizontal-list') {
-            return static::sectionA($section, $data);
+            return static::horizontalList($section, $data);
         } elseif ($section->title === 'paragraph-image') {
-            return static::sectionC($section, $data);
+            return static::paragraphImage($section, $data);
         }
     }
 
@@ -56,10 +56,9 @@ class HomePageHelper
             $section->update(['active' => $data['status']]);
             return $section;
         } else {
-            $section->contents()->delete();
             foreach ($data as $key => $value) {
                 if ($value) {
-                    $section->contents()->create(['type' => $key, 'content' => $value]);
+                    $section->contents()->updateOrCreate(['type' => $key], ['content' => $value]);
                 }
             }
             return $section;
@@ -98,12 +97,19 @@ class HomePageHelper
      * @param  Array $data              Request Data
      * @return Array                    Data that the Operation needs
      */
-    public static function sectionC($section, $data)
+    public static function paragraphImage($section, $data)
     {
-        $section->contents()->delete();
-        $section->contents()->create(['type' => 'img', 'content' => $data['img']]);
-        $section->contents()->create(['type' => 'paragraph', 'content' => $data['paragraph']]);
-        return $section;
+        if (isset($data['status'])) {
+            $section->update(['active' => $data['status']]);
+            return $section;
+        } else {
+            foreach ($data as $key => $value) {
+                if ($value) {
+                    $section->contents()->updateOrCreate(['type' => $key], ['content' => $value]);
+                }
+            }
+            return $section;
+        }
     }
 
     /**
@@ -112,13 +118,23 @@ class HomePageHelper
      * @param  Array $data              Request Data
      * @return Array                    Data that the Operation needs
      */
-    public static function sectionA($section, $data)
+    public static function horizontalList($section, $data)
     {
-        $section->contents()->delete();
-        foreach ($data as $key => $item) {
-            $section->contents()->create(['type' => 'img', 'content' => $item['img'], 'order' => ($key + 1)]);
-            $section->contents()->create(['type' => 'heading', 'order' => ($key + 1), 'content' => $item['heading']]);
-            $section->contents()->create(['type' => 'paragraph', 'order' => ($key + 1), 'content' => $item['paragraph']]);
+        if (isset($data['status'])) {
+            $section->update(['active' => $data['status']]);
+        } elseif ($data['heading'] && $data['paragraph'] && $data['img'] && $data['order']) {
+            $section->contents()->updateOrCreate(
+                ['type' => 'heading', 'order' => $data['order']],
+                ['content' => $data['heading']]
+            );
+            $section->contents()->updateOrCreate(
+                ['type' => 'paragraph', 'order' => $data['order']],
+                ['content' => $data['paragraph']]
+            );
+            $section->contents()->updateOrCreate(
+                ['type' => 'img', 'order' => $data['order']],
+                ['content' => $data['img']]
+            );
         }
         return $section;
     }

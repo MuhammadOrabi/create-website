@@ -4,6 +4,10 @@
 	 About |
 @stop
 
+@php
+    $paragraph = $section->contents->first();
+@endphp
+
 @section('content')
 	
 	<div class="title-bar">
@@ -20,7 +24,9 @@
 							<h4 class="panel-title">Who we Are?</h4>
 						</div>
 						<div class="panel-body">
-							<p>{!! $section->contents->first()->content !!}</p>
+                            @if($paragraph)
+                                <p>{!! $paragraph->content !!}</p>
+                            @endif
 						</div>
 					</div>
 				</div>

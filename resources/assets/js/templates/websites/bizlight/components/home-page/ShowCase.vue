@@ -42,7 +42,6 @@
 
 <script>
 export default {
-
     name: 'ShowCase',
     props: ['id', 'token', 'address'],
     data () {

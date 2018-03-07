@@ -20,26 +20,8 @@ class ServicesHelper
     {
         if ($op === 'get') {
             return $section->contents->toArray();
-        } elseif ($op === 'update') {
-            return static::update($section, $data);
         }
     }
 
-    /**
-     * Update Services Page's Sections
-     * @param  App\Section $section     The page Section that the request belongs to
-     * @param  Array $data              Request Data
-     * @return Array                    Data that the Operation needs
-     */
-    public static function update($section, $data)
-    {
-        $section->contents()->delete();
-        foreach ($data as $key => $item) {
-            $section->contents()
-                        ->create(['type' => 'heading', 'order' => ($key + 1), 'content' => $item['heading']]);
-            $section->contents()
-                        ->create(['type' => 'paragraph', 'order' => ($key + 1), 'content' => $item['paragraph']]);
-        }
-        return $section;
-    }
+
 }

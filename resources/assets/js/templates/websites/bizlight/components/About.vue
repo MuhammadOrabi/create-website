@@ -25,9 +25,32 @@ export default {
             paragraph: ''
         }
     },
+    mounted() {
+        this.getData();
+    },
     methods: {
+        getData() {
+            window.axios.get(`/api/dashboard/pages/${this.id}`, { headers: { 'Authorization': `Bearer ${this.token}` } })
+            .then(res => {
+                let about = _.findWhere(res.data.sections, {title: 'about'});    
+                if (about) {
+                    let paragraph = _.findWhere(about.contents, {type: 'paragraph'});                
+                    this.paragraph = paragraph ? paragraph.content : '';
+                }                            
+            })
+            .catch(err => console.log(err));
+        },
         save() {
-            
+            let data = { paragraph: this.paragraph };
+            window.axios.put(`/api/dashboard/pages/${this.id}`, data, { headers: { 'Authorization': `Bearer ${this.token}` } })
+            .then(res => {
+                this.$toast.open({
+                    message: 'Saved Successfully',
+                    type: 'is-success'
+                });
+                this.getData();
+            })
+            .catch(err => console.log(err));
         }
     }
 }

@@ -54,6 +54,8 @@ class PageController extends Controller
         $site = auth()->user()->sites()->findOrFail($page->site->id);
         $tag = $site->theme->tags()->where('type', 'category')->first();
         if ($tag->tag === 'website') {
+            $data = WebsitesHelper::finder($page->site, $page, 'update-page', request()->all());
+            return response()->json($data);
         } elseif ($tag->tag === 'portfolio') {
         } elseif ($tag->tag === 'web application') {
             $data = WebAppsHelper::finder($site, $page, 'updatePage', request()->all());

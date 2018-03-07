@@ -24,10 +24,8 @@ class BizlightHelper
         $home->sections()->create(['title' => 'paragraph-image', 'order' => 4]);
 
         $about = $site->addPage(['title' => 'About', 'homePage' => false, 'slug' => 'about']);
-        $aboutSection = $about->sections()->create(['title' => 'aboutSection', 'order' => 1]);
 
         $services = $site->addPage(['title' => 'Services', 'homePage' => false, 'slug' => 'services']);
-        $servicesSection = $services->sections()->create(['title' => 'servicesSection', 'order' => 1]);
 
         $top_nav = $site->constants()->create(['type' => 'top-nav']);
 
@@ -70,6 +68,8 @@ class BizlightHelper
             return PageHelper::which('get', $page);
         } elseif ($op === 'delete-content') {
             return ContentHelper::whcih($component, $op, $data);
+        } elseif ($op === 'update-page') {
+            return PageHelper::which('update', $page, $data);
         }
     }
 }

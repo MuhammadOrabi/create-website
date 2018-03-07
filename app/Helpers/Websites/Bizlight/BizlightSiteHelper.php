@@ -115,7 +115,7 @@ class BizlightSiteHelper
         $site = $this->site;
         $nav = $this->nav();
         $page = $site->pages()->where('slug', 'about')->first();
-        $section = $page->sections()->where('title', 'aboutSection')->with('contents')->first();
+        $section = $page->sections()->where('title', 'about')->with('contents')->first();
         return compact('site', 'nav', 'section');
     }
 
@@ -128,7 +128,7 @@ class BizlightSiteHelper
         $site = $this->site;
         $nav = $this->nav();
         $page = $site->pages()->where('slug', 'services')->first();
-        $section = $page->sections()->where('title', 'servicesSection')->with('contents')->first();
+        $section = $page->sections()->where('title', 'services')->with('contents')->first();
         return compact('site', 'nav', 'section');
     }
 

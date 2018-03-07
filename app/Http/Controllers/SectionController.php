@@ -126,6 +126,8 @@ class SectionController extends Controller
             $site = auth()->user()->sites()->findOrFail($section->page->site->id);
             $tag = $section->page->site->theme->tags()->where('type', 'category')->first();
             if ($tag->tag === 'website') {
+                $data = WebsitesHelper::finder($section->page->site, $section->page, 'deleteSection', null, $section);
+                return response()->json($data);
             } elseif ($tag->tag === 'portfolio') {
             } elseif ($tag->tag === 'web application') {
                 $data = WebAppsHelper::finder($section->page->site, $section->page, 'deleteSection', null, $section);

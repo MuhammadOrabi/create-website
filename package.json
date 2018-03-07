@@ -42,6 +42,7 @@
     "vuex-localstorage": "^1.0.0"
   },
   "dependencies": {
-    "hchs-vue-charts": "^1.2.8"
+    "hchs-vue-charts": "^1.2.8",
+    "node-sass": "^4.7.2"
   }
 }

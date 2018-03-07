@@ -25,15 +25,4 @@ class AboutHelper
         }
     }
 
-    /**
-     * Update About Page's Sections
-     * @param  App\Section $section     The page Section that the request belongs to
-     * @param  Array $data              Request Data
-     * @return Array                    Data that the Operation needs
-     */
-    public static function update($section, $data)
-    {
-        $section->contents()->delete();
-        $section->contents()->create(['type' => 'paragraph', 'content' => $data[0]['paragraph']]);
-    }
 }

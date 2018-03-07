@@ -86,7 +86,7 @@ class BizlightSiteHelper
         $site = $this->site;
         $nav = $site->constants()->where('type', 'top-nav')->with('contents')->first();
         $links = $nav->contents()->where('type', 'link')->get();
-        $logo = $nav->contents()->where('type', 'logo')->first();
+        $logo = $site->extras()->where('type', 'logo')->first();
         return compact('links', 'logo');
     }
 
@@ -142,5 +142,42 @@ class BizlightSiteHelper
         $nav = $this->nav();
         $page = $site->pages()->where('slug', 'contact')->first();
         return compact('site', 'nav', 'page');
+    }
+
+    public function apiInfo($type)
+    {
+        if ($type === 'site-info') {
+            return $this->site->load('extras');
+        } elseif ($type === 'page-analytics') {
+            return $this->pageAnalytics();
+        }
+    }
+
+     public function pageAnalytics()
+    {
+        // $page = $this->site->pages()->where('homePage', true)->first();
+        // $years = $page->logs->groupBy(
+        //     function ($item, $key) {
+        //         return \Carbon\Carbon::parse($item['created_at'])->year;
+        //     }
+        // )->toArray();
+        // $months = $page->logs->groupBy(
+        //     function ($item, $key) {
+        //         $month = \Carbon\Carbon::parse($item['created_at'])->month;
+        //         return date("F", mktime(0, 0, 0, $month, 1));
+        //     }
+        // )->toArray();
+        // return ['months' => $months, 'years' => $years];
+    }
+
+    public function update($data)
+    {
+        if ($data['name']) {
+            $this->site->update(['name' => $data['name']]);
+        }
+        if ($data['logo']) {
+            $this->site->extras()->updateOrCreate(['type' => 'logo'], ['content' => $data['logo']]);
+        }
+        return $this->site;
     }
 }

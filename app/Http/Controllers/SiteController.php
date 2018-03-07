@@ -75,6 +75,8 @@ class SiteController extends Controller
         $site = Site::where('address', request()->address)->firstOrFail();
         $tag = $site->theme->tags()->where('type', 'category')->first();
         if ($tag->tag === 'website') {
+            $data = WebsitesHelper::finder($site, null, 'api-info', request()->type);
+            return response()->json($data);
         } elseif ($tag->tag === 'portfolio') {
             $data = PortfoliosHelper::finder($site, null, 'api-info', request()->type);
             return response()->json($data);
@@ -91,6 +93,8 @@ class SiteController extends Controller
             $site = auth()->user()->sites()->findOrFail(request()->id);
             $tag = $site->theme->tags()->where('type', 'category')->first();
             if ($tag->tag === 'website') {
+                $data = WebsitesHelper::finder($site, null, 'site-update', request()->all());
+                return response()->json($data);
             } elseif ($tag->tag === 'portfolio') {
                 $data = PortfoliosHelper::finder($site, null, 'site-update', request()->all());
                 return response()->json($data);

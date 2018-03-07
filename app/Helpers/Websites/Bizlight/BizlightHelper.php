@@ -70,6 +70,12 @@ class BizlightHelper
             return ContentHelper::whcih($component, $op, $data);
         } elseif ($op === 'update-page') {
             return PageHelper::which('update', $page, $data);
+        } elseif ($op === 'api-info') {
+            $site = new BizlightSiteHelper($site->id);
+            return $site->apiInfo($data);
+        } elseif ($op === 'site-update') {
+            $site = new BizlightSiteHelper($site->id);
+            return $site->update($data);
         }
     }
 }

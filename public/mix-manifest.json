@@ -8,5 +8,8 @@
     "/css/bulma/app.css": "/css/bulma/app.css",
     "/css/templates/websites/bizlight/app.css": "/css/templates/websites/bizlight/app.css",
     "/css/templates/portfolios/template1/app.css": "/css/templates/portfolios/template1/app.css",
-    "/js/templates/portfolios/template1/site/app.js": "/js/templates/portfolios/template1/site/app.js"
+    "/css/templates/blogs/template1/app.css": "/css/templates/blogs/template1/app.css",
+    "/js/templates/portfolios/template1/site/app.js": "/js/templates/portfolios/template1/site/app.js",
+    "/js/templates/blogs/template1/site/app.js": "/js/templates/blogs/template1/site/app.js",
+    "/js/templates/blogs/template1/dashboard/app.js": "/js/templates/blogs/template1/dashboard/app.js"
 }

@@ -8,6 +8,7 @@ use App\Helpers\Websites\WebsitesHelper;
 use Illuminate\Notifications\Notifiable;
 use App\Helpers\Portfolios\PortfoliosHelper;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Helpers\Blogs\BlogsHelper;
 
 class User extends Authenticatable
 {
@@ -70,6 +71,7 @@ class User extends Authenticatable
         } elseif ($tag->tag === 'web application') {
             return WebAppsHelper::finder($site, null, 'scaffold');
         } elseif ($tag->tag === 'blog') {
+            return BlogsHelper::finder($site, null, 'scaffold');    
         }
 
         return $site;

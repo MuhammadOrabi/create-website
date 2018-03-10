@@ -32,3 +32,9 @@ mix.sass('resources/assets/sass/templates/websites/bizlight/app.scss', 'public/c
 mix.js('resources/assets/js/templates/portfolios/template1/site/app.js', 'public/js/templates/portfolios/template1/site');
 mix.js('resources/assets/js/templates/portfolios/template1/dashboard/app.js', 'public/js/templates/portfolios/template1/dashboard');
 mix.sass('resources/assets/sass/templates/portfolios/template1/app.scss', 'public/css/templates/portfolios/template1');
+
+// Blogs
+// Template 1
+mix.js('resources/assets/js/templates/blogs/template1/site/app.js', 'public/js/templates/blogs/template1/site');
+mix.js('resources/assets/js/templates/blogs/template1/dashboard/app.js', 'public/js/templates/blogs/template1/dashboard');
+mix.sass('resources/assets/sass/templates/blogs/template1/app.scss', 'public/css/templates/blogs/template1');

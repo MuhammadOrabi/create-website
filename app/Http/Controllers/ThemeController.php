@@ -56,6 +56,12 @@ class ThemeController extends Controller
         $portfolio_theme1->imgs()->create(['url' => '/img/portfolios/template1/5.png']);
         $portfolio_theme1->imgs()->create(['url' => '/img/portfolios/template1/6.png']);
         $portfolio_theme1->imgs()->create(['url' => '/img/portfolios/template1/7.png']);
+
+        $blog_template1 = $tag_blog->themes()->create(
+            ['name' => 'template1', 'location' => 'templates.blogs.template1', 'type' => 'blog']
+        );
+        $blog_template1->imgs()->create(['url' => '/img/portfolios/template1/1.png']);
+        
         return redirect('/');
     }
 }

@@ -1,0 +1,254 @@
+@import "node_modules/materialize-css/sass/materialize";
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+body {
+    background: black;
+}
+
+
+/*//////////////////////////////*/
+
+nav {
+    background: linear-gradient(to right, rgb(61, 18, 73), rgb(183, 5, 45)) !important;
+    padding-left: 5%;
+}
+
+.content_row {
+    margin-right: 3% !important;
+    margin-left: 3% !important;
+    margin-top: 5%;
+}
+
+
+/* slider*/
+
+h3 {
+    background: black;
+    opacity: 0.5;
+}
+
+.slider .indicators .indicator-item.active {
+    background: rgb(102, 14, 64) !important;
+}
+
+
+/* LATEST MOVIE NEWS HEADLINES*/
+
+#box {
+    margin: 5% auto 0 auto;
+    font-family: 'Raleway', sans-serif;
+    background-color: #fff;
+    border-radius: 2px;
+}
+
+.box {
+    margin: 5% auto 0 auto;
+    background-color: #fff;
+    border-radius: 2px;
+    padding: 5%;
+}
+
+.heading {
+    padding: 3% 3%;
+    background: linear-gradient(to right, rgb(61, 18, 73), rgb(183, 5, 45));
+    width: 50%;
+    margin-left: -20px;
+    font-size: 20px;
+    color: #fff;
+    font-family: "Times New Roman (Headings CS)";
+}
+
+.trapezoid {
+    border-top: 20px solid rgb(52, 9, 61);
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    height: 0;
+    width: 41%;
+    margin-left: -20px;
+}
+
+
+/* cards*/
+
+.read_more_btn {
+    color: rgb(171, 7, 48) !important;
+    font-size: 20px;
+}
+
+.read_more_btn:hover {
+    color: #fff !important;
+    background: rgb(141, 10, 55);
+}
+
+
+/* load more*/
+
+.load {
+    display: none;
+    padding: 10px;
+    border-width: 0 1px 1px 0;
+    border-style: solid;
+    border-color: #fff;
+    box-shadow: 0 1px 1px #ccc;
+    margin-bottom: 5px;
+    background-color: #f1f1f1;
+}
+
+.totop {
+    position: fixed;
+    bottom: 10px;
+    right: 20px;
+}
+
+.totop .lm_btn {
+    display: none;
+}
+
+.lm_btn,
+.lm_btn:visited {
+    color: #33739E;
+    text-decoration: none;
+    display: block;
+    margin: 10px 0;
+}
+
+.lm_btn:hover {
+    text-decoration: none;
+}
+
+#loadMore {
+    padding: 10px;
+    text-align: center;
+    background: linear-gradient(to right, rgb(61, 18, 73), rgb(183, 5, 45));
+    color: #fff;
+    border-width: 0 1px 1px 0;
+    border-style: solid;
+    border-color: #fff;
+    box-shadow: 0 1px 1px #ccc;
+    transition: all 600ms ease-in-out;
+    -webkit-transition: all 600ms ease-in-out;
+    -moz-transition: all 600ms ease-in-out;
+    -o-transition: all 600ms ease-in-out;
+}
+
+#loadMore:hover {
+    background-color: #fff;
+    color: #33739E;
+}
+
+
+/* footer*/
+
+footer {
+    background: linear-gradient(to right, rgb(61, 18, 73), rgb(183, 5, 45));
+}
+
+
+/* right section*/
+
+.right_section {
+    background: #fff;
+}
+
+.tabs {
+    background: linear-gradient(to right, rgb(61, 18, 73), rgb(183, 5, 45));
+    margin-top: 3% !important;
+}
+
+.tab {
+    color: #fff !important;
+}
+
+.side {
+    margin-top: 4%;
+    background: black;
+}
+
+.description {
+    color: #fff;
+    font-size: 20px;
+}
+
+.sub_description {
+    color: rgb(168, 168, 168);
+    font-weight: bold;
+}
+
+.side_img {
+    width: 100%;
+    margin-top: 5%;
+}
+
+.p1 {
+    font-size: 25px;
+    font-family: "Times New Roman (Headings CS)";
+}
+
+.p2 {
+    font-size: 25px;
+    font-weight: bold;
+    font-family: "Times New Roman (Headings CS)";
+}
+
+iframe {
+    width: 90%;
+    height: 70%;
+}
+
+.actionBox {
+    margin: 5% 5% 5% 5%;
+    overflow-y: scroll;
+    height: 30%;
+    padding-left: 2%;
+}
+
+.commenter {
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(106, 13, 62);
+    font-family: "Felix Titling";
+}
+
+.date {
+    color: gray;
+    font-family: "Kristen ITC";
+}
+
+
+/* Form*/
+
+form {
+    margin-top: 5%;
+    padding-top: 5%;
+    background: rgb(232, 232, 232);
+}
+
+
+/* label color */
+
+.input-field label {
+    color: rgb(122, 12, 59) !important;
+}
+
+
+/* label underline focus color */
+
+.input-field input[type=text]:focus {
+    border-bottom: 1px solid red !important;
+    box-shadow: 0 1px 0 0 #000;
+}
+
+
+/* label underline focus color */
+
+.input-field input[type=email]:focus {
+    border-bottom: 1px solid red !important;
+    box-shadow: 0 1px 0 0 #000;
+}
+
+.materialize-textarea:focus {
+    border-bottom: 1px solid red !important;
+}
+
+.btn {
+    background: linear-gradient(to right, rgb(61, 18, 73), rgb(183, 5, 45))!important;
+}

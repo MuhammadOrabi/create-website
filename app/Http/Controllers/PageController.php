@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Helpers\WebApps\WebAppsHelper;
 use App\Helpers\Websites\WebsitesHelper;
 use App\Helpers\Portfolios\PortfoliosHelper;
+use App\Helpers\Blogs\BlogsHelper;
 
 class PageController extends Controller
 {
@@ -17,16 +18,15 @@ class PageController extends Controller
         $tag = $site->theme->tags()->where('type', 'category')->first();
         if ($tag->tag === 'website') {
             $data = WebsitesHelper::finder($site, request()->type, 'dashboard', null);
-            return view($data['location'], $data['data']);
         } elseif ($tag->tag === 'portfolio') {
             $data = PortfoliosHelper::finder($site, request()->type, 'dashboard', null);
-            abort_if(!view()->exists($data['location']), 404);
-            return view($data['location'], $data['data']);
         } elseif ($tag->tag === 'web application') {
             $data = WebAppsHelper::finder($site, request()->type, 'dashboard', null);
-            return view($data['location'], $data['data']);
         } elseif ($tag->tag === 'blog') {
+            $data = BlogsHelper::finder($site, request()->type, 'dashboard', null);
         }
+        abort_if(!view()->exists($data['location']), 404);
+        return view($data['location'], $data['data']);
     }
 
     public function edit()

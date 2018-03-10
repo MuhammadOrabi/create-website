@@ -20,7 +20,7 @@
 			</b-tab-item>
 			<b-tab-item label="Templates" icon="fa fa-arrow-right" :disabled="!themes.length">
 				<div class="columns p-t-15">
-					<div class="column is-one-quarter" v-for="(theme, i) in themes" :key="theme.id">	
+					<div class="column is-one-quarter" v-for="theme in themes" :key="theme.id">	
 						<div class="card">
 							<div class="card-image">
 								<figure class="image is-50x50">
@@ -128,9 +128,12 @@ export default {
 		create() {
 			var vm = this;
 			let site = { theme: vm.id, address: vm.address };
+            console.log(site);
+            
 			window.axios.post('/api/dashboard/sites', site ,{ headers: { 'Authorization': 'Bearer ' + vm.token } })
 			.then((res) => {
-				if (res.data.page) {
+                console.log(res.data);
+                if (res.data.pages) {
 					window.location = '/dashboard/settings/' + this.address;
 				}
 			})

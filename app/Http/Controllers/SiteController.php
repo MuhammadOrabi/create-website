@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Helpers\WebApps\WebAppsHelper;
 use App\Helpers\Websites\WebsitesHelper;
 use App\Helpers\Portfolios\PortfoliosHelper;
+use App\Helpers\Blogs\BlogsHelper;
 
 class SiteController extends Controller
 {
@@ -40,7 +41,7 @@ class SiteController extends Controller
         $site = auth()->user()->addSite(request('address'), request('theme'));
         $page = $site->pages->where('homePage', true)->first();
         flash('Congrats for the new site!', ['type' => 'Success']);
-        return response()->json(compact('page'));
+        return response()->json($site);
     }
 
     public function show()
@@ -66,6 +67,8 @@ class SiteController extends Controller
             $data = WebAppsHelper::finder($site, $slug, 'site', request()->id);
             return view($data['location'], $data['data']);
         } elseif ($tag->tag === 'blog') {
+            $data = BlogsHelper::finder($site, $slug, 'site', request()->id);
+            return view($data['location'], $data['data']);
         }
         abort(500);
     }

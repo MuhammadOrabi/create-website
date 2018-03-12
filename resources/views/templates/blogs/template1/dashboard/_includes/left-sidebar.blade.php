@@ -16,17 +16,17 @@
 		<p class="menu-label">Content</p>
 		<ul class="menu-list">
 			<li>
-				<a class="has-submenu {{ Nav::hasSegment('pages', 2) }}" href="#">
+				<a class="has-submenu {{ Nav::hasSegment('pages', 2) }}" href="/dashboard/pages/{{ $site->address }}">
 					<span class="icon"><i class="fa fa-fw m-r-10 fa-list"></i></span>Pages
 				</a>
 				<ul class="submenu">
-					{{--  @foreach($pages as $page)
+                    @foreach($pages as $page)
 						<li>
 							<a href="/dashboard/pages/{{ $page->id }}/{{ $site->address }}" class="{{ Nav::hasSegment($page->id,3) }}">
 								{{ $page->title }}
 							</a>
 						</li>
-					@endforeach  --}}
+					@endforeach
 				</ul>
 			</li>
 			<li>

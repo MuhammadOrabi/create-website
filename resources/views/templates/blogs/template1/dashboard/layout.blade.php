@@ -28,7 +28,7 @@
             </div>
             @include('home-page._includes.nav.right-sidebar')
         </div>
-        <script src="/js/templates/blogs/template1/app.js"></script>
+        <script src="/js/templates/blogs/template1/dashboard/app.js"></script>
         @include('notifications.toast')
         @yield('scripts')        
     </body>

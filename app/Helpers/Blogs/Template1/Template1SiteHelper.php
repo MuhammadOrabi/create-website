@@ -26,12 +26,12 @@ class Template1SiteHelper
 
     public function dashboard($type, $data, $component)
     {
-        $pages = ['media', 'settings', 'analytics'];
+        $pages = ['media', 'settings', 'analytics', 'pages', 'footer'];
         abort_if(! in_array($type, $pages), 404);
         $location = $this->site->theme->location . '.dashboard.' . $type;
         $page = $this->site->pages()->where('homePage', true)->first();
         $page->load('sections.contents');
-        $data = ['site' => $this->site, 'page' => $page];
+        $data = ['site' => $this->site, 'page' => $page, 'pages' => $this->site->pages];
         return compact('location', 'data');
     }
 

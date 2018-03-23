@@ -17,8 +17,8 @@ class ConstantHelper
     {
         $constant->contents()->updateOrCreate(['type' => 'link', 'title' => 'twitter'], ['content' => $data['twitter']]);
         $constant->contents()->updateOrCreate(['type' => 'link', 'title' => 'facebook-square'], ['content' => $data['facebook']]);
-        $constant->contents()->updateOrCreate(['type' => 'link', 'title' => 'google-plus-g'], ['content' => $data['google']]);
-        $constant->contents()->updateOrCreate(['type' => 'link', 'title' => 'linkedin-in'], ['content' => $data['linkedin']]);
+        $constant->contents()->updateOrCreate(['type' => 'link', 'title' => 'google-plus'], ['content' => $data['google']]);
+        $constant->contents()->updateOrCreate(['type' => 'link', 'title' => 'linkedin'], ['content' => $data['linkedin']]);
         $constant->contents()->updateOrCreate(['type' => 'logo'], ['content' => $data['logo']]);
     }
 

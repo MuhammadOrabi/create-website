@@ -99,6 +99,7 @@ class BizlightSiteHelper
         $site = $this->site;
         $nav = $this->nav();
         $page = $site->pages()->where('homePage', true)->first();
+        $page->logs()->create(['type' => 'page-log', 'action' => 'load']);
         $showCase = $page->sections()->where('title', 'show-case')->with('contents')->first();
         $accordion = $page->sections()->where('title', 'accordion')->with('contents')->first();
         $horizontalList = $page->sections()->where('title', 'horizontal-list')->with('contents')->first();
@@ -115,6 +116,7 @@ class BizlightSiteHelper
         $site = $this->site;
         $nav = $this->nav();
         $page = $site->pages()->where('slug', 'about')->first();
+        $page->logs()->create(['type' => 'page-log', 'action' => 'load']);
         $section = $page->sections()->where('title', 'about')->with('contents')->first();
         return compact('site', 'nav', 'section');
     }
@@ -128,6 +130,7 @@ class BizlightSiteHelper
         $site = $this->site;
         $nav = $this->nav();
         $page = $site->pages()->where('slug', 'services')->first();
+        $page->logs()->create(['type' => 'page-log', 'action' => 'load']);
         $section = $page->sections()->where('title', 'services')->with('contents')->first();
         return compact('site', 'nav', 'section');
     }
@@ -141,6 +144,7 @@ class BizlightSiteHelper
         $site = $this->site;
         $nav = $this->nav();
         $page = $site->pages()->where('slug', 'contact')->first();
+        // $page->logs()->create(['type' => 'page-log', 'action' => 'load']);
         return compact('site', 'nav', 'page');
     }
 
@@ -153,21 +157,21 @@ class BizlightSiteHelper
         }
     }
 
-     public function pageAnalytics()
+    public function pageAnalytics()
     {
-        // $page = $this->site->pages()->where('homePage', true)->first();
-        // $years = $page->logs->groupBy(
-        //     function ($item, $key) {
-        //         return \Carbon\Carbon::parse($item['created_at'])->year;
-        //     }
-        // )->toArray();
-        // $months = $page->logs->groupBy(
-        //     function ($item, $key) {
-        //         $month = \Carbon\Carbon::parse($item['created_at'])->month;
-        //         return date("F", mktime(0, 0, 0, $month, 1));
-        //     }
-        // )->toArray();
-        // return ['months' => $months, 'years' => $years];
+        $page = $this->site->pages()->where('homePage', true)->first();
+        $years = $page->logs->groupBy(
+            function ($item, $key) {
+                return \Carbon\Carbon::parse($item['created_at'])->year;
+            }
+        )->toArray();
+        $months = $page->logs->groupBy(
+            function ($item, $key) {
+                $month = \Carbon\Carbon::parse($item['created_at'])->month;
+                return date("F", mktime(0, 0, 0, $month, 1));
+            }
+        )->toArray();
+        return ['months' => $months, 'years' => $years];
     }
 
     public function update($data)

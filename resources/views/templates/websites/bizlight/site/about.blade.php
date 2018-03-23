@@ -5,7 +5,8 @@
 @stop
 
 @php
-    $paragraph = $section->contents->first();
+    $contents = optional($section)->contents;
+    $paragraph = optional($contents)->first();
 @endphp
 
 @section('content')

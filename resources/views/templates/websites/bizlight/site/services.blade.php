@@ -4,6 +4,12 @@
 	Services |
 @stop
 
+
+@php
+    $contents = optional($section)->contents;
+    $ordered = optional($contents)->groupBy('order');
+@endphp
+
 @section('content')
 	<div class="title-bar">
 		<div class="container">
@@ -19,14 +25,16 @@
 							<h4 class="panel-title">What we Do?</h4>
 						</div>
 						<div class="panel-body">
-							@foreach($section->contents->groupBy('order') as $content)
-								@isset($content[0]->content)
-									<div class="well">
-										<h4>{!! $content[0]->content !!}</h4>
-										<p>{!! $content[1]->content !!}</p>
-									</div>
-								@endisset
-							@endforeach
+                            @if($ordered)
+                                @foreach($ordered as $content)
+                                    @isset($content[0]->content)
+                                        <div class="well">
+                                            <h4>{!! $content[0]->content !!}</h4>
+                                            <p>{!! $content[1]->content !!}</p>
+                                        </div>
+                                    @endisset
+                                @endforeach
+                            @endif
 						</div>
 					</div>
 				</div>

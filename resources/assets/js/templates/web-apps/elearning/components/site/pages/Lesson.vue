@@ -4,7 +4,7 @@
             <div class="container">
                 <h1 class="title">{{ title }}</h1>
                 <h2 class="subtitle">{{ course.title }}</h2>
-                <video width="800" height="480" src="/img/out.ogv" controls preload="auto"></video>
+                <video width="800" height="480" :src="video" controls preload="auto"></video>
             </div>
         </section>
         <div class="columns">

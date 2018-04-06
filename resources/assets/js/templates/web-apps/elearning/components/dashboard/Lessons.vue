@@ -16,7 +16,7 @@
             </b-table-column>
 
             <b-table-column label="Actions">
-                <a class="button is-info is-inverted">
+                <a class="button is-info is-inverted" target="_blank" :href="`/s/elearning/lesson/${props.row.id}`">
                     <b-icon pack="fa" icon="eye"></b-icon>
                 </a>
                 <a class="button is-primary is-inverted" :href="`/dashboard/lessons/update/${props.row.id}/${address}`">

@@ -16,10 +16,8 @@ Requirements:
 
 See comments on this GitHub Gist page for more details and links or explanation. https://gist.github.com/jacurtis/9fa687e8f7512bb197decce7ffc30091
 --}}
-
 <div id="toast-notifications" style="display:none;"></div>
 <script>
-
 	var notifications = new Vue({
 		el: '#toast-notifications',
 		data: {
@@ -57,10 +55,10 @@ See comments on this GitHub Gist page for more details and links or explanation.
 			},
 			success: function(msg, pos = 'is-top', dur = 5000) {
 				this.$toast.open({
-							duration: dur,
-							message: msg,
-							position: pos,
-							type: 'is-success'
+                        duration: dur,
+                        message: msg,
+                        position: pos,
+                        type: 'is-success'
 					});
 			},
 			info: function(msg, pos = 'is-top', dur = 5000) {

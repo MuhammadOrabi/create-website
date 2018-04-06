@@ -14,7 +14,7 @@ class Template1SiteHelper
         if ($slug === 'index') {
             $page = $this->site->pages()->where('homePage', true)->first();
         } else {
-            $page = $this->site->pages()->where('slug', $slug)->firstOrFail();            
+            $page = $this->site->pages()->where('slug', $slug)->firstOrFail();
             abort_if(!$id, 404);
         }
         $page->logs()->create(['type' => 'page-log', 'action' => 'load']);
@@ -24,33 +24,72 @@ class Template1SiteHelper
         return compact('location', 'data');
     }
 
-    public function dashboard($type, $data, $component)
+    public function dashboard($page, $data = null, $component = null)
     {
-        $pages = ['media', 'settings', 'analytics', 'pages', 'footer'];
-        abort_if(! in_array($type, $pages), 404);
-        $location = $this->site->theme->location . '.dashboard.' . $type;
-        $page = $this->site->pages()->where('homePage', true)->first();
-        $page->load('sections.contents');
-        $data = ['site' => $this->site, 'page' => $page, 'pages' => $this->site->pages];
+        $pages = ['media', 'settings', 'analytics', 'footer'];
+        abort_if(!in_array($page, $pages), 404);
+        $pages = $this->site->pages;
+        $location = $this->site->theme->location . '.dashboard.' . $page;
+        $data = ['site' => $this->site, 'pages' => $pages];
+        return compact('location', 'data');
+    }
+
+
+    public function loadPage($data, $component)
+    {
+        $pages = $this->site->pages;
+        if ($data === 'pages') {
+            $page = $pages->where('id', $component)->first();
+            abort_if(!$page, 500);
+            $page->load('sections.contents');
+            $section = null;
+        } elseif ($data === 'items') {
+            $page = $pages->where('slug', 'pages')->first();
+            $section = $page->sections()->findOrFail($component);
+        }
+        $location = $this->site->theme->location . '.dashboard.' . $data . '.show';
+        $data = ['page' => $page, 'site' => $this->site, 'pages' => $pages, 'section' => $section];
         return compact('location', 'data');
     }
 
     public function loadAction($data, $component)
     {
-        if ($data['action'] === 'update') {
-            if ($data['type'] === 'sections') {
-                return $this->loadUpdateSection($component);
+        if ($data['action'] === 'create') {
+            if ($data['type'] === 'items') {
+                return $this->loadCreateItems($data, $component);
+            }
+        } elseif ($data['action'] === 'update') {
+            if ($data['type'] === 'items') {
+                return $this->loadUpdateItems($data, $component);
             }
         }
         abort(404);
     }
 
-    public function loadUpdateSection($id)
+    public function loadCreateItems($data, $component)
     {
-        $page = $this->site->pages()->where('homePage', true)->with('sections.contents')->first();
-        $section = $page->sections()->find($id);
-        $location = $this->site->theme->location . '.dashboard.sections.update';
-        $data = ['page' => $page, 'site' => $this->site, 'section' => $section];
+        $pages = $this->site->pages;
+        $courses = $pages->where('slug', 'pages')->first();
+        $section = $courses->sections()->findOrFail($component);
+        $location = $this->site->theme->location . '.dashboard.' . $data['type'] . '.' . $data['action'];
+        $data = ['page' => $courses, 'site' => $this->site, 'pages' => $pages, 'section' => $section];
+        return compact('location', 'data');
+    }
+
+    public function loadUpdateItems($data, $component)
+    {
+        $pages = $this->site->pages;
+        $courses = $pages->where('slug', 'pages')->first();
+        $content = Content::where('id', $component)
+                            ->whereIn('contentable_id', $courses->sections->pluck('id'))
+                            ->firstOrFail();
+        $page = $content->contentable->page;
+        $location = $this->site->theme->location . '.dashboard.' . $data['type'] . '.' . $data['action'];
+        $data = [
+            'page' => $page, 'site' => $this->site,
+            'pages' => $pages, 'section' => $content->contentable,
+            'content' => $content
+        ];
         return compact('location', 'data');
     }
 

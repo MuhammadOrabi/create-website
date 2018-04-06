@@ -7,7 +7,7 @@ class Template1Helper
     public static function scaffold($site)
     {
         $home = $site->addPage(['title' => 'Home Page', 'homePage' => true, 'slug' => '']);
-        $post = $site->addPage(['title' => 'Post', 'slug' => 'post']);
+        $pages = $site->addPage(['title' => 'Pages', 'slug' => 'pages']);
         return $site;
     }
 
@@ -21,25 +21,20 @@ class Template1Helper
         } elseif ($op === 'dashboard') {
             $template1 = new Template1SiteHelper($site);
             return $template1->dashboard($page, $data, $component);
+        } elseif ($op === 'dashboard-load-page') {
+            $template1 = new Template1SiteHelper($site);
+            return $template1->loadPage($data, $component);
+        } elseif ($op === 'getSection') {
+            return SectionHelper::which($page, 'get', $data, $component);
+        } elseif ($op === 'get-page-auth') {
+            return PageHelper::which($page, 'get-auth', $data);
+        } elseif ($op === 'create-section-auth') {
+            SectionHelper::which($page, 'create-auth', $data);
+        } elseif ($op === 'deleteSection') {
+            SectionHelper::which($page, 'delete', $data, $component);
         } elseif ($op === 'dashboard-load-action') {
             $template1 = new Template1SiteHelper($site);
             return $template1->loadAction($data, $component);
-        } elseif ($op === 'getSection') {
-            return SectionHelper::which('get', $data, $component);
-        } elseif ($op === 'updateSection') {
-            return SectionHelper::which('update', $data, $component);
-        } elseif ($op === 'get-content') {
-            return ContentHelper::which('get', $component);
-        } elseif ($op === 'delete-content') {
-            return ContentHelper::which('delete', $component);
-        } elseif ($op === 'create-section-site') {
-            return SectionHelper::which('create-site', $data, $component, $page);
-        } elseif ($op === 'api-info') {
-            $template1 = new Template1SiteHelper($site);
-            return $template1->apiInfo($data);
-        } elseif ($op === 'site-update') {
-            $template1 = new Template1SiteHelper($site);
-            return $template1->update($data);
         }
     }
 }

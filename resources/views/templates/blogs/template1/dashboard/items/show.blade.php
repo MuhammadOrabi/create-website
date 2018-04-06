@@ -15,9 +15,9 @@
             </a>
         </div>
         <div class="column">
-            <h1 class="title">{{$section->title}}'s Lessons</h1>
+            <h1 class="title">{{$section->title}}'s Items</h1>
         </div>
     </div>
     
-    <lessons id="{{ $section->id }}" address="{{ $site->address }}" token="{{ auth()->user()->getToken('lessons-manage') }}"></lessons>        
+    <items id="{{ $section->id }}" address="{{ $site->address }}" token="{{ auth()->user()->getToken('items-manage') }}"></items>        
 @stop

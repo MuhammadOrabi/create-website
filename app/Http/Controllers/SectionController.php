@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Helpers\WebApps\WebAppsHelper;
 use App\Helpers\Websites\WebsitesHelper;
 use App\Helpers\Portfolios\PortfoliosHelper;
+use App\Helpers\Blogs\BlogsHelper;
 
 class SectionController extends Controller
 {
@@ -27,6 +28,9 @@ class SectionController extends Controller
                 }
                 return response()->json($data);
             } elseif ($tag->tag === 'blog') {
+                if (auth()->id() === $site->user->id) {
+                    $data = BlogsHelper::finder($site, $page, 'create-section-auth', request()->all());
+                }
             }
         } else {
             $page = Page::findOrFail(request()->id);
@@ -70,6 +74,8 @@ class SectionController extends Controller
             $data = WebAppsHelper::finder($section->page->site, $section->page, 'getSection', null, $section);
             return response()->json($data);
         } elseif ($tag->tag === 'blog') {
+            $data = BlogsHelper::finder($section->page->site, $section->page, 'getSection', null, $section);
+            return response()->json($data);
         }
     }
 
@@ -133,6 +139,8 @@ class SectionController extends Controller
                 $data = WebAppsHelper::finder($section->page->site, $section->page, 'deleteSection', null, $section);
                 return response()->json($data);
             } elseif ($tag->tag === 'blog') {
+                $data = BlogsHelper::finder($section->page->site, $section->page, 'deleteSection', null, $section);
+                return response()->json($data);
             }
         } else {
             $section = Section::findOrFail(request()->id);

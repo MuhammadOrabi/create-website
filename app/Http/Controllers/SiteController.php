@@ -55,7 +55,6 @@ class SiteController extends Controller
             // if the slug doesn't belong to any of the site pages
             abort_if(! $site->pages->pluck('slug')->contains($slug), 404);
         }
-
         $tag = $site->theme->tags()->where('type', 'category')->first();
         if ($tag->tag === 'website') {
             $data = WebsitesHelper::finder($site, $slug, 'site', null);

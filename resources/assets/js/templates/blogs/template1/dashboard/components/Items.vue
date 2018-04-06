@@ -1,5 +1,5 @@
 <template>
-    <b-table :data="lessons" :mobile-cards="true" :loading="loading">
+    <b-table :data="items" :mobile-cards="true" :loading="loading">
         <template slot-scope="props">
             <b-table-column field="title" label="Title">
                 {{ props.row.title }}
@@ -19,7 +19,7 @@
                 <a class="button is-info is-inverted">
                     <b-icon pack="fa" icon="eye"></b-icon>
                 </a>
-                <a class="button is-primary is-inverted" :href="`/dashboard/lessons/update/${props.row.id}/${address}`">
+                <a class="button is-primary is-inverted" :href="`/dashboard/items/update/${props.row.id}/${address}`">
                     <b-icon pack="fa" icon="pencil-square-o"></b-icon>
                 </a>
                 <span class="button is-danger is-inverted" @click="deleteDialog(props.row.id)">
@@ -43,7 +43,7 @@
         </template>
         <template slot="footer" >
             <div class="has-text-centered">
-                <a :href="`/dashboard/lessons/create/${id}/${address}`" class="button is-link is-inverted" >
+                <a :href="`/dashboard/items/create/${id}/${address}`" class="button is-link is-inverted" >
                     <b-icon pack="fa" icon="plus"></b-icon>
                 </a>
             </div>
@@ -55,11 +55,11 @@
     const _ = window._;
     import moment from 'moment';
     export default {
-        name: 'Lessons',
+        name: 'Items',
         props: ['id', 'address', 'token'],
         data() {
             return {
-                lessons: [],
+                items: [],
 				loading: true
             };
         },
@@ -72,13 +72,13 @@
                 const vm = this;
                 window.axios.get('/api/dashboard/sections/' + vm.id, { headers: { 'Authorization': 'Bearer ' + vm.token } })
                 .then(res => {
-                	this.lessons = [];
+                	this.items = [];
 					this.loading = false;
                 	res.data.contents.forEach((content) => {
 						if (content.title) {
 							let title = content.title;
 							let video = _.findWhere(content.extras, {type: 'video'});
-							this.lessons.push(
+							this.items.push(
 								{id: content.id, title: title, video: video.content, created_at: content.created_at}
 							);
 						}

@@ -7,14 +7,8 @@
 @section('content')
     <h1 class="title">{{ $page->title }}</h1>
     @if($page->homePage)
-    	<home-page address="{{ $site->address }}" token="{{ auth()->user()->getToken('users-manage') }}" id="{{ $page->id }}"></home-page>
-    @elseif($page->slug === 'register')
-        <users address="{{ $site->address }}" token="{{ auth()->user()->getToken('users-manage') }}"></users>
-    @elseif($page->slug === 'courses')
-        <courses id="{{ $page->id }}" address="{{ $site->address }}" token="{{ auth()->user()->getToken('courses-manage') }}"></courses>
-    @elseif($page->slug === 'articles')
-    	<articles id="{{ $page->id }}" address="{{ $site->address }}" token="{{ auth()->user()->getToken('articles-manage') }}"></articles>
-    @elseif($page->slug === 'contact')
-        <contact id="{{ $page->id }}" address="{{ $site->address }}" token="{{ auth()->user()->getToken('contact-manage') }}"></contact>
+    	<home-page address="{{ $site->address }}" token="{{ auth()->user()->getToken('home-page') }}" id="{{ $page->id }}"></home-page>
+    @elseif($page->slug === 'pages')
+        <pages address="{{ $site->address }}" token="{{ auth()->user()->getToken('pages') }}"  id="{{ $page->id }}"></pages>
     @endif
 @stop

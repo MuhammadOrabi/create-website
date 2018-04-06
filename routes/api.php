@@ -24,6 +24,7 @@ Route::middleware('auth:api')->group(function () {
 
         
         Route::prefix('pages')->group(function () {
+            Route::post('/{address}', 'PageController@store');
             Route::get('/{id}', 'PageController@show');
             Route::put('/{id}', 'PageController@update');
         });

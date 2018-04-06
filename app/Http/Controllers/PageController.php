@@ -29,6 +29,19 @@ class PageController extends Controller
         return view($data['location'], $data['data']);
     }
 
+    public function store()
+    {
+        $site = auth()->user()->sites()->where('address', request()->address)->firstOrFail();
+        $tag = $site->theme->tags()->where('type', 'category')->first();
+        if ($tag->tag === 'website') {
+        } elseif ($tag->tag === 'portfolio') {
+        } elseif ($tag->tag === 'web application') {
+        } elseif ($tag->tag === 'blog') {
+            $data = BlogsHelper::finder($site, null, 'create-page', request()->all());
+            return response()->json($data);
+        }
+    }
+
     public function edit()
     {
         $site = auth()->user()->sites()->where('address', request()->address)->firstOrFail();
@@ -45,7 +58,12 @@ class PageController extends Controller
             abort_if(!view()->exists($data['location']), 404);
             return view($data['location'], $data['data']);
         } elseif ($tag->tag === 'blog') {
+            $info = ['type' => request()->type, 'action' => request()->action];
+            $data = BlogsHelper::finder($site, null, 'dashboard-load-action', $info, request()->id);
+            abort_if(!view()->exists($data['location']), 404);
+            return view($data['location'], $data['data']);
         }
+        abort(404);
     }
 
     public function update()
@@ -83,6 +101,8 @@ class PageController extends Controller
                 $data = WebAppsHelper::finder($site, $page, $op);
                 return response()->json($data);
             } elseif ($tag->tag === 'blog') {
+                $data = BlogsHelper::finder($site, $page, $op);
+                return response()->json($data);
             }
         } else {
             $site = auth()->user()->sites()->where('address', request()->address)->firstOrFail();
@@ -98,6 +118,9 @@ class PageController extends Controller
                 abort_if(!view()->exists($data['location']), 404);
                 return view($data['location'], $data['data']);
             } elseif ($tag->tag === 'blog') {
+                $data = BlogsHelper::finder($site, null, 'dashboard-load-page', request()->type, request()->id);
+                abort_if(!view()->exists($data['location']), 404);
+                return view($data['location'], $data['data']);
             }
         }
         abort(500);

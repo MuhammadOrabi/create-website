@@ -31,24 +31,24 @@ return [
     'defaults' => [
         /**
          * Notification Type
-				 *  (ex: danger, success, info, warning, light, dark)
+                 *  (ex: danger, success, info, warning, light, dark)
          */
         'type' => 'info',
-				/**
+                /**
          * Notification Priority
-				 *  This is an arbitrary integer to indicate priority over other
-				 *  notifications. A higher number is considered higher priority.
+                 *  This is an arbitrary integer to indicate priority over other
+                 *  notifications. A higher number is considered higher priority.
          */
         'priority' => 5,
         /**
          * Notification Title
-				 *  (ie. "Success: ", "Warning: ", "Notice: ", null)
+                 *  (ie. "Success: ", "Warning: ", "Notice: ", null)
          */
         'title' => 'Notice: ',
         /**
          * Notification Content
-				 *  This will probably never revert to this default,
-				 *  but is set just in case
+                 *  This will probably never revert to this default,
+                 *  but is set just in case
          */
         'content' => 'Your last request experienced a problem',
     ],
@@ -62,10 +62,10 @@ return [
     |
     */
     'classes' => [
-				/**
-				 * Used for important and critical notices or errors.
-				 */
-				'success' => 'alert-success',
+                /**
+                 * Used for important and critical notices or errors.
+                 */
+                'success' => 'alert-success',
         /**
          * Used for informational notices.
          */
@@ -74,9 +74,9 @@ return [
          * Used for important and critical notices or errors.
          */
         'warning' => 'alert-warning',
-				/**
-				 * Used for important and critical notices or errors.
-				 */
-				'danger' => 'alert-danger',
+                /**
+                 * Used for important and critical notices or errors.
+                 */
+                'danger' => 'alert-danger',
     ],
 ];

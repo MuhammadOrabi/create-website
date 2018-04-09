@@ -52,6 +52,7 @@
 
 <script>
 import marked from 'marked';
+import TurndownService from 'turndown';
 export default {
   	name: 'Articles-CU',
   	props: {address: String, token: String, id: String, page: String, c: Boolean, u: Boolean},
@@ -109,7 +110,8 @@ export default {
                 let type = section.type;
                 let img = _.findWhere(section.contents, {type: 'img'});
                 if (type === 'markedown') {
-                	this.markedown = paragraph;
+                    let turndownService = new TurndownService();
+                    this.markedown = turndownService.turndown(paragraph);
                 	this.editors = 1;
                 } else if (type === 'editor') {
                 	this.editor = paragraph;

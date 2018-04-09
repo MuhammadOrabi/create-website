@@ -43,5 +43,5 @@ Route::middleware('auth')->group(function () {
 Route::get('/s/{address}/{slug?}/{id?}', 'SiteController@show')->name('site');
 
 Route::prefix('sections')->group(function () {
-    Route::post('{id}', 'SectionController@store');
+    Route::post('{id}/{component?}', 'SectionController@store');
 });

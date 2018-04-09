@@ -20,6 +20,13 @@
                     </a>
                 </b-table-column>
 
+                <b-table-column label="Files">
+                    {{ props.row.files }}
+                    <a :href="`/dashboard/files/${props.row.id}/${address}`" class="button is-link is-rounded is-inverted">
+                        <b-icon pack="fa" icon="cog"></b-icon>
+                    </a>
+                </b-table-column>
+
                 <b-table-column field="created_at" label="Created at">
                     {{ props.row.created_at }}
                 </b-table-column>
@@ -88,11 +95,17 @@ export default {
                 this.courses = [];
                 res.data.sections.forEach((section) => {
                     let tags = _.pluck(_.where(section.extras, {type: 'tag'}), 'content');
+                    let files = _.where(section.extras, {type: 'file'});
                     let title = section.title;
                     let lessons = section.contents ? section.contents.length : 0;
-                    this.courses.push(
-                        {id: section.id, title: title, tags: tags, lessons: lessons, created_at: moment(section.created_at).calendar()}
-                    );
+                    this.courses.push({
+                        id: section.id, 
+                        files: files ? files.length : 0,
+                        title: title, 
+                        tags: tags, 
+                        lessons: lessons, 
+                        created_at: moment(section.created_at).calendar()
+                    });
                 });
             })
             .catch(err => console.log(err));

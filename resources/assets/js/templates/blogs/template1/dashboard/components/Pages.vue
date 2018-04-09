@@ -9,15 +9,15 @@
                     {{ props.row.title }}
                 </b-table-column>
 
-                <b-table-column field="items" label="Sections">
+                <b-table-column field="items" label="Items">
                     {{ props.row.items }}
                     <a :href="`/dashboard/items/${props.row.id}/${address}`" class="button is-link is-rounded is-inverted">
                         <b-icon pack="fa" icon="cog"></b-icon>
                     </a>
                 </b-table-column>
 
-                <b-table-column label="Type">
-                    {{ props.row.type }}                    
+                <b-table-column field="tags" label="Tags">
+                    {{ props.row.tags.toLocaleString() }}                    
                 </b-table-column>
 
                 <b-table-column field="created_at" label="Created at">
@@ -69,7 +69,7 @@ export default {
             if (this.key) {
                 let search = new JsSearch.Search('id');
                 search.addIndex('title');
-                search.addIndex('type');
+                search.addIndex('tags');
                 search.addIndex('created_at');
                 search.addDocuments(this.pages);
                 return search.search(this.key);
@@ -90,8 +90,9 @@ export default {
                 this.pages = [];
                 res.data.sections.forEach((section) => {
                     let items = section.contents ? section.contents.length : 0;
+                    let tags = _.pluck(_.where(section.extras, {type: 'tag'}), 'content');
                     this.pages.push(
-                        {id: section.id, title: section.title, type: section.type, items: items, created_at: moment(section.created_at).calendar()}
+                        {id: section.id, title: section.title, tags: tags, items: items, created_at: moment(section.created_at).calendar()}
                     );
                 });
                 this.loading = false;

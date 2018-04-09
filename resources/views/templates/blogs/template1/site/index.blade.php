@@ -2,389 +2,60 @@
 @section('title') 
     {{ $site->name }}
 @stop 
+@php
+    $page = $site->pages->where('slug', 'page')->first();
+    $contents = $page->contents->sortByDesc('created_at');
+@endphp
 @section('content')
 <div class="col l9 s12">
 
     <!--slider-->
     <div class="slider">
         <ul class="slides">
-            <li>
-                <a href="">
-                    <img src="imgs/Coco-Movie-Mexican-Box-Office-Record-Pixar.jpg">
-                    <div class="caption center-align">
-                        <h3>Pixar's Coco Beats Avengers as Mexico's Biggest Movie Ever</h3>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    <img src="imgs/maxresdefault.jpg">
-                    <div class="caption left-align">
-                        <h3>Trailer For 'Deadpool 2' Has Dropped And It's Absolutely Bizarre</h3>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    <img src="imgs/Justice League.jpg">
-                    <div class="caption right-align">
-                        <h3>'Thor: Ragnarok' Set To Beat 'Justice League' In The Film's Debut Weekend In North America</h3>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    <img src="imgs/Strangers2.jpg">
-                    <div class="caption center-align">
-                        <h3>Strangers: Prey at Night</h3>
-                    </div>
-                </a>
-            </li>
+            @foreach($contents as $content)
+                <li>
+                    <a href="/s/{{ $site->address }}/item/{{ $content->id }}">
+                        <img src="{{ @$content->extras->where('type', 'img')->first()->content }}">
+                        <div class="caption center-align">
+                            <h3>{{ $content->title }}</h3>
+                        </div>
+                    </a>
+                </li>
+            @endforeach
         </ul>
     </div>
     <!--end slider -->
 
     <!--LATEST MOVIE NEWS HEADLINES-->
     <div id="box">
-        <div class="heading">LATEST MOVIE NEWS HEADLINES</div>
+        <div class="heading">LATEST HEADLINES</div>
         <div class="trapezoid"></div>
         <!-- cards-->
-        <div class="row load">
-            <div class="col l4 s12 m7">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="imgs/Strangers2.jpg">
-
-                    </div>
-                    <div class="card-content">
-                        <p>I am a very simple card. I am good at containing small bits of information. I am convenient because
-                            I require little markup to use effectively.</p>
-                    </div>
-                    <a class="read_more_btn" href="read_more.html">
-                        <div class="card-action">
-                            Read more
+        @php $key = ($contents->count() / 3) > 5 ? 5 : ($contents->count() / 3) + 1 @endphp
+        @for ($i = 1; $i < $key; $i++)
+            <div class="row load">
+                @php $chunk = $contents->forPage($i, 3); @endphp
+                @foreach($chunk as $content)
+                    <div class="col l4 s12 m7">
+                        <div class="card">
+                            <div class="card-image">
+                                <img src="{{ @$content->extras->where('type', 'img')->first()->content }}">
+                            </div>
+                            <div class="card-content">
+                                <p>{{ $content->title }}</p>
+                            </div>
+                            <a class="read_more_btn" href="/s/{{ $site->address }}/item/{{ $content->id }}">
+                                <div class="card-action">
+                                    Read more
+                                </div>
+                            </a>
                         </div>
-                    </a>
-                </div>
+                    </div>
+                @endforeach
             </div>
-            <!-- ^^^^ -->
-            <div class="col l4 s12 m7">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="imgs/Strangers2.jpg">
-
-                    </div>
-                    <div class="card-content">
-                        <p>I am a very simple card. I am good at containing small bits of information. I am convenient because
-                            I require little markup to use effectively.</p>
-                    </div>
-
-                    <a class="read_more_btn" href="#">
-                        <div class="card-action">
-                            Read more
-                        </div>
-                    </a>
-
-                </div>
-            </div>
-            <!-- ^^^^ -->
-            <div class="col l4 s12 m7">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="imgs/Strangers2.jpg">
-
-                    </div>
-                    <div class="card-content">
-                        <p>I am a very simple card. I am good at containing small bits of information. I am convenient because
-                            I require little markup to use effectively.</p>
-                    </div>
-                    <a class="read_more_btn" href="#">
-                        <div class="card-action">
-                            Read more
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <!-- ^^^^ -->
-        </div>
-        <div class="row load">
-            <div class="col l4 s12 m7">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="imgs/Strangers2.jpg">
-
-                    </div>
-                    <div class="card-content">
-                        <p>I am a very simple card. I am good at containing small bits of information. I am convenient because
-                            I require little markup to use effectively.</p>
-                    </div>
-                    <a class="read_more_btn" href="#">
-                        <div class="card-action">
-                            Read more
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col l4 s12 m7">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="imgs/Strangers2.jpg">
-
-                    </div>
-                    <div class="card-content">
-                        <p>I am a very simple card. I am good at containing small bits of information. I am convenient because
-                            I require little markup to use effectively.</p>
-                    </div>
-                    <a class="read_more_btn" href="#">
-                        <div class="card-action">
-                            Read more
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col l4 s12 m7">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="imgs/Strangers2.jpg">
-
-                    </div>
-                    <div class="card-content">
-                        <p>I am a very simple card. I am good at containing small bits of information. I am convenient because
-                            I require little markup to use effectively.</p>
-                    </div>
-                    <a class="read_more_btn" href="#">
-                        <div class="card-action">
-                            Read more
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <!-- ^^^^ -->
-        <div class="row load">
-            <div class="col l4 s12 m7">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="imgs/Strangers2.jpg">
-
-                    </div>
-                    <div class="card-content">
-                        <p>I am a very simple card. I am good at containing small bits of information. I am convenient because
-                            I require little markup to use effectively.</p>
-                    </div>
-                    <a class="read_more_btn" href="#">
-                        <div class="card-action">
-                            Read more
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col l4 s12 m7">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="imgs/Strangers2.jpg">
-
-                    </div>
-                    <div class="card-content">
-                        <p>I am a very simple card. I am good at containing small bits of information. I am convenient because
-                            I require little markup to use effectively.</p>
-                    </div>
-                    <a class="read_more_btn" href="#">
-                        <div class="card-action">
-                            Read more
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col l4 s12 m7">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="imgs/Strangers2.jpg">
-
-                    </div>
-                    <div class="card-content">
-                        <p>I am a very simple card. I am good at containing small bits of information. I am convenient because
-                            I require little markup to use effectively.</p>
-                    </div>
-                    <a class="read_more_btn" href="#">
-                        <div class="card-action">
-                            Read more
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <!-- ^^^^ -->
-        <div class="row load">
-            <div class="col l4 s12 m7">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="imgs/Strangers2.jpg">
-
-                    </div>
-                    <div class="card-content">
-                        <p>I am a very simple card. I am good at containing small bits of information. I am convenient because
-                            I require little markup to use effectively.</p>
-                    </div>
-                    <a class="read_more_btn" href="#">
-                        <div class="card-action">
-                            Read more
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col l4 s12 m7">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="imgs/Strangers2.jpg">
-
-                    </div>
-                    <div class="card-content">
-                        <p>I am a very simple card. I am good at containing small bits of information. I am convenient because
-                            I require little markup to use effectively.</p>
-                    </div>
-                    <a class="read_more_btn" href="#">
-                        <div class="card-action">
-                            Read more
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col l4 s12 m7">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="imgs/Strangers2.jpg">
-
-                    </div>
-                    <div class="card-content">
-                        <p>I am a very simple card. I am good at containing small bits of information. I am convenient because
-                            I require little markup to use effectively.</p>
-                    </div>
-                    <a class="read_more_btn" href="#">
-                        <div class="card-action">
-                            Read more
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <!-- ^^^^ -->
-        <div class="row load">
-            <div class="col l4 s12 m7">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="imgs/Strangers2.jpg">
-
-                    </div>
-                    <div class="card-content">
-                        <p>I am a very simple card. I am good at containing small bits of information. I am convenient because
-                            I require little markup to use effectively.</p>
-                    </div>
-                    <a class="read_more_btn" href="#">
-                        <div class="card-action">
-                            Read more
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col l4 s12 m7">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="imgs/Strangers2.jpg">
-
-                    </div>
-                    <div class="card-content">
-                        <p>I am a very simple card. I am good at containing small bits of information. I am convenient because
-                            I require little markup to use effectively.</p>
-                    </div>
-                    <a class="read_more_btn" href="#">
-                        <div class="card-action">
-                            Read more
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col l4 s12 m7">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="imgs/Strangers2.jpg">
-
-                    </div>
-                    <div class="card-content">
-                        <p>I am a very simple card. I am good at containing small bits of information. I am convenient because
-                            I require little markup to use effectively.</p>
-                    </div>
-                    <a class="read_more_btn" href="#">
-                        <div class="card-action">
-                            Read more
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <!-- ^^^^ -->
-        <div class="row load">
-            <div class="col l4 s12 m7">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="imgs/Strangers2.jpg">
-
-                    </div>
-                    <div class="card-content">
-                        <p>I am a very simple card. I am good at containing small bits of information. I am convenient because
-                            I require little markup to use effectively.</p>
-                    </div>
-                    <a class="read_more_btn" href="#">
-                        <div class="card-action">
-                            Read more
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col l4 s12 m7">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="imgs/Strangers2.jpg">
-
-                    </div>
-                    <div class="card-content">
-                        <p>I am a very simple card. I am good at containing small bits of information. I am convenient because
-                            I require little markup to use effectively.</p>
-                    </div>
-                    <a class="read_more_btn" href="#">
-                        <div class="card-action">
-                            Read more
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col l4 s12 m7">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="imgs/Strangers2.jpg">
-
-                    </div>
-                    <div class="card-content">
-                        <p>I am a very simple card. I am good at containing small bits of information. I am convenient because
-                            I require little markup to use effectively.</p>
-                    </div>
-                    <a class="read_more_btn" href="#">
-                        <div class="card-action">
-                            Read more
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
+        @endfor
         <!-- ^^^^ -->
         <a class="lm_btn" href="#" id="loadMore">Load More</a>
-        <p class="totop">
-            <a href="#top">Back to top</a>
-        </p>
-
-        <!-- END cards-->
-
-
     </div>
 
     <!-- END LATEST MOVIE NEWS HEADLINES-->

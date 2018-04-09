@@ -26,6 +26,7 @@ class ConstantHelper
         }
         $content = $constant->contents()->where('type', 'links')->first();
         if ($content) {
+            $content->extras()->delete();
             foreach ($data['links'] as $key => $link) {
                 if ($link) {
                     $content->extras()->updateOrCreate(['type' => $key], ['content' => $link]);

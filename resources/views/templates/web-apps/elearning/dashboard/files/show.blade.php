@@ -1,4 +1,4 @@
-@extends($site->theme->location . '.dashboard.layout')
+@extends($site->theme->location . '.layouts.dashboard')
 
 @section('title')
     {{$section->title}}
@@ -15,8 +15,9 @@
             </a>
         </div>
         <div class="column">
-            <h1 class="title">{{$section->title}}'s Items</h1>
+            <h1 class="title">{{$section->title}}'s Files</h1>
         </div>
     </div>
-    <items id="{{ $section->id }}" address="{{ $site->address }}" token="{{ auth()->user()->getToken('items-manage') }}"></items>        
+    
+    <files id="{{ $section->id }}" address="{{ $site->address }}" token="{{ auth()->user()->getToken('files-manage') }}"></files>        
 @stop

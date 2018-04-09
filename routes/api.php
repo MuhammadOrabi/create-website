@@ -43,6 +43,13 @@ Route::middleware('auth:api')->group(function () {
             Route::delete('/{id}', 'ContentController@destroy');
         });
 
+        Route::prefix('extras')->group(function () {
+            Route::get('{id}', 'ExtraController@edit');
+            Route::post('{id}', 'ExtraController@store');
+            Route::put('{id}', 'ExtraController@update');
+            Route::delete('{id}', 'ExtraController@destroy');
+        });
+
         Route::prefix('imgs')->group(function () {
             Route::get('{address}', 'ImgController@index');
             Route::post('/', 'ImgController@store');

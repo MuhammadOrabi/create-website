@@ -3,6 +3,8 @@
 
 namespace App\Helpers\Blogs\Template1;
 
+use App\Content;
+
 class SectionHelper
 {
     public static function which($page, $op, $data, $section = null)
@@ -13,17 +15,23 @@ class SectionHelper
             static::createDashboard($page);
         } elseif ($op === 'delete') {
             static::destroy($section);
+        } elseif ($op === 'create-comment') {
+            self::createComment($page);
         }
     }
 
     public static function createDashboard($page)
     {
-        $page->sections()->create([
+        $section = $page->sections()->create([
             'title' => request('title'),
-            'type' => request('type'),
+            'type' => 'page',
             'order' => request('order'),
             'active' => request('active'),
         ]);
+        foreach (request('tags') as $tag) {
+            $section->extras()->create(['type' => 'tag', 'content' => $tag]);
+        }
+
         return response('success', 200);
     }
 
@@ -36,5 +44,16 @@ class SectionHelper
         $section->extras()->delete();
         $section->delete();
         return response('success', 200);
+    }
+
+    public static function createComment($page)
+    {
+        $content = Content::where('id', request()->component)->firstOrFail();
+        abort_if($content->contentable->page->id !== $page->id, 500);
+        $comment = $content->extras()->create([
+            'type' => 'comment',
+            'title' => request('first_name') . ' ' . request('last_name'),
+            'content' => request('message')
+        ]);
     }
 }

@@ -25,7 +25,7 @@
                 <aside class="column menu">
                     <ul class="menu-list">
                         <li>
-                        <a class="is-active">Lessons</a>
+                            <a class="is-active">Lessons</a>
                             <ul>
                                 <li v-for="lesson in lessons" :key="lesson.id">
                                     <a :href="`/s/${address}/lesson/${lesson.id}`">{{ lesson.title }}</a>
@@ -34,7 +34,18 @@
                         </li>
                     </ul>
                 </aside>
-                <div class="column"></div>
+                <div class="column">
+                    <ul class="menu-list">
+                        <li>
+                            <a class="is-active">Download files</a>
+                            <ul>
+                                <li v-for="file in files" :key="file.id">
+                                    <a :href="file.content" target="_blank" download>{{ file.title }}</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </section>
     </section>
@@ -50,7 +61,8 @@ export default {
             paragraph: '',
             tags: [],
             img: null,
-            lessons: []
+            lessons: [],
+            files: []
         }
     },
     mounted() {
@@ -68,6 +80,7 @@ export default {
                 this.img = _.findWhere(course.extras, {type: 'img'}) ? 
                                 _.findWhere(course.extras, {type: 'img'}).content : null;
                 this.lessons = course.contents;
+                this.files = _.where(course.extras, {type: 'file'});
             })
             .catch(err => console.log(err));
         }

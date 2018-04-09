@@ -5,30 +5,20 @@
         </a>
         <ul class="left hide-on-med-and-down">
             <li>
-                <a href="#">LOGO</a>
+                <a href="/s/{{ $site->address }}">LOGO</a>
             </li>
-            <li class="active">
-                <a href="#">News</a>
-            </li>
-            <li>
-                <a href="#">UpComing</a>
-            </li>
-            <li>
-                <a href="#">Heroes</a>
-            </li>
-
+            @foreach($pages as $page)
+                <li>
+                    <a href="/s/{{ $site->address }}/page/{{ $page->id }}">{{ $page->title }}</a>
+                </li>
+            @endforeach
         </ul>
         <ul class="side-nav" id="mobile-demo">
-            <li>
-                <a href="#">News</a>
-            </li>
-            <li>
-                <a href="#">UpComing</a>
-            </li>
-            <li>
-                <a href="#">Heroes</a>
-            </li>
-
+            @foreach($pages as $page)
+                <li>
+                    <a href="/s/{{ $site->address }}/page/{{ $page->id }}">{{ $page->title }}</a>
+                </li>
+            @endforeach
         </ul>
     </div>
 </nav>

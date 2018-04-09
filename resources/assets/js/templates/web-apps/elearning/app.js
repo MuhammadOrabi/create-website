@@ -32,6 +32,8 @@ Vue.component('courses', require('./components/dashboard/Courses.vue'));
 Vue.component('courses-crud', require('./components/dashboard/Courses-CRUD.vue'));
 Vue.component('lessons', require('./components/dashboard/Lessons.vue'));
 Vue.component('lessons-cu', require('./components/dashboard/Lessons-CU.vue'));
+Vue.component('files', require('./components/dashboard/Files.vue'));
+Vue.component('files-cu', require('./components/dashboard/Files-CU.vue'));
 Vue.component('articles', require('./components/dashboard/Articles.vue'));
 Vue.component('articles-cu', require('./components/dashboard/Articles-CU.vue'));
 Vue.component('home-page', require('./components/dashboard/homePage.vue'));

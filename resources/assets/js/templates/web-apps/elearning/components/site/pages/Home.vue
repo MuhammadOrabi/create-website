@@ -138,4 +138,9 @@ export default {
 </script>
 
 <style lang="css" scoped>
+    p {
+    height:60px;
+    line-height:20px; /* Height / no. of lines to display */
+    overflow:hidden;
+}
 </style>

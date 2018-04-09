@@ -55,6 +55,8 @@ class SectionController extends Controller
                 return back();
             } elseif ($tag->tag === 'web application') {
             } elseif ($tag->tag === 'blog') {
+                BlogsHelper::finder($site, $page, 'create-section-site', request()->all());
+                return back();
             }
         }
     }

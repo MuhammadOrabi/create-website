@@ -6,6 +6,7 @@ use App\Page;
 use App\Site;
 use App\Content;
 use App\Section;
+use App\Extra;
 
 class ELearningSiteHelper
 {
@@ -61,6 +62,11 @@ class ELearningSiteHelper
         } elseif ($data === 'lessons') {
             $page = $pages->where('slug', 'courses')->first();
             $section = $page->sections()->findOrFail($component);
+        } elseif ($data === 'files') {
+            $page = $pages->where('slug', 'courses')->first();
+            $section = $page->sections()->findOrFail($component);
+        } else {
+            abort(404);
         }
         $location = $this->site->theme->location . '.dashboard.' . $data . '.show';
         $data = ['page' => $page, 'site' => $this->site, 'pages' => $pages, 'section' => $section];
@@ -70,14 +76,14 @@ class ELearningSiteHelper
     public function loadAction($data, $component)
     {
         if ($data['action'] === 'create') {
-            if ($data['type'] === 'lessons') {
-                return $this->loadCreateLesson($data, $component);
+            if ($data['type'] === 'lessons' || $data['type'] === 'files') {
+                return $this->loadCreateCourseItem($data, $component);
             } elseif ($data['type'] === 'articles') {
                 return $this->loadCreateArticles($data, $component);
             }
         } elseif ($data['action'] === 'update') {
-            if ($data['type'] === 'lessons') {
-                return $this->loadUpdateLesson($data, $component);
+            if ($data['type'] === 'lessons' || $data['type'] === 'files') {
+                return $this->loadUpdateCourseItem($data, $component);
             } elseif ($data['type'] === 'articles') {
                 return $this->loadUpdateArticles($data, $component);
             }
@@ -85,7 +91,7 @@ class ELearningSiteHelper
         abort(404);
     }
 
-    public function loadCreateLesson($data, $component)
+    public function loadCreateCourseItem($data, $component)
     {
         $pages = $this->sidebar();
         $courses = $pages->where('slug', 'courses')->first();
@@ -95,18 +101,27 @@ class ELearningSiteHelper
         return compact('location', 'data');
     }
 
-    public function loadUpdateLesson($data, $component)
+    public function loadUpdateCourseItem($data, $component)
     {
         $pages = $this->sidebar();
         $courses = $pages->where('slug', 'courses')->first();
-        $content = Content::where('id', $component)
-                            ->whereIn('contentable_id', $courses->sections->pluck('id'))
-                            ->firstOrFail();
-        $page = $content->contentable->page;
+        if ($data['type'] === 'lessons') {
+            $content = Content::where('id', $component)
+                                ->whereIn('contentable_id', $courses->sections->pluck('id'))
+                                ->firstOrFail();
+            $page = $content->contentable->page;
+            $section = $content->contentable;
+        } elseif ($data['type'] === 'files') {
+            $content = Extra::where('id', $component)
+                ->whereIn('extraable_id', $courses->sections->pluck('id'))
+                ->firstOrFail();
+            $page = $content->extraable->page;
+            $section = $content->extraable;
+        }
         $location = $this->site->theme->location . '.dashboard.' . $data['type'] . '.' . $data['action'];
         $data = [
             'page' => $page, 'site' => $this->site,
-            'pages' => $pages, 'section' => $content->contentable,
+            'pages' => $pages, 'section' => $section,
             'content' => $content
         ];
         return compact('location', 'data');
@@ -133,6 +148,7 @@ class ELearningSiteHelper
         ];
         return compact('location', 'data');
     }
+    
 
     public function sidebar()
     {

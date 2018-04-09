@@ -8,7 +8,7 @@
     <h1 class="title">{{ $page->title }}</h1>
     @if($page->homePage)
     	<home-page address="{{ $site->address }}" token="{{ auth()->user()->getToken('home-page') }}" id="{{ $page->id }}"></home-page>
-    @elseif($page->slug === 'pages')
+    @elseif($page->slug === 'page')
         <pages address="{{ $site->address }}" token="{{ auth()->user()->getToken('pages') }}"  id="{{ $page->id }}"></pages>
     @endif
 @stop

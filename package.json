@@ -32,6 +32,7 @@
     "moment": "^2.19.1",
     "node-fs": "^0.1.7",
     "popper.js": "^1.12.6",
+    "turndown": "^4.0.1",
     "underscore": "^1.8.3",
     "vee-validate": "^2.0.0-rc.21",
     "video.js": "^6.4.0",
@@ -39,10 +40,10 @@
     "vuetify": "^1.0.0-alpha.3",
     "vuex": "^3.0.1",
     "vuex-localstorage": "^1.0.0"
-},
-"dependencies": {
-    "vue": "^2.5.13",
+  },
+  "dependencies": {
     "hchs-vue-charts": "^1.2.8",
-    "node-sass": "^4.7.2"
+    "node-sass": "^4.7.2",
+    "vue": "^2.5.13"
   }
 }

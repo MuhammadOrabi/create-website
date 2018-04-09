@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Helpers\WebApps\WebAppsHelper;
 use App\Helpers\Portfolios\PortfoliosHelper;
 use App\Helpers\Websites\WebsitesHelper;
+use App\Helpers\Blogs\BlogsHelper;
 
 class ContentController extends Controller
 {
@@ -23,6 +24,7 @@ class ContentController extends Controller
             $data = WebAppsHelper::finder($site, $content->contentable->page, 'get-content-site', null, $content);
             return response()->json($data);
         } elseif ($tag->tag === 'blog') {
+            return BlogsHelper::finder($site, $content->contentable->page, 'get-content-site', request()->all(), $content);
         }
         return abort(500);
     }
@@ -38,6 +40,7 @@ class ContentController extends Controller
             $data = WebAppsHelper::finder($site, $section->page, 'createContent', request()->all(), $section);
             return response()->json($data);
         } elseif ($tag->tag === 'blog') {
+            return BlogsHelper::finder($site, $section->page, 'create-content', request()->all(), $section);
         }
         return abort(500);
     }
@@ -59,6 +62,7 @@ class ContentController extends Controller
             );
             return response()->json($data);
         } elseif ($tag->tag === 'blog') {
+            return BlogsHelper::finder($site, $content->contentable->page, 'update-content', request()->all(), $content);
         }
         return abort(500);
     }
@@ -76,6 +80,7 @@ class ContentController extends Controller
             $data = WebAppsHelper::finder($site, $content->contentable->page, 'getContent', null, $content);
             return response()->json($data);
         } elseif ($tag->tag === 'blog') {
+            return BlogsHelper::finder($site, $content->contentable->page, 'get-content', request()->all(), $content);
         }
     }
 
@@ -94,6 +99,7 @@ class ContentController extends Controller
             $data = WebAppsHelper::finder($site, $content->contentable->page, 'deleteContent', null, $content);
             return response()->json($data);
         } elseif ($tag->tag === 'blog') {
+            return BlogsHelper::finder($site, $content->contentable->page, 'delete-content', request()->all(), $content);
         }
     }
 }

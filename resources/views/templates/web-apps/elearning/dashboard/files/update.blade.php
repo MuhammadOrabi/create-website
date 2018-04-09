@@ -1,4 +1,4 @@
-@extends($site->theme->location . '.dashboard.layout')
+@extends($site->theme->location . '.layouts.dashboard')
 
 @section('title')
     {{ $section->title }}
@@ -7,7 +7,7 @@
 @section('content')
     <div class="columns">
         <div class="column is-one-quarter">
-            <a class="subtitle" href="/dashboard/items/{{ $section->id }}/{{ $site->address }}">
+            <a class="subtitle" href="/dashboard/files/{{ $section->id }}/{{ $site->address }}">
                 <span class="icon">
                     <i class="fa fa-arrow-left"></i>
                 </span>
@@ -18,6 +18,6 @@
             <h1 class="title">Update {{$content->title}}</h1>            
         </div>
     </div>
-    <items-cu u address="{{ $site->address }}" token="{{ auth()->user()->getToken('items-cu') }}" 
-    	id="{{ $content->id }}" sectionid="{{ $section->id }}"></items-cu>
+    <files-cu u address="{{ $site->address }}" token="{{ auth()->user()->getToken('files-cu') }}" 
+    	id="{{ $content->id }}" sectionid="{{ $section->id }}"></files-cu>
 @stop

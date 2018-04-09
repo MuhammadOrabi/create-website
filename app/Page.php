@@ -22,4 +22,9 @@ class Page extends Model
     {
         return $this->morphToMany('App\Log', 'loggable');
     }
+
+    public function contents()
+    {
+        return $this->hasManyThrough('App\Content', 'App\Section', 'page_id', 'contentable_id');
+    }
 }

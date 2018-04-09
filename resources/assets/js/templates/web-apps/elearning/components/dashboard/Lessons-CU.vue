@@ -81,7 +81,6 @@
         		const vm = this;
                 window.axios.get('/api/dashboard/contents/' + vm.id, { headers: { 'Authorization': 'Bearer ' + vm.token } })
                 .then(res => {
-                	console.log(res.data);
                     let content = res.data;
                     this.data.title = content.title;
                     this.data.paragraph = content.content;

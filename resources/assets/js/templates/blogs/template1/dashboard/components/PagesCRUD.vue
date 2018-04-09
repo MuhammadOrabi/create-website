@@ -4,7 +4,7 @@
             <span class="button is-link is-inverted" v-if="c" @click="createModal">
                 <b-icon pack="fa" icon="plus"></b-icon>
             </span>
-            <a class="button is-info is-inverted" v-if="r" :href="`/s/${address}/course/${sectionid}`" target="_blank">
+            <a class="button is-info is-inverted" v-if="r" :href="`/s/${address}/page/${sectionid}`" target="_blank">
                 <b-icon pack="fa" icon="eye"></b-icon>
             </a>
             <span class="button is-primary is-inverted" v-if="u" @click="updateModal">
@@ -21,10 +21,10 @@
                 <b-field label="Title">
                     <b-input v-model.trim="data.title" placeholder="Title"></b-input>
                 </b-field>
-                <b-field label="Type">
-                    <b-input v-model.trim="data.type" placeholder="Type"></b-input>
+                <b-field label="Add some tags">
+                    <b-taginput v-model="data.tags" icon="label" placeholder="Add a tag"></b-taginput>
                 </b-field>
-                 <b-field label="Order">
+                <b-field label="Order">
                     <b-input type="number" v-model.trim="data.order" placeholder="Order"></b-input>
                 </b-field>
                 <div class="field">
@@ -51,15 +51,15 @@
                 isModalActive: false,
                 data: {
                     title: '',
-                    type: '',
                     order: 0,
+                    tags: [],
                     active: true,
                 },
             };
         },
         computed: {
             valid() {
-                return this.data.title !== '' && this.data.type !== '';
+                return this.data.title !== '';
             }
         },
         mounted() {

@@ -28,8 +28,8 @@ class ExtraHelper
     {
         return $section->extras()->create([
             'type' => 'file',
-            'title' => request('title'),
-            'content' => request('file')
+            'title' => $data['title'],
+            'content' => $data['file']
         ]);
     }
 

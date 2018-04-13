@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call(TagsTableSeeder::class);
         $this->call(ThemesTableSeeder::class);
         $this->call(ImgsTableSeeder::class);
+        $this->call(ElearningSHA::class);
     }
 }

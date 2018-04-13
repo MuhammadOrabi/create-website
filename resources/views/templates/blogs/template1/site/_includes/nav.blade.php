@@ -5,7 +5,7 @@
         </a>
         <ul class="left hide-on-med-and-down">
             <li>
-                <a href="/s/{{ $site->address }}">LOGO</a>
+                <a href="/s/{{ $site->address }}">{{ $site->name }}</a>
             </li>
             @foreach($pages as $page)
                 <li>

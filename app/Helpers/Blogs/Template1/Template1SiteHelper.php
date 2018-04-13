@@ -36,7 +36,15 @@ class Template1SiteHelper
         }
         $page->logs()->create(['type' => 'page-log', 'action' => 'load-' . $page->slug]);
         $location = $this->site->theme->location . '.site.' . $slug;
-        $data = ['site' => $this->site, 'slug' => $slug, 'page' => $page, 'pages' => $this->loadNav(), 'component' => $component];
+        $constant = $this->site->constants()->where('type', 'footer')->first();
+        $data = [
+            'site' => $this->site,
+            'constant' => $constant->load('contents.extras'),
+            'slug' => $slug,
+            'page' => $page,
+            'pages' => $this->loadNav(),
+            'component' => $component
+        ];
         return compact('location', 'data');
     }
 

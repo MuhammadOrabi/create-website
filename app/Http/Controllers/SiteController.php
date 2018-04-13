@@ -86,6 +86,8 @@ class SiteController extends Controller
             $data = WebAppsHelper::finder($site, null, 'api-info', request()->type);
             return response()->json($data);
         } elseif ($tag->tag === 'blog') {
+            $data = BlogsHelper::finder($site, null, 'api-info', request()->type);
+            return response()->json($data);
         }
     }
 
@@ -104,6 +106,8 @@ class SiteController extends Controller
                 $data = WebAppsHelper::finder($site, null, 'site-update', request()->all());
                 return response()->json($data);
             } elseif ($tag->tag === 'blog') {
+                $data = BlogsHelper::finder($site, null, 'site-update', request()->all());
+                return response()->json($data);
             }
         } else {
             $site = auth()->user()->sites()->findOrFail(request()->id);

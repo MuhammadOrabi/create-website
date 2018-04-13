@@ -8,7 +8,8 @@ class Template1Helper
     {
         $home = $site->addPage(['title' => 'Home Page', 'homePage' => true, 'slug' => '']);
         $pages = $site->addPage(['title' => 'Pages', 'slug' => 'page']);
-        $pages = $site->addPage(['title' => 'Items', 'slug' => 'item']);
+        $item = $site->addPage(['title' => 'Items', 'slug' => 'item']);
+        $footer = $site->constants()->create(['type' => 'footer']);
         return $site;
     }
 
@@ -46,6 +47,16 @@ class Template1Helper
             return ContentHelper::which($page, 'update', $data, $component);
         } elseif ($op === 'create-section-site') {
             return SectionHelper::which($page, 'create-comment', $data);
+        } elseif ($op === 'constant-get') {
+            return ConstantHelper::which('get', $data, $component);
+        } elseif ($op === 'constant-update') {
+            return ConstantHelper::which('update', $data, $component);
+        } elseif ($op === 'site-update') {
+            $template1 = new Template1SiteHelper($site);
+            return $template1->update($data);
+        } elseif ($op === 'api-info') {
+            $Template1 = new Template1SiteHelper($site);
+            return $Template1->apiInfo($data);
         }
     }
 }

@@ -19,7 +19,8 @@ Vue.component('pages', require('./components/Pages.vue'));
 Vue.component('pages-crud', require('./components/PagesCRUD.vue'));
 Vue.component('items', require('./components/Items.vue'));
 Vue.component('items-cu', require('./components/Items-CU.vue'));
-// Vue.component('settings', require('./components/Settings.vue'));
+Vue.component('footer-settings', require('./components/Footer.vue'));
+Vue.component('settings', require('./components/Settings.vue'));
 // Vue.component('analytics-page', require('./components/AnalyticsPage.vue'));
 
 const app = new Vue({

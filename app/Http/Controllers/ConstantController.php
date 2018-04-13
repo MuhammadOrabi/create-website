@@ -6,6 +6,7 @@ use App\Constant;
 use Illuminate\Http\Request;
 use App\Helpers\WebApps\WebAppsHelper;
 use App\Helpers\Websites\WebsitesHelper;
+use App\Helpers\Blogs\BlogsHelper;
 
 class ConstantController extends Controller
 {
@@ -23,6 +24,8 @@ class ConstantController extends Controller
                 $data = WebAppsHelper::finder($site, null, 'constant-update', request()->all(), $constant);
                 return response()->json($data);
             } elseif ($tag->tag === 'blog') {
+                $data = BlogsHelper::finder($site, null, 'constant-update', request()->all(), $constant);
+                return response()->json($data);
             }
         } else {
         }
@@ -42,8 +45,10 @@ class ConstantController extends Controller
                 $data = WebAppsHelper::finder($site, null, 'constant-get', null, $constant);
                 return response()->json($data);
             } elseif ($tag->tag === 'blog') {
+                $data = BlogsHelper::finder($site, null, 'constant-get', null, $constant);
+                return response()->json($data);
             }
-        } else {
         }
+        abort(404);
     }
 }

@@ -112,6 +112,7 @@ export default {
                 if (type === 'markedown') {
                     let turndownService = new TurndownService();
                     this.markedown = turndownService.turndown(paragraph);
+                    // this.markedown = paragraph;
                 	this.editors = 1;
                 } else if (type === 'editor') {
                 	this.editor = paragraph;

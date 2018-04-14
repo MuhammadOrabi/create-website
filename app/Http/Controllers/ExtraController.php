@@ -10,6 +10,7 @@ use App\Helpers\Portfolios\PortfoliosHelper;
 use App\Helpers\Websites\WebsitesHelper;
 use App\Helpers\Blogs\BlogsHelper;
 use App\Extra;
+use App\Site;
 
 class ExtraController extends Controller
 {
@@ -31,13 +32,20 @@ class ExtraController extends Controller
 
     public function store()
     {
-        $section = Section::findOrFail(request()->id);
-        $site = auth()->user()->sites()->where('address', $section->page->site->address)->firstOrFail();
+        if (request()->extraable === 'sections') {
+            $component = Section::findOrFail(request()->id);
+            $page = $component->page;
+            $site = auth()->user()->sites()->where('address', $page->site->address)->firstOrFail();
+        } elseif (request()->extraable === 'contents') {
+            $component = Content::findOrFail(request()->id);
+            $page = $component->contentable->page;
+            $site = Site::where('address', request()->user()->address)->firstOrFail();
+        }
         $tag = $site->theme->tags()->where('type', 'category')->first();
         if ($tag->tag === 'website') {
         } elseif ($tag->tag === 'portfolio') {
         } elseif ($tag->tag === 'web application') {
-            $data = WebAppsHelper::finder($site, $section->page, 'create-extra', request()->all(), $section);
+            $data = WebAppsHelper::finder($site, $page, 'create-extra-' . request()->extraable, request()->all(), $component);
             return response()->json($data);
         } elseif ($tag->tag === 'blog') {
         }
@@ -76,12 +84,18 @@ class ExtraController extends Controller
     public function destroy()
     {
         $extra = Extra::findOrFail(request()->id);
-        $site = auth()->user()->sites()->findOrFail($extra->extraable->page->site->id);
+        if (request()->extraable === 'sections') {
+            $page = $extra->extraable->page;
+            $site = auth()->user()->sites()->where('address', $page->site->address)->firstOrFail();
+        } elseif (request()->extraable === 'contents') {
+            $page = $extra->extraable->contentable->page;
+            $site = Site::where('address', request()->user()->address)->firstOrFail();
+        }
         $tag = $site->theme->tags()->where('type', 'category')->first();
         if ($tag->tag === 'website') {
         } elseif ($tag->tag === 'portfolio') {
         } elseif ($tag->tag === 'web application') {
-            $data = WebAppsHelper::finder($site, $extra->extraable->page, 'delete-extra', null, $extra);
+            $data = WebAppsHelper::finder($site, $page, 'delete-extra', null, $extra);
             return response()->json($data);
         } elseif ($tag->tag === 'blog') {
         }

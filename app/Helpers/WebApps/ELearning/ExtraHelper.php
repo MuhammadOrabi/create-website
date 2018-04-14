@@ -8,17 +8,20 @@ class ExtraHelper
     {
         if ($page->slug === 'courses') {
             switch ($op) {
-                case 'create':
+                case 'create-sections':
                     return self::createFile($component, $data);
                     break;
+                case 'create-contents':
+                    return self::createComment($component, $data);
+                    break;
                 case 'get':
-                    return self::showFile($component);
+                    return self::showExtra($component);
                     break;
                 case 'update':
                     return self::updateFile($component, $data);
                     break;
                 case 'delete':
-                    return self::destroyFile($component);
+                    return self::destroyExtra($component);
                     break;
             }
         }
@@ -33,12 +36,21 @@ class ExtraHelper
         ]);
     }
 
-    public static function showFile($extra)
+    public static function createComment($content, $data)
+    {
+        return $content->extras()->create([
+            'type' => 'comment',
+            'title' => $data['user'],
+            'content' => $data['comment']
+        ]);
+    }
+
+    public static function showExtra($extra)
     {
         return $extra->load('extraable.extras');
     }
 
-    public static function destroyFile($extra)
+    public static function destroyExtra($extra)
     {
         return $extra->delete();
     }

@@ -24,6 +24,7 @@ Vue.component('site-article', require('./components/site/pages/Article.vue'));
 Vue.component('site-contact', require('./components/site/pages/Contact.vue'));
 Vue.component('site-home', require('./components/site/pages/Home.vue'));
 Vue.component('site-footer', require('./components/site/pages/Footer.vue'));
+Vue.component('comment-section', require('./components/site/sections/CommentSection.vue'));
 
 // Dashboard Components
 Vue.component('media', require('./components/dashboard/Media.vue'));

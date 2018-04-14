@@ -51,8 +51,7 @@ class ElearningSHA extends Seeder
         $elearning_site_helper->userUpdate([
             'title' => 'Student',
             'name' => 'Muhammad Orabi',
-            'img' => 'https://firebasestorage.googleapis.com/v0/b/graduation-project-168208.appspot.com/o/development%2Fsha-elearning%2FMon%20Apr%2009%202018%2Fa558682b158debb6d6f49d07d854f99f-casual-male-avatar-silhouette-by-vexels.png?alt=media&token=4634eac4-bd41-4071-8411-8959ff8f5ae6
-'
+            'img' => 'https://firebasestorage.googleapis.com/v0/b/graduation-project-168208.appspot.com/o/development%2Fsha-elearning%2FMon%20Apr%2009%202018%2Fa558682b158debb6d6f49d07d854f99f-casual-male-avatar-silhouette-by-vexels.png?alt=media&token=4634eac4-bd41-4071-8411-8959ff8f5ae6'
         ], $sha_student);
 
         $footer = $site->constants()->where('type', 'footer')->first();
@@ -88,7 +87,7 @@ class ElearningSHA extends Seeder
             'title' => 'Compiler',
             'paragraph' => 'This course will discuss the major ideas used today in the implementation of programming language compilers, including lexical analysis, parsing, syntax-directed translation, abstract syntax trees, types and type checking, intermediate languages, dataflow analysis, program optimization.',
             'img' => 'https://firebasestorage.googleapis.com/v0/b/graduation-project-168208.appspot.com/o/development%2Fsha-elearning%2FMon%20Apr%2009%202018%2Fcompilers_tile.jpg?alt=media&token=c92a510e-b8e7-4e5b-9f8b-eecc0def9753',
-            'tags' => ['CS', 'Maha Tallat']
+            'tags' => ['CS', '4th year']
         ]);
     
         LessonHelper::store($compiler, [
@@ -154,7 +153,7 @@ class ElearningSHA extends Seeder
             'title' => 'Computer Organization',
             'paragraph' => 'In computer engineering, computer architecture is a set of rules and methods that describe the functionality, organization, and implementation of computer systems. Some definitions of architecture define it as describing the capabilities and programming model of a computer but not a particular implementation.',
             'img' => 'https://firebasestorage.googleapis.com/v0/b/graduation-project-168208.appspot.com/o/development%2Fsha-elearning%2FMon%20Apr%2009%202018%2F6.004.3x_378x225.jpg?alt=media&token=51b0c5a8-1e15-432a-ace2-31c8b29dfd75',
-            'tags' => ['CS', 'Maha Tallat']
+            'tags' => ['CS', '3rd']
         ]);
 
         LessonHelper::store($co, [

@@ -45,9 +45,9 @@ Route::middleware('auth:api')->group(function () {
 
         Route::prefix('extras')->group(function () {
             Route::get('{id}', 'ExtraController@edit');
-            Route::post('{id}', 'ExtraController@store');
+            Route::post('{extraable}/{id}', 'ExtraController@store');
             Route::put('{id}', 'ExtraController@update');
-            Route::delete('{id}', 'ExtraController@destroy');
+            Route::delete('{extraable}/{id}', 'ExtraController@destroy');
         });
 
         Route::prefix('imgs')->group(function () {

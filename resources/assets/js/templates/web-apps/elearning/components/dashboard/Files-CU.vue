@@ -89,7 +89,7 @@
         	create(fileLink) {
         		const vm = this;
         		let data = {title: vm.data.title, file: fileLink};
-                window.axios.post('/api/dashboard/extras/' + vm.sectionid, data, { headers: { 'Authorization': 'Bearer ' + vm.token } })
+                window.axios.post('/api/dashboard/extras/sections/' + vm.sectionid, data, { headers: { 'Authorization': 'Bearer ' + vm.token } })
                 .then((res) => {
                    	this.$toast.open({
                         duration: 5000,

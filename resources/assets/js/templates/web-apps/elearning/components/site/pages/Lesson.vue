@@ -26,6 +26,10 @@
                 </ul>
             </aside>
         </div>
+        <div class="container">
+            <hr>
+            <comment-section :address="address" :id="id"></comment-section>
+        </div>
     </div>
 </template>
 
@@ -53,15 +57,14 @@ export default {
     methods: {
         getData() {
             window.axios.get('/api/contents/' + this.id, { headers: { 'Authorization': 'Bearer ' + this.auth.token } })
-                .then(res => {
-                    console.log(res.data);
-                    let content = res.data;
-                    this.title = content.title;
-                    this.paragraph = content.content;
-                    this.video = _.findWhere(content.extras, {type: 'video'}).content;
-                    this.course = content.contentable;
-                })
-                .catch(err => console.log(err));
+            .then(res => {
+                let content = res.data;
+                this.title = content.title;
+                this.paragraph = content.content;
+                this.video = _.findWhere(content.extras, {type: 'video'}).content;
+                this.course = content.contentable;                    
+            })
+            .catch(err => console.log(err));
         }
     }
 }

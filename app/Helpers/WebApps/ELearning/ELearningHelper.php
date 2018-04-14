@@ -87,8 +87,10 @@ class ELearningHelper
         } elseif ($op === 'user-update') {
             $eLearning = new ELearningSiteHelper($site->id);
             return $eLearning->userUpdate($data, $component);
-        } elseif ($op === 'create-extra') {
-            return ExtraHelper::which($page, 'create', $data, $component);
+        } elseif ($op === 'create-extra-sections') {
+            return ExtraHelper::which($page, 'create-sections', $data, $component);
+        } elseif ($op === 'create-extra-contents') {
+            return ExtraHelper::which($page, 'create-contents', $data, $component);
         } elseif ($op === 'get-extra') {
             return ExtraHelper::which($page, 'get', $data, $component);
         } elseif ($op === 'update-extra') {

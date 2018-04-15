@@ -12,23 +12,23 @@ class SectionHelper
         if ($op === 'get') {
             return $section->load('contents.extras');
         } elseif ($op === 'create-auth') {
-            static::createDashboard($page);
+            static::createDashboard($page, $data);
         } elseif ($op === 'delete') {
             static::destroy($section);
         } elseif ($op === 'create-comment') {
-            self::createComment($page);
+            self::createComment($page, $data);
         }
     }
 
-    public static function createDashboard($page)
+    public static function createDashboard($page, $data)
     {
         $section = $page->sections()->create([
-            'title' => request('title'),
+            'title' => $data['title'],
             'type' => 'page',
-            'order' => request('order'),
-            'active' => request('active'),
+            'order' => $data['order'],
+            'active' => $data['active'],
         ]);
-        foreach (request('tags') as $tag) {
+        foreach ($data['tags'] as $tag) {
             $section->extras()->create(['type' => 'tag', 'content' => $tag]);
         }
 

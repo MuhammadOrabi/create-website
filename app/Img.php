@@ -22,4 +22,13 @@ class Img extends Model
     {
         return $this->morphToMany('App\Log', 'loggable');
     }
+
+    // Helper Function
+    public function addLables($lables)
+    {
+        foreach ($lables as $label) {
+            $tag = Tag::firstOrCreate(['tag' => $label]);
+            $this->tags()->attach($tag->id);
+        }
+    }
 }

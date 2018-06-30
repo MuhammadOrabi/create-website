@@ -15,8 +15,11 @@
     <!-- end slider -->
     <div class="box">
         <p class="p2">{{ $component->title }}</p>
-        <p class="p1">{{ $component->content }}</p>
-        <video width="800" src="{{ $component->extras->where('type', 'video')->first()->content }}" controls></video>
+        <p class="p1">{{ @$component->content }}</p>
+        @php $video = $component->extras->where('type', 'video')->first(); @endphp
+        @if($video)
+            <video width="800" src="{{ $video->content }}" controls></video>
+        @endif
         <!---->
         <div id="box">
             <div class="heading">More {{ $component->contentable->title }}</div>

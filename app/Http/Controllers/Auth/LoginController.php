@@ -47,7 +47,7 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         // PS: Update the if condition to "production" when you have a production mail service
-        if (!$user->active && config('env') == 'local') {
+        if (!$user->active) {
             auth()->logout();
             \Mail::to($user)->send(new ActivateEmail($user));
             return back()->withErrors(['msg' => 'Please check your Email to active your account!']);

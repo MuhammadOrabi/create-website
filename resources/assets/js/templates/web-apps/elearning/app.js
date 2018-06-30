@@ -6,6 +6,12 @@ import VueFroala from 'vue-froala-wysiwyg';
 import store from './store';
 import Buefy from 'buefy';
 
+// chartjs package
+require('chart.js');
+// vue-charts package
+require('hchs-vue-charts');
+Vue.use(VueCharts);
+
 Vue.use(Buefy);
 Vue.use(VueFroala);
 
@@ -42,6 +48,7 @@ Vue.component('contact', require('./components/dashboard/Contact.vue'));
 Vue.component('footer-settings', require('./components/dashboard/Footer.vue'));
 Vue.component('settings', require('./components/dashboard/Settings.vue'));
 Vue.component('profile', require('./components/dashboard/Profile.vue'));
+Vue.component('analytics', require('./components/dashboard/AnalyticsPage.vue'));
 
 
 const app = new Vue({

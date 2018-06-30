@@ -16,7 +16,8 @@ class UsersTableSeeder extends Seeder
             'name' => 'Muhammad Orabi',
             'email' => 'orabi@app.com',
             'password' => bcrypt('password'),
-            'address' => 'main'
+            'address' => 'main',
+            'active' => 1
         ]);
     }
 }

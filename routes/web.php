@@ -16,7 +16,7 @@ Route::get('/', 'HomeController@index')->name('home.index');
 
 Route::prefix('active')->group(function () {
     Route::get('{id}/{code}', 'ActivateController@active')->name('active.active');
-    Route::get('{id}', 'UserController@resend')->name('active.resend');
+    Route::get('{id}', 'ActivateController@resend')->name('active.resend');
 });
 
 Route::prefix('themes')->group(function () {

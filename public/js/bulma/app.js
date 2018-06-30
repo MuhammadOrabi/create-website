@@ -28846,7 +28846,9 @@ window._ = __webpack_require__(116);
 
 try {
   window.$ = window.jQuery = __webpack_require__(48);
-} catch (e) {}
+} catch (e) {
+  console.error(e);
+}
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -28857,7 +28859,6 @@ try {
 window.axios = __webpack_require__(117);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-window.axios.defaults.headers.common['Content-Type'] = 'application/json';
 
 /**
  * Next we will register the CSRF Token as a common header with Axios so that
@@ -73738,9 +73739,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		getData: function getData() {
 			var _this = this;
 
-			window.axios.get('/').then(function (res) {
-				console.log(res.data);
-			});
 			window.axios.get('/themes').then(function (res) {
 				_this.tags = res.data;
 			});

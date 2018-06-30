@@ -12,6 +12,7 @@ use App\Helpers\WebApps\ELearning\LessonHelper;
 use App\Helpers\WebApps\ELearning\ExtraHelper;
 use App\Helpers\WebApps\ELearning\ArticlesHelper;
 use App\Helpers\WebApps\ELearning\HomePageHelper;
+use App\Helpers\HelperFunctions;
 
 class ElearningSHA extends Seeder
 {
@@ -26,7 +27,8 @@ class ElearningSHA extends Seeder
             'name' => 'Admin',
             'email' => 'admin@sha.edu.eg',
             'password' => bcrypt('password'),
-            'address' => 'main'
+            'address' => 'main',
+            'active' => 1
         ]);
 
         $theme = Theme::where('location', 'templates.web-apps.elearning')->first();
@@ -35,9 +37,13 @@ class ElearningSHA extends Seeder
         
         $elearning_site_helper = new ELearningSiteHelper($site->id);
         
+        $logo = 'https://firebasestorage.googleapis.com/v0/b/graduation-project-168208.appspot.com/o/development%2Fsha-elearning%2FMon%20Apr%2009%202018%2FSH_LOGO.png?alt=media&token=2c3094a2-8ae0-4615-9526-1b2552d3828c';
+        $lables = HelperFunctions::clarifai($logo);
+        $img = $site->addImage($logo);
+        $img->addLables($lables);
         $elearning_site_helper->update([
             'name' => 'SHA - ELearning',
-            'logo' => 'https://firebasestorage.googleapis.com/v0/b/graduation-project-168208.appspot.com/o/development%2Fsha-elearning%2FMon%20Apr%2009%202018%2FSH_LOGO.png?alt=media&token=2c3094a2-8ae0-4615-9526-1b2552d3828c'
+            'logo' => $logo
         ]);
         
         $sha_student = User::create([
@@ -48,10 +54,14 @@ class ElearningSHA extends Seeder
             'active' => 1
         ]);
 
+        $url = 'https://firebasestorage.googleapis.com/v0/b/graduation-project-168208.appspot.com/o/development%2Fsha-elearning%2FMon%20Apr%2009%202018%2Fa558682b158debb6d6f49d07d854f99f-casual-male-avatar-silhouette-by-vexels.png?alt=media&token=4634eac4-bd41-4071-8411-8959ff8f5ae6';
+        $lables = HelperFunctions::clarifai($url);
+        $img = $site->addImage($url);
+        $img->addLables($lables);
         $elearning_site_helper->userUpdate([
             'title' => 'Student',
             'name' => 'Muhammad Orabi',
-            'img' => 'https://firebasestorage.googleapis.com/v0/b/graduation-project-168208.appspot.com/o/development%2Fsha-elearning%2FMon%20Apr%2009%202018%2Fa558682b158debb6d6f49d07d854f99f-casual-male-avatar-silhouette-by-vexels.png?alt=media&token=4634eac4-bd41-4071-8411-8959ff8f5ae6'
+            'img' => $url
         ], $sha_student);
 
         $footer = $site->constants()->where('type', 'footer')->first();
@@ -67,26 +77,33 @@ class ElearningSHA extends Seeder
         ], $footer);
 
         $homePage = $site->pages()->where('homePage', true)->first();
+        $url = 'https://firebasestorage.googleapis.com/v0/b/graduation-project-168208.appspot.com/o/development%2Fsha-elearning%2FMon%20Apr%2009%202018%2Fmodels-of-elearning-for-corporate-training.jpg?alt=media&token=d8ec058a-4625-4ec9-81b0-b1167376db86';
+        $lables = HelperFunctions::clarifai($url);
+        $img = $site->addImage($url);
+        $img->addLables($lables);
         HomePageHelper::update($homePage, [
             'sections' => ['showcase', 'articles', 'courses'],
-            'img' => 'https://firebasestorage.googleapis.com/v0/b/graduation-project-168208.appspot.com/o/development%2Fsha-elearning%2FMon%20Apr%2009%202018%2Fmodels-of-elearning-for-corporate-training.jpg?alt=media&token=d8ec058a-4625-4ec9-81b0-b1167376db86',
-            
+            'img' => $url,
         ]);
 
         $courses = $site->pages()->where('slug', 'courses')->first();
-        $this->compilerCourse($courses);
-        $this->computerOrganizationCourse($courses);
+        $this->compilerCourse($courses, $site);
+        $this->computerOrganizationCourse($courses, $site);
 
         $articles = $site->pages()->where('slug', 'articles')->first();
-        $this->articles($articles);
+        $this->articles($articles, $site);
     }
     
-    public function compilerCourse($courses)
+    public function compilerCourse($courses, $site)
     {
+        $url = 'https://firebasestorage.googleapis.com/v0/b/graduation-project-168208.appspot.com/o/development%2Fsha-elearning%2FMon%20Apr%2009%202018%2Fcompilers_tile.jpg?alt=media&token=c92a510e-b8e7-4e5b-9f8b-eecc0def9753';
+        $lables = HelperFunctions::clarifai($url);
+        $img = $site->addImage($url);
+        $img->addLables($lables);
         $compiler = CourseHelper::store($courses, [
             'title' => 'Compiler',
             'paragraph' => 'This course will discuss the major ideas used today in the implementation of programming language compilers, including lexical analysis, parsing, syntax-directed translation, abstract syntax trees, types and type checking, intermediate languages, dataflow analysis, program optimization.',
-            'img' => 'https://firebasestorage.googleapis.com/v0/b/graduation-project-168208.appspot.com/o/development%2Fsha-elearning%2FMon%20Apr%2009%202018%2Fcompilers_tile.jpg?alt=media&token=c92a510e-b8e7-4e5b-9f8b-eecc0def9753',
+            'img' => $url,
             'tags' => ['CS', '4th year']
         ]);
     
@@ -147,12 +164,16 @@ class ElearningSHA extends Seeder
         ]);
     }
 
-    public function computerOrganizationCourse($courses)
+    public function computerOrganizationCourse($courses, $site)
     {
+        $url = 'https://firebasestorage.googleapis.com/v0/b/graduation-project-168208.appspot.com/o/development%2Fsha-elearning%2FMon%20Apr%2009%202018%2F6.004.3x_378x225.jpg?alt=media&token=51b0c5a8-1e15-432a-ace2-31c8b29dfd75';
+        $lables = HelperFunctions::clarifai($url);
+        $img = $site->addImage($url);
+        $img->addLables($lables);
         $co = CourseHelper::store($courses, [
             'title' => 'Computer Organization',
             'paragraph' => 'In computer engineering, computer architecture is a set of rules and methods that describe the functionality, organization, and implementation of computer systems. Some definitions of architecture define it as describing the capabilities and programming model of a computer but not a particular implementation.',
-            'img' => 'https://firebasestorage.googleapis.com/v0/b/graduation-project-168208.appspot.com/o/development%2Fsha-elearning%2FMon%20Apr%2009%202018%2F6.004.3x_378x225.jpg?alt=media&token=51b0c5a8-1e15-432a-ace2-31c8b29dfd75',
+            'img' => $url,
             'tags' => ['CS', '3rd']
         ]);
 
@@ -187,8 +208,12 @@ class ElearningSHA extends Seeder
         ]);
     }
 
-    public function articles($articles)
+    public function articles($articles, $site)
     {
+        $url = 'https://firebasestorage.googleapis.com/v0/b/graduation-project-168208.appspot.com/o/development%2Fsha-elearning%2FMon%20Apr%2009%202018%2F0_4Ke_pln7m-R_0Sho.png?alt=media&token=649c6be3-7cc5-4e4d-bf60-411f4e46af68';
+        $lables = HelperFunctions::clarifai($url);
+        $img = $site->addImage($url);
+        $img->addLables($lables);
         ArticlesHelper::store($articles, [
             'title' => 'Tracking with deep networks',
             'type' => 'markedown',
@@ -213,7 +238,7 @@ class ElearningSHA extends Seeder
                 <li>B. Babenko, M.-H. Yang, and S. Belongie. Visual tracking with online multiple instance learning. CVPR, 2009.  </li>
                 </ol>
             ',
-            'img' => 'https://firebasestorage.googleapis.com/v0/b/graduation-project-168208.appspot.com/o/development%2Fsha-elearning%2FMon%20Apr%2009%202018%2F0_4Ke_pln7m-R_0Sho.png?alt=media&token=649c6be3-7cc5-4e4d-bf60-411f4e46af68',
+            'img' => $url,
             'tags' => ['AI', 'CS']
         ]);
     }

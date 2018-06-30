@@ -1,71 +1,77 @@
 <template>
-    <div class="container m-b-100">
-        <figure class="image is-16by9" v-if="home.showcase && home.img">
-            <img :src="home.img">
-        </figure>
-        <div class="columns">
-            <div class="column" v-if="home.courses">
-                <h1 class="is-5 title">Leatest Courses</h1>
-                <div class="box m-t-10" v-for="(course, i) in courses" :key="i" v-if="i < 5">
-                    <article class="media">
-                        <div class="media-left" v-if="course.img">
-                            <figure class="image is-64x64">
-                                <img :src="course.img" alt="Image">
-                            </figure>
-                        </div>
-                        <div class="media-content">
-                            <div class="content">
-                                <p>
-                                    <strong>{{ course.title }}</strong> 
-                                    <span class="tag is-light">{{ course.created_at }}</span>
-                                    <span class="tag is-dark m-l-5" v-for="(tag, i) in course.tags" :key="i">{{ tag }}</span>
-                                    <br>
-                                    <span v-html="course.paragraph"></span>
-                                </p>
-                            </div>
-                            <nav class="level is-mobile">
-                                <div class="level-left"></div>
-                                <div class="level-right">
-                                    <a class="level-item" :href="`/s/${address}/course/${course.id}`">
-                                        View Course
-                                        <span class="icon"><i class="fa fa-long-arrow-right"></i></span>
-                                    </a>
-                                </div>
-                            </nav>
-                        </div>
-                    </article>
-                </div>
+    <div>
+        <section class="hero is-small">
+            <div class="hero-body">        
+                <figure class="image" v-if="home.showcase && home.img">
+                    <img :src="home.img">
+                </figure>
             </div>
-            <div class="column" v-if="home.articles">
-                <h1 class="is-5 title">Leatest Articles</h1>
-                <div class="box m-t-10" v-for="(article, i) in articles" :key="i" v-if="i < 5">
-                    <article class="media">
-                        <div class="media-left" v-if="article.img">
-                            <figure class="image is-64x64">
-                                <img :src="article.img" alt="Image">
-                            </figure>
-                        </div>
-                        <div class="media-content">
-                            <div class="content">
-                                <p>
-                                    <strong>{{ article.title }}</strong>
-                                    <br>
-                                    <span class="tag is-light">{{ article.created_at }}</span>
-                                    <br>
-                                    <span class="tag is-dark m-l-5 m-t-20" v-for="(tag, i) in article.tags" :key="i">{{ tag }}</span>
-                                </p>
+        </section>
+        <div class="container m-b-100">
+            <div class="columns">
+                <div class="column" v-if="home.courses">
+                    <h1 class="is-5 title">Leatest Courses</h1>
+                    <div class="box m-t-10" v-for="(course, i) in courses" :key="i" v-if="i < 5">
+                        <article class="media">
+                            <div class="media-left" v-if="course.img">
+                                <figure class="image is-64x64">
+                                    <img :src="course.img" alt="Image">
+                                </figure>
                             </div>
-                            <nav class="level is-mobile">
-                                <div class="level-left"></div>
-                                <div class="level-right">
-                                    <a class="level-item" :href="`/s/${address}/article/${article.id}`">
-                                        View Article
-                                        <span class="icon"><i class="fa fa-long-arrow-right"></i></span>
-                                    </a>
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>
+                                        <strong>{{ course.title }}</strong> 
+                                        <span class="tag is-light">{{ course.created_at }}</span>
+                                        <span class="tag is-dark m-l-5" v-for="(tag, i) in course.tags" :key="i">{{ tag }}</span>
+                                        <br>
+                                        <span v-html="course.paragraph"></span>
+                                    </p>
                                 </div>
-                            </nav>
-                        </div>
-                    </article>
+                                <nav class="level is-mobile">
+                                    <div class="level-left"></div>
+                                    <div class="level-right">
+                                        <a class="level-item" :href="`/s/${address}/course/${course.id}`">
+                                            View Course
+                                            <span class="icon"><i class="fa fa-long-arrow-right"></i></span>
+                                        </a>
+                                    </div>
+                                </nav>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+                <div class="column" v-if="home.articles">
+                    <h1 class="is-5 title">Leatest Articles</h1>
+                    <div class="box m-t-10" v-for="(article, i) in articles" :key="i" v-if="i < 5">
+                        <article class="media">
+                            <div class="media-left" v-if="article.img">
+                                <figure class="image is-64x64">
+                                    <img :src="article.img" alt="Image">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>
+                                        <strong>{{ article.title }}</strong>
+                                        <br>
+                                        <span class="tag is-light">{{ article.created_at }}</span>
+                                        <br>
+                                        <span class="tag is-dark m-l-5 m-t-20" v-for="(tag, i) in article.tags" :key="i">{{ tag }}</span>
+                                    </p>
+                                </div>
+                                <nav class="level is-mobile">
+                                    <div class="level-left"></div>
+                                    <div class="level-right">
+                                        <a class="level-item" :href="`/s/${address}/article/${article.id}`">
+                                            View Article
+                                            <span class="icon"><i class="fa fa-long-arrow-right"></i></span>
+                                        </a>
+                                    </div>
+                                </nav>
+                            </div>
+                        </article>
+                    </div>
                 </div>
             </div>
         </div>

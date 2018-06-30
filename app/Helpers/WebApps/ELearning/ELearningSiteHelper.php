@@ -28,6 +28,7 @@ class ELearningSiteHelper
             $page = $this->site->pages()->where('homePage', true)->first();
             $location = $this->site->theme->location . '.site.' . $slug;
             $data = ['site' => $this->site, 'slug' => $slug, 'page' => $page];
+            $page->logs()->create(['type' => 'page-log', 'action' => 'load']);
             return compact('location', 'data');
         } elseif ($slug === 'login' || $slug === 'register') {
             $location = $this->site->theme->location . '.site.auth.' . $slug;
@@ -165,7 +166,26 @@ class ELearningSiteHelper
             return $this->site->load('extras');
         } elseif ($type === 'site-info') {
             return $this->site->load('user', 'extras');
+        } elseif ($type === 'page-analytics') {
+            return $this->pageAnalytics();
         }
+    }
+
+    public function pageAnalytics()
+    {
+        $page = $this->site->pages()->where('homePage', true)->first();
+        $years = $page->logs->groupBy(
+            function ($item, $key) {
+                return \Carbon\Carbon::parse($item['created_at'])->year;
+            }
+        )->toArray();
+        $months = $page->logs->groupBy(
+            function ($item, $key) {
+                $month = \Carbon\Carbon::parse($item['created_at'])->month;
+                return date("F", mktime(0, 0, 0, $month, 1));
+            }
+        )->toArray();
+        return ['months' => $months, 'years' => $years];
     }
 
     public function update($data)

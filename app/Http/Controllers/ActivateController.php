@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use App\Mail\ActivateEmail;
 
 class ActivateController extends Controller
 {
@@ -18,7 +19,6 @@ class ActivateController extends Controller
             $user->active = 1;
             $user->save();
             $user->logs()->create(['type' => 'user_auth', 'action' => 'User Activate Email']);
-            auth()->guard()->login($user);
         }
         return redirect()->home();
     }
@@ -27,7 +27,7 @@ class ActivateController extends Controller
     {
         $user = User::find($request->id);
         $user->logs()->create(['type' => 'user_auth', 'action' => 'User Request to Activate Email']);
-        $user->activate()->save(['code' => str_random(40)]);
+        $user->activate()->update(['code' => str_random(40)]);
         \Mail::to($user)->send(new ActivateEmail($user));
         return back();
     }

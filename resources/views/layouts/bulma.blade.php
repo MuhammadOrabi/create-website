@@ -20,6 +20,11 @@
     <body>
         <div id="app">
             @yield('nav')
+            @if(!auth()->user()->active)	
+                <div class="notification is-warning">
+                    Please check your email, for activation mail! <a href="/active/{{ auth()->id() }}">resend</a>
+                </div>
+            @endif
             @yield('content')           
         </div>
         <script src="/js/bulma/app.js"></script>
